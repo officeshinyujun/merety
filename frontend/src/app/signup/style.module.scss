@@ -1,0 +1,40 @@
+.container{
+    width: 100vw;
+    height: 100vh;
+    background: $background-secondary;
+}
+
+.contents{
+    width: 400px;
+    padding: $s-20;
+    border-radius: $s-16;
+    border: 1px solid $border-primary;
+}
+
+.signupButton{
+    width: 100%;
+    padding: $s-16;
+    background : $text-primary !important;
+    color: $background-primary !important;
+    font-size: $f-md;
+    font-weight: $bold;
+    
+}
+
+.submit {
+    width: 100%;
+    p{
+        font-size: $f-xs;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+    a{
+        font-size: $f-xs;
+        color: $text-primary;
+        font-weight: $semi-bold;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

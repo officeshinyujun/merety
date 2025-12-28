@@ -32,9 +32,9 @@ export default function Input(props: Props) {
                     padding: `0 ${isPassword ? '40px 0 10px' : '10px'}`,
                     boxSizing: 'border-box',
                     borderRadius: '16px',
-                    color: '#111',
-                    border: '1px solid #E0E0E0',
-                    background: 'none',
+                    color: '#959595',
+                    border: '1px solid #474747',
+                    background: '#26282B',
                     outline: 'none',
                     fontSize: '14px'
                 }}
