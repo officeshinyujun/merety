@@ -1,0 +1,18 @@
+.container{
+    width: 100%;
+    h1{
+        font-size: $f-md;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+}
+
+.card {
+    padding: $s-8 $s-12;
+    p{
+        font-size: $f-xs;
+        font-weight: $medium;
+        color: $text-secondary;
+    }
+}
+

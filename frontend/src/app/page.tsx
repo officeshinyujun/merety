@@ -1,9 +1,11 @@
-import styles from "./page.module.css";
+import { HStack } from "@/components/general/HStack";
+import s from "./page.module.scss";
+import Sidebar from "@/components/general/Sidebar";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-
-    </div>
+    <HStack className={s.container}>
+      <Sidebar />
+    </HStack>
   );
 }
