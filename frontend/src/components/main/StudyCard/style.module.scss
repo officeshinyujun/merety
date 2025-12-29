@@ -1,0 +1,41 @@
+.container{
+    width: 300px;
+    padding: $s-16;
+    position: relative;
+    border-radius: $s-16;
+    border: 1px solid ;
+}
+
+.title{
+    width: 100%;
+    p{
+        font-size: $f-md;
+        color: $text-primary;
+        font-weight: $medium;
+    }
+}
+
+.slug {
+    font-size: $f-xs;
+    color: $text-secondary;
+    font-weight: $medium;
+}
+
+.profileImage {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $border-primary;
+    margin-right: -15px;
+}
+
+.participantCount {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid $border-primary;
+    color: $text-primary;
+    font-size: $f-xs;
+    font-weight: $medium;
+    background-color: $text-secondary;
+}
+

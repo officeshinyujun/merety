@@ -3,9 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   sassOptions: {
   additionalData: `
-    @use "@/styles/COLORS.scss" as *;
-    @use "@/styles/FONTS.scss" as *;
-    @use "@/styles/SPACING.scss" as *;
+    @use "@/constants/COLORS.scss" as *;
+    @use "@/constants/FONTS.scss" as *;
+    @use "@/constants/SPACING.scss" as *;
   `,
 },
 

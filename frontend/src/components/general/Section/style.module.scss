@@ -1,0 +1,20 @@
+.container{
+    padding: $s-12;
+}
+
+.header{
+    h2{
+        color: $text-primary;
+        font-size: $f-xl;
+        font-weight: $semi-bold;
+    }
+    a{
+        color: $text-secondary;
+        font-size: $f-md;
+        font-weight: $medium;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
