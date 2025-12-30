@@ -1,0 +1,12 @@
+.container{
+    width: 100%;
+    border:  1px solid $border-primary;
+    background-color: $background-third;
+    padding: $s-16;
+    border-radius: $s-12;
+    span{
+        font-size: $f-md;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+}

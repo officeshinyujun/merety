@@ -14,3 +14,43 @@
         color: $text-primary;
     }
 }
+
+.tilSection{
+    width: 100%;
+    
+}
+
+.middleSection{
+    width: 100%;
+    padding: $s-12;
+}
+
+.recentTils {
+    p{
+        font-size: $f-md;
+        color: $text-primary;
+        font-weight: $medium;
+    }
+    span{
+        font-size: $f-xs;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+}
+
+.tilStats {
+    p{
+        font-size: $f-md;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+    h3{
+        font-size: $f-lg;
+        color: $text-primary;
+        font-weight: $medium;
+    }
+}
+
+.recentSection{
+    width: 100%;
+}
