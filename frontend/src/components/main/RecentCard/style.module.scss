@@ -1,3 +1,21 @@
 .container{
-    
+    padding: $s-16;
+    height: 100%;
+    width: 100%;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    span{
+        color: $text-secondary;
+        font-size: $f-xs;
+        font-weight: $medium;
+    }
+}
+
+.recentItem{
+    p{
+        color: $text-primary;
+        font-size: $f-md;
+        font-weight: $medium;
+    }
 }

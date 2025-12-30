@@ -7,6 +7,7 @@ import GlobeImage from "../../public/globe.svg"
 import StudyCard from "@/components/main/StudyCard";
 import { ShieldAlert, CodeXml } from "lucide-react";
 import TILCard from "@/components/main/TILCard";
+import RecentCard from "@/components/main/RecentCard";
 
 const StudyDummyData = {
   studies: [
@@ -65,6 +66,11 @@ const RecentDummyData = {
       id: 2,
       title: "Joined study group",
       time: "1 day ago"
+    },
+    {
+      id: 3,
+      title: "Updated profile",
+      time: "3 days ago"
     }
   ]
 };
@@ -106,8 +112,10 @@ export default function Home() {
               ))}
           </Section>
           <Section title="최근 활동" className={s.recentSection}>
-            <p>Activity content will go here</p>
-          </Section>
+            {RecentDummyData.activities.map((activity) => (
+              <RecentCard key={activity.id} title={activity.title} time={activity.time} />
+            ))}
+          </Section>  
         </HStack>
       </VStack>
     </HStack>
