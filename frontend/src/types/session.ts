@@ -10,4 +10,6 @@ export interface Session {
   created_by: UUID; // user_id
   created_at: Timestamp;
   updated_at: Timestamp;
+  data?: Record<string, unknown>;
+  
 }
