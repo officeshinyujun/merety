@@ -1,0 +1,19 @@
+.container{
+    padding: $s-12;
+}
+
+.title{
+    font-size: 36px;
+    font-weight: $bold;
+    color: $text-primary;
+}
+
+.statusContainer {
+    background-color: $background-third;
+    padding: $s-8 $s-12;
+    border-radius: $s-16;
+    color: $text-primary;
+    font-size: $f-sm;
+    font-weight: $medium;
+    
+}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface StudyCardProps {
+  id: number | string;
   title: string;
   slug: string;
   icon: React.ReactNode;
@@ -17,12 +18,12 @@ interface StudyCardProps {
   color?: 'red' | 'green';
 }
 
-export default function StudyCard({ title, slug, isAdmin = false, people, color = 'red', icon }: StudyCardProps) {
+export default function StudyCard({ id, title, slug, isAdmin = false, people, color = 'red', icon }: StudyCardProps) {
     const colorStyle = STUDY_CARD_COLORS[color];
     return (
-        <Link href={`/study/${slug}`} style={{ textDecoration: 'none' }}>
+        <Link href={`/study/${id}`} style={{ textDecoration: 'none' }}>
             <VStack 
-                style={{ backgroundColor: colorStyle.background, borderColor: isAdmin ? '#fdfdfe' : colorStyle.border }} 
+                style={{ backgroundColor: colorStyle.background, borderColor: isAdmin ? '#fdfdfe' : colorStyle.border }}  
                 className={s.container}
                 align="start"
                 justify="start"

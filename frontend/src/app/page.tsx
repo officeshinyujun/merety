@@ -13,7 +13,7 @@ import Calendar from "@/components/main/Calendar";
 const StudyDummyData = {
   studies: [
     {
-      id: 1, 
+      id: 'study-1', 
       title: "Sample Study", 
       slug: "sample-study", 
       people: { count: 5, profileImage: [GlobeImage, GlobeImage] },
@@ -21,7 +21,7 @@ const StudyDummyData = {
       icon : <ShieldAlert size={20} color="#fdfdfe" strokeWidth={1.5} />
     },
     { 
-      id: 2, 
+      id: 'study-2', 
       title: "Another Study", 
       slug: "another-study", 
       people: { count: 3, profileImage: [GlobeImage, GlobeImage, GlobeImage, GlobeImage] } ,
@@ -76,14 +76,6 @@ const RecentDummyData = {
   ]
 };
 
-const CalendarDummyData = [
-  { title: 'Project Kickoff', date: '2025-12-01', color: '#FF5733' },
-  { title: 'Dev Meeting', date: '2025-12-05', color: '#33FF57' },
-  { title: 'Code Review', date: '2025-12-10', color: '#3357FF' },
-  { title: 'Deployment', date: '2025-12-20', color: '#F333FF' },
-  { title: 'Christmas Party', date: '2025-12-25', color: '#FF3333' },
-];
-
 export default function Home() {
   return (
     <HStack className={s.container}>
@@ -95,6 +87,7 @@ export default function Home() {
             {StudyDummyData.studies.map((study) => (
               <StudyCard 
                 key={study.id} 
+                id={study.id}
                 title={study.title} 
                 slug={study.slug} 
                 icon={study.icon} 
@@ -127,7 +120,7 @@ export default function Home() {
           </Section>  
         </HStack>
         <Section title="일정" className={s.calendar}>
-          <Calendar events={CalendarDummyData}/>
+          <Calendar events={[]} />
         </Section>
       </VStack>
     </HStack>

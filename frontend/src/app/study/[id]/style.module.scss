@@ -3,3 +3,12 @@
     height: 100vh;
     background-color: $background-secondary;
 }
+
+.overviewSection {
+    width: 100%;
+    p{
+        font-size: $f-md;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+}

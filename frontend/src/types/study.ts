@@ -19,6 +19,7 @@ export interface Study {
   created_by: UUID; // user_id
   created_at: Timestamp;
   updated_at: Timestamp;
+  overview: StudyOverview;
 }
 
 export enum StudyMemberRole {
@@ -35,8 +36,6 @@ export interface StudyMembership {
 }
 
 export interface StudyOverview {
-  study_id: UUID;
-  content_md: string;
-  updated_by: UUID; // user_id
-  updated_at: Timestamp;
+  description: string;
+  manager_list: UUID[];
 }

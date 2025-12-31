@@ -1,4 +1,5 @@
-{
+[
+  {
     "id" : "study-1",
     "name" : "Red Team Study",
     "type" : "RED",
@@ -123,4 +124,71 @@
             "is_deleted" : false
         }
     ]
-}
+  },
+  {
+    "id" : "study-2",
+    "name" : "Web Team Study",
+    "type" : "WEB",
+    "slug" : "web팀의 스터디입니다.",
+    "status" : "active",
+    "created_by" : "user-3",
+    "created_at" : "2024-02-01T00:00:00Z",
+    "updated_at" : "2024-02-01T00:00:00Z",
+    "overView" : {
+        "description": "WEB 스터디의 개요입니다.",
+        "manager_list" : ["user-3", "user-4"]
+    },
+    "sessions" : [{
+        "id" : "session-3",
+        "study_id" : "study-2",
+        "session_no" : 1,
+        "title" : "오리엔테이션",
+        "scheduled_at" : "2024-02-15T14:00:00Z",
+        "content_md" : "# 오리엔테이션\n\n스터디 진행 방식 소개",
+        "created_by" : "user-3",
+        "created_at" : "2024-02-01T00:00:00Z",
+        "updated_at" : "2024-02-01T00:00:00Z",
+        "data" : {
+            "materials": ["소개자료"]
+        }
+    }],
+    "Members": [
+        {
+            "user": {
+                "id": "user-3",
+                "email": "user3@example.com",
+                "password_hash": "$2b$10$examplehash3",
+                "name": "사용자3",
+                "handle": "user3",
+                "role": "LEADER",
+                "status": "active",
+                "must_change_password": false,
+                "created_at": "2024-02-01T00:00:00Z",
+                "updated_at": "2024-02-01T00:00:00Z",
+                "last_login_at": null
+            },
+            "joined_at": "2024-02-01T00:00:00Z",
+            "role": "LEADER"
+        },
+        {
+            "user": {
+                "id": "user-4",
+                "email": "user4@example.com",
+                "password_hash": "$2b$10$examplehash4",
+                "name": "사용자4",
+                "handle": "user4",
+                "role": "MEMBER",
+                "status": "active",
+                "must_change_password": false,
+                "created_at": "2024-02-01T00:00:00Z",
+                "updated_at": "2024-02-01T00:00:00Z",
+                "last_login_at": null
+            },
+            "joined_at": "2024-02-01T00:00:00Z",
+            "role": "MEMBER"
+        }
+    ],
+    "WIL" : [],
+    "Archive": []
+  }
+]
