@@ -8,6 +8,7 @@ import StudyCard from "@/components/main/StudyCard";
 import { ShieldAlert, CodeXml } from "lucide-react";
 import TILCard from "@/components/main/TILCard";
 import RecentCard from "@/components/main/RecentCard";
+import Calendar from "@/components/main/Calendar";
 
 const StudyDummyData = {
   studies: [
@@ -75,6 +76,14 @@ const RecentDummyData = {
   ]
 };
 
+const CalendarDummyData = [
+  { title: 'Project Kickoff', date: '2025-12-01', color: '#FF5733' },
+  { title: 'Dev Meeting', date: '2025-12-05', color: '#33FF57' },
+  { title: 'Code Review', date: '2025-12-10', color: '#3357FF' },
+  { title: 'Deployment', date: '2025-12-20', color: '#F333FF' },
+  { title: 'Christmas Party', date: '2025-12-25', color: '#FF3333' },
+];
+
 export default function Home() {
   return (
     <HStack className={s.container}>
@@ -117,6 +126,9 @@ export default function Home() {
             ))}
           </Section>  
         </HStack>
+        <Section title="일정" className={s.calendar}>
+          <Calendar events={CalendarDummyData}/>
+        </Section>
       </VStack>
     </HStack>
   );
