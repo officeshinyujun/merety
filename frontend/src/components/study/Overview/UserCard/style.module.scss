@@ -1,0 +1,25 @@
+.container{
+    padding: $s-12 $s-16;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-12;
+}
+
+.profileImage{
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+}
+
+.userDetails {
+    h1{
+        font-size: $f-md;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+    p{
+        font-size: $f-xs;
+        font-weight: $regular;
+        color: $text-secondary;
+    }
+}

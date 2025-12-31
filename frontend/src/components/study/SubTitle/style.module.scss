@@ -1,0 +1,20 @@
+.container{
+    padding: 12px;
+}
+
+.leftContent {
+    p{
+        font-size: 36px;
+        color: $text-primary;
+        font-weight: $bold;
+    }
+}
+
+.handleButton {
+    background-color: $text-primary;
+    padding: $s-12 $s-24;
+    font-size: $f-md;
+    color: $background-primary;
+    font-weight: $semi-bold;
+}
+
