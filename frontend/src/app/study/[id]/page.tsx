@@ -17,6 +17,9 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
             <Section title="Overview" className={s.overviewSection} viewMoreHref={`/study/${id}/overview`}>
                 <p>{study.slug}</p>
             </Section>
+            <Section title="Sessions" className={s.sessionsSection} viewMoreHref={`/study/${id}/sessions`}>
+                <p>ss</p>
+            </Section>
         </VStack>
     );
 }

@@ -1,0 +1,12 @@
+.container{
+    width: 100%;
+    padding: $s-16;
+    border-radius: $s-12;
+    border: 1px solid $border-primary;
+    background-color: $background-third;
+    h2{
+        font-size: 18px;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+}
