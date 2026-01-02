@@ -1,3 +1,4 @@
+
 import s from './style.module.scss';
 import type { StudyOverview } from '@/types/study';
 import dummyStudyData from "@/data/dummyStudyData.json";
@@ -6,6 +7,7 @@ import SubTitle from '@/components/study/SubTitle';
 import Section from '@/components/general/Section';
 import { HStack } from '@/components/general/HStack';
 import UserCard from '@/components/study/Overview/UserCard';
+import MdEditor from '@/components/general/MdEditor';
 
 export default async function StudyOverview({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -14,7 +16,7 @@ export default async function StudyOverview({ params }: { params: Promise<{ id: 
         return <div>Study not found</div>;
     }
     return (
-        <VStack className={s.container}>
+        <VStack className={s.container} gap={12} align='start' justify='start' fullWidth>
             <SubTitle text="Overview" />
             <Section title="manager" className={s.managerSection}>
                 <HStack align='center' justify='start' gap={12} className={s.managerContainer}>
@@ -27,6 +29,9 @@ export default async function StudyOverview({ params }: { params: Promise<{ id: 
                         />
                     ))}
                 </HStack>
+            </Section>
+            <Section title='rules' className={s.rulesSection}>
+                <MdEditor/>
             </Section>
         </VStack>
     );
