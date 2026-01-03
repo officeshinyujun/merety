@@ -7,6 +7,7 @@ import Section from '@/components/general/Section';
 
 export default async function StudyDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
+    //test
     const study = dummyStudyData.find(s => s.id === id);
     if (!study) {
         return <div>Study not found</div>;
