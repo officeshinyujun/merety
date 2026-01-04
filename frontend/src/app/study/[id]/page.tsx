@@ -4,6 +4,8 @@ import { VStack } from '@/components/general/VStack';
 import Title from '@/components/study/Title';
 import { StudyStatus, StudyType } from '@/types/study';
 import Section from '@/components/general/Section';
+import { HStack } from '@/components/general/HStack';
+import SessionCard from '@/components/study/Session/SessionCard';
 
 export default async function StudyDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -19,7 +21,23 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
                 <p>{study.slug}</p>
             </Section>
             <Section title="Sessions" className={s.sessionsSection} viewMoreHref={`/study/${id}/sessions`}>
-                <p>ss</p>
+                <HStack fullWidth gap={12} className={s.sessionList}>
+                    <SessionCard 
+                        title="First Session" 
+                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
+                        createdAt="2025-01-01" 
+                    />
+                     <SessionCard 
+                        title="First Session" 
+                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
+                        createdAt="2025-01-01" 
+                    />
+                     <SessionCard 
+                        title="First Session" 
+                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
+                        createdAt="2025-01-01" 
+                    />
+                </HStack>
             </Section>
         </VStack>
     );

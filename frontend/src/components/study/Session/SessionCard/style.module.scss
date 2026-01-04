@@ -9,4 +9,14 @@
         font-weight: $semi-bold;
         color: $text-primary;
     }
+    p{
+        font-size: $f-xs;
+        color: $text-secondary;
+        font-weight: $regular;
+    }
+    span{
+        font-size: $f-xs;
+        color: $text-secondary;
+        font-weight: $regular;
+    }
 }
