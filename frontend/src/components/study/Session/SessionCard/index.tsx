@@ -19,7 +19,7 @@ export default function SessionCard({ title, user, createdAt }: SessionCardProps
         <VStack className={s.container} align='start' justify='start' gap={12}>
             <h2>{title}</h2>
             <HStack align='center' justify='start' gap={8}>
-                <Image src={user.profileImage} alt={user.name} width={20} height={20} />
+                <Image src={user.profileImage} alt={user.name} width={20} height={20} style={{borderRadius : "999px"}} />
                 <p>{user.name}</p>
             </HStack>
             <HStack align='center' justify='start' gap={8} >

@@ -1,0 +1,40 @@
+.checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    
+    width: 20px;
+    height: 20px;
+    border: 1px solid $border-primary;
+    border-radius: 4px;
+    background-color: $background-third;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+
+    &:checked {
+        background-color: $text-primary;
+        border-color: $text-primary;
+        
+        &::after {
+            content: '';
+            width: 10px;
+            height: 6px;
+            border-left: 2px solid $background-primary;
+            border-bottom: 2px solid $background-primary;
+            transform: rotate(-45deg);
+            margin-bottom: 3px; 
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+        border-color: $text-secondary;
+    }
+}

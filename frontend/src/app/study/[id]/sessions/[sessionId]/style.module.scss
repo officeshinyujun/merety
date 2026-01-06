@@ -1,0 +1,47 @@
+.container{
+    width: 100%;
+    padding: 48px 128px;
+}
+
+.titleSection{
+    padding: 0 $s-16;
+    font-size: $f-sm;
+    color: $text-secondary;
+    
+}
+
+.contentsSection{
+    padding: $s-16;
+    height: 300px;
+}
+
+.contentMdSection{
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+}
+
+.contentMdViewer{
+    height: 100% !important;
+    border: none;
+}
+
+.contentsDataSection{
+    width: 300px;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    padding: $s-16;
+    p{
+        color: $text-primary;
+        font-size: $f-lg;
+        font-weight: $semi-bold;
+    }
+}
+
+.studentsSection{
+    padding: $s-16;
+    h3{
+        color: $text-primary;
+        font-size: $f-lg;
+        font-weight: $semi-bold;
+    }
+}

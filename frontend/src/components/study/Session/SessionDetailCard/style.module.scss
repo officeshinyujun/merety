@@ -1,0 +1,36 @@
+.container {
+    padding: $s-16;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-12;
+    color: $text-primary;
+}
+
+.headerContainer{
+    div{
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        background-color: $text-primary;
+        color: $background-primary;
+        font-size: $f-xs;
+        font-weight: $medium;
+    }
+}
+
+.archivedTitle {
+    color: $text-secondary;
+}
+
+.contents{
+    img{
+        border-radius: 100%;
+        object-fit: cover;
+    }
+    p{
+        color: $text-secondary;
+        font-size: $f-sm;
+        font-weight: $medium;
+    }
+}

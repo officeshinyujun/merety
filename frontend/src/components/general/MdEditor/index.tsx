@@ -13,9 +13,11 @@ import { useEffect } from "react";
 
 interface Props {
   isEdit?: boolean;
+  contents?: string;
+  className?: string;
 }
 
-export default function MdEditor ({ isEdit = true }: Props) {
+export default function MdEditor ({ isEdit = true, contents, className }: Props) {
     const [text, setText] = useState("Hello World!");
   const editor = useEditor({
     extensions: [
@@ -25,12 +27,12 @@ export default function MdEditor ({ isEdit = true }: Props) {
       }),
       Markdown,
     ],
-    content: text,
+    content: contents || text,
     immediatelyRender: false,
     editable: isEdit,
     editorProps: {
       attributes: {
-        class: s.editor,
+        class: s.editor
       },
     },
     onUpdate({ editor }) {
@@ -49,7 +51,7 @@ export default function MdEditor ({ isEdit = true }: Props) {
   }
 
     return (
-        <VStack className={s.container}>
+        <VStack className={s.container + ' ' + className}>
             {isEdit && (
                 <HStack className={s.toolbar}>
                     <Button 

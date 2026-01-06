@@ -1,0 +1,16 @@
+.image{
+    border-radius: 100%;
+}
+.contents{
+    
+    p{
+        font-size: $f-md;
+        color: $text-primary;
+        font-weight: $medium;
+    }
+    span{
+        font-size: $f-xs;
+        color: $text-secondary;
+        font-weight: $regular;
+    }
+}

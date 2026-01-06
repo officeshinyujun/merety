@@ -27,12 +27,17 @@
         "id" : "session-1",
         "study_id" : "study-1",
         "session_no" : 1,
+        "round" : 1,
         "title" : "1차 세션",
-        "scheduled_at" : "2024-01-15T10:00:00Z",
+        "status" : "active",
+        "createUser" : {
+            "name" : "user-1",
+            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        },
+        "scheduled_at" : "2024-01-15",
         "content_md" : "# 1차 세션 내용\n\n세션 개요입니다.",
-        "created_by" : "user-1",
-        "created_at" : "2024-01-01T00:00:00Z",
-        "updated_at" : "2024-01-01T00:00:00Z",
+        "created_at" : "2024-01-01",
+        "updated_at" : "2024-01-01",
         "data" : {
             "materials": ["자료1", "자료2"]
         }
@@ -41,12 +46,17 @@
         "id" : "session-2",
         "study_id" : "study-1",
         "session_no" : 2,
+        "round" : 2,
         "title" : "2차 세션",
-        "scheduled_at" : "2024-01-22T10:00:00Z",
+        "status" : "archived",
+        "createUser" : {
+            "name" : "user-1",
+            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        },
+        "scheduled_at" : "2024-01-22",
         "content_md" : "# 2차 세션 내용\n\n세션 개요입니다.",
-        "created_by" : "user-1",
-        "created_at" : "2024-01-01T00:00:00Z",
-        "updated_at" : "2024-01-01T00:00:00Z",
+        "created_at" : "2024-01-01",
+        "updated_at" : "2024-01-01",
         "data" : {
             "materials": ["자료3", "자료4"]
         }
@@ -164,10 +174,14 @@
         "id" : "session-3",
         "study_id" : "study-2",
         "session_no" : 1,
+        "round" : 1,
         "title" : "오리엔테이션",
         "scheduled_at" : "2024-02-15T14:00:00Z",
         "content_md" : "# 오리엔테이션\n\n스터디 진행 방식 소개",
-        "created_by" : "user-3",
+        "createUser" : {
+            "name" : "user-3",
+            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        },
         "created_at" : "2024-02-01T00:00:00Z",
         "updated_at" : "2024-02-01T00:00:00Z",
         "data" : {

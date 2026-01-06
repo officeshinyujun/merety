@@ -14,6 +14,8 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
     if (!study) {
         return <div>Study not found</div>;
     }
+
+    const sessions = study.sessions || [];
     return (
         <VStack align='start' justify='start' fullWidth fullHeight gap={16} style={{padding : "48px 128px"}}>
             <Title text={study.name} isArchived={study.status as StudyStatus} type={study.type as StudyType} />
@@ -22,21 +24,14 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
             </Section>
             <Section title="Sessions" className={s.sessionsSection} viewMoreHref={`/study/${id}/sessions`}>
                 <HStack fullWidth gap={12} className={s.sessionList}>
-                    <SessionCard 
-                        title="First Session" 
-                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
-                        createdAt="2025-01-01" 
-                    />
-                     <SessionCard 
-                        title="First Session" 
-                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
-                        createdAt="2025-01-01" 
-                    />
-                     <SessionCard 
-                        title="First Session" 
-                        user={{ profileImage: "https://avatars.githubusercontent.com/u/85398698?v=4", name: "John Doe" }} 
-                        createdAt="2025-01-01" 
-                    />
+                    {sessions.map((session: any) => (
+                        <SessionCard 
+                            key={session.id}
+                            title={session.title}
+                            user={{ name: session.createUser.name, profileImage: session.createUser.userImage }}
+                            createdAt={session.created_at}
+                        />
+                    ))}
                 </HStack>
             </Section>
         </VStack>
