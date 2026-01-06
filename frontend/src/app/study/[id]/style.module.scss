@@ -20,3 +20,19 @@
 .sessionList{
     padding: $s-12;
 }
+
+.membersList{
+    padding: $s-12;
+    p{
+        font-size: $f-md;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+}
+
+.memberCard{
+    background-color: $background-third;
+    border-radius: $s-12;
+    border: 1px solid $border-primary;
+    padding: $s-16 $s-12;
+}

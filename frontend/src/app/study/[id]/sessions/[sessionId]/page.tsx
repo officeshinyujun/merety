@@ -48,6 +48,8 @@ export default async function SessionDetailPage({ params }: { params: Promise<{ 
             <VStack align='start' justify='start' fullWidth gap={12} className={s.studentsSection}>
                 <h3>출석체크</h3>
                 <SessionUserCard user={dummyUserData}/>
+                <SessionUserCard user={dummyUserData}/>
+                <SessionUserCard user={dummyUserData}/>
             </VStack>
         </VStack>
     );
