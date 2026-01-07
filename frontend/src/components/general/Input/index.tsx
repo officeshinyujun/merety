@@ -8,6 +8,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     width?: string;
     height?: string;
     value?: string;
+    icon?: React.ReactNode;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,6 +18,7 @@ export default function Input(props: Props) {
         width = '100%', 
         height = '40px',
         type: propType = 'text',
+        icon,
         ...rest 
     } = props;
     
@@ -29,10 +31,10 @@ export default function Input(props: Props) {
                 style={{
                     width: '100%',
                     height: height,
-                    padding: `0 ${isPassword ? '40px 0 10px' : '10px'}`,
+                    padding: `0 ${icon ? '40px' : isPassword ? '40px' : '10px'} 0 10px`,
                     boxSizing: 'border-box',
                     borderRadius: '16px',
-                    color: '#959595',
+                    color: '#fdfdfe',
                     border: '1px solid #474747',
                     background: '#26282B',
                     outline: 'none',
@@ -42,6 +44,20 @@ export default function Input(props: Props) {
                 type={inputType}
                 {...rest}
             />
+            {icon && (
+                <div style={{
+                    position: 'absolute',
+                    right: '12px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    pointerEvents: 'none'
+                }}>
+                    {icon}
+                </div>
+            )}
             {isPassword && (
                 <button
                     type="button"
@@ -54,7 +70,7 @@ export default function Input(props: Props) {
                         background: 'none',
                         border: 'none',
                         cursor: 'pointer',
-                        color: '#B4B4B5',
+                        color: '#fdfdfe',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -69,6 +85,7 @@ export default function Input(props: Props) {
                     )}
                 </button>
             )}
+            
         </div>
     )
 }

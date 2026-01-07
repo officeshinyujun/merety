@@ -8,9 +8,16 @@ interface PaginationBarProps {
     itemsPerPage: number;
     currentPage: number;
     onPageChange: (page: number) => void;
+    maxVisiblePages?: number;
 }
 
-export default function PagenationBar({ totalItems, itemsPerPage, currentPage, onPageChange }: PaginationBarProps) {
+export default function PagenationBar({ 
+    totalItems, 
+    itemsPerPage, 
+    currentPage, 
+    onPageChange,
+    maxVisiblePages = 5 
+}: PaginationBarProps) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const handlePageChange = (page: number) => {
@@ -21,7 +28,10 @@ export default function PagenationBar({ totalItems, itemsPerPage, currentPage, o
 
     const renderPageNumbers = () => {
         const pages = [];
-        for (let i = 1; i <= totalPages; i++) {
+        const startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+        const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+
+        for (let i = startPage; i <= endPage; i++) {
             pages.push(
                 <p 
                     key={i} 

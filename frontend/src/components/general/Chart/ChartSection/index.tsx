@@ -3,6 +3,7 @@ import s from "./style.module.scss";
 import Divider from "../../Divider";
 import { HStack } from "../../HStack";
 import Image from "next/image";
+import React, { Fragment } from "react";
 
 interface ChartChildrenType {
     title?: string;
@@ -31,8 +32,8 @@ export default function ChartSection({ title, children, width, height }: ChartSe
                         <VStack key={index} align="start" justify="start" fullWidth gap={4} > 
                             <HStack className={s.card} fullWidth align="center" justify="start" gap={12} style={{height:"64px"}}>
                                 {child.image && <Image width={40} height={40} src={child.image} alt={child.text || child.title || ""} style={{borderRadius: "100%"}} />}
-                                {child.icon && child.icon.map((icon) => (
-                                    icon
+                                {child.icon && child.icon.map((icon, i) => (
+                                    <Fragment key={i}>{icon}</Fragment>
                                 ))}
                                 {child.title && <h3>{child.title}</h3>}
                                 {child.text && <p>{child.text}</p>}

@@ -1,0 +1,14 @@
+.container{
+    padding: $s-12 $s-20;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    p{
+        font-size: $f-sm;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+}
+
+.active { 
+    background-color: $background-third;
+}

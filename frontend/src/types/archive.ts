@@ -24,4 +24,6 @@ export interface Archive {
   category: ArchiveCategory;
   created_at: Timestamp;
   is_deleted: boolean;
+  download_url?: string;
+  preview_url?: string;
 }
