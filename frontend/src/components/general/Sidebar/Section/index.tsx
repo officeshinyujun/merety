@@ -4,6 +4,7 @@ import { HStack } from '../../HStack';
 import { VStack } from '../../VStack';
 import s from './style.module.scss';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface SidebarSectionItem {
     icon: React.ReactNode;
@@ -18,11 +19,20 @@ interface SidebarSectionProps {
 
 export default function SidebarSection({ title, contents }: SidebarSectionProps) {
     const router = useRouter();
+    const routerPath = usePathname();
+    
     return (
         <VStack gap={8} align='start' justify='start' className={s.container} >
             <h1>{title}</h1>
             {contents.map((item, index) => (
-                <HStack fullWidth align='center' justify='start' key={index} className={s.card} gap={8} onClick={() => router.push(item.href)}>
+                <HStack 
+                fullWidth 
+                align='center' 
+                justify='start' 
+                key={index} 
+                className={s.card + (routerPath === item.href ? ' ' + s.active : '')} 
+                gap={8} 
+                onClick={() => router.push(item.href)}>
                     {item.icon}
                     <p>{item.label}</p>
                 </HStack>

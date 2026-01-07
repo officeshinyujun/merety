@@ -9,10 +9,18 @@
 
 .card {
     padding: $s-8 $s-12;
+    border-radius: $s-16;
     p{
         font-size: $f-xs;
         font-weight: $medium;
         color: $text-secondary;
+    }
+}
+
+.active {
+    background-color: $background-secondary;
+    p{
+        color: $text-primary !important;
     }
 }
 

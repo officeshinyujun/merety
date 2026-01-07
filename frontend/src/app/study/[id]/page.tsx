@@ -7,6 +7,7 @@ import Section from '@/components/general/Section';
 import { HStack } from '@/components/general/HStack';
 import SessionCard from '@/components/study/Session/SessionCard';
 import UserCard from '@/components/general/UserCard';
+import MainCArchivesCard from '@/components/study/Archives/MainCard';
 
 export default async function StudyDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -18,6 +19,7 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
 
     const sessions = study.sessions || [];
     const members = study.Members || [];
+    const archives = study.Archive || [];
     return (
         <VStack align='start' justify='start' fullWidth fullHeight gap={16} style={{padding : "48px 128px"}}>
             <Title text={study.name} isArchived={study.status as StudyStatus} type={study.type as StudyType} />
@@ -51,9 +53,17 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
                             </HStack>
                         ))
                     }
-                    <p>+{members.length > 2 ? `${members.length - 2}` : ''}명</p>
+                    {members.length > 2 && <p className={s.moreCount}>+{members.length - 2}명</p>}
                 </HStack>
             </Section>
+            <Section title='Archives' viewMoreHref={`/study/${id}/archives`}>
+                <HStack align='center' justify='start' gap={12} fullWidth style={{padding:16}} >
+                    {archives.slice(0, 3).map((item, id) => (
+                        <MainCArchivesCard key={id} type={item.category as 'DOC' | 'SLIDE' | 'CODE' | 'LINK' | 'ETC'} title={item.title} />
+                    ))}
+                    {archives.length > 3 && <p className={s.moreCount}>+{archives.length - 3}개</p>}
+                </HStack>
+            </Section>  
         </VStack>
     );
 }

@@ -1,0 +1,14 @@
+.container{
+    padding: $s-12 $s-16;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-8;
+    p{
+        font-size: $f-md;
+        color: $text-primary;
+        font-weight: $regular;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

@@ -8,18 +8,31 @@ import { HStack } from '../HStack';
 import Image from 'next/image';
 import LogoImage from '../../../../public/404Bnf_Logo.png'
 import {useRouter} from 'next/navigation'
+import { useState } from 'react';
+import {usePathname} from 'next/navigation'
 
-const sidebarSections = [
+
+const userInfo = {
+    name : "석주",
+    role : "Admin"
+}
+
+export default function Sidebar() {
+    const router = useRouter();
+    const pathname = usePathname(); 
+    const [iconColor, setIconColor] = useState("#959595");  
+    
+    const sidebarSections = [
     {
         title: 'Study',
         contents: [
             {
-                icon: <ShieldAlert size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <ShieldAlert size={16} color={pathname === '/study/study-1' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Red team study',
                 href : '/study/study-1'
             },
             {
-                icon: <CodeXml size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <CodeXml size={16} color={pathname === '/study/study-2' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Web study',
                 href : '/study/study-2'
             }
@@ -29,26 +42,26 @@ const sidebarSections = [
         title: 'Team',
         contents: [
             {
-                icon: <Bell size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <Bell size={16} color={pathname === '/notice' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Notice',
             },
             {
-                icon: <User size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <User size={16} color={pathname === '/members' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Members',
             },
             
             {
-                icon: <ChartPie size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <ChartPie size={16} color={pathname === '/roles' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Roles',
             },
             
             {
-                icon: <Cog size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <Cog size={16} color={pathname === '/contribution' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Contribution',
             },
             
             {
-                icon: <Pencil size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <Pencil size={16} color={pathname === '/til' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'TIL',
             },
         ]
@@ -57,33 +70,25 @@ const sidebarSections = [
         title: 'Admin',
         contents: [
             {
-                icon: <UserCog size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <UserCog size={16} color={pathname === '/user-management' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'User Management',
             },
             
             {
-                icon: <Book size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <Book size={16} color={pathname === '/study-management' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Study Management',
             },
             {
-                icon: <Cog size={16} color="#959595" strokeWidth={1.5} />,
+                icon: <Cog size={16} color={pathname === '/metrics' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Metrics',
             }
         ]
     }
 ]
 
-const userInfo = {
-    name : "석주",
-    role : "Admin"
-}
-
-export default function Sidebar() {
-    const router = useRouter();
-    
     return (
         <VStack className={s.container} align='start' justify='between'>
-            <VStack className={s.contents} gap={14} align='start' justify='start'>
+            <VStack className={s.contents} gap={14} align='start' justify='start' fullWidth>
                 <Image src={LogoImage} alt="logo" width={71} onClick={() => router.push('/')} />
                 {sidebarSections.map((section, index) => (
                     //@ts-ignore
