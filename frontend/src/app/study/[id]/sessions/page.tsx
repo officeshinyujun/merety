@@ -5,8 +5,10 @@ import Divider from "@/components/general/Divider";
 import SessionDetailCard from "@/components/study/Session/SessionDetailCard";
 import dummyStudyData from "@/data/dummyStudyData.json";
 
-export default function StudySessionPage() {
-    const DummySession = dummyStudyData[0].sessions
+export default async function StudySessionPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const study = dummyStudyData.find(s => s.id === id);
+    const DummySession = study ? study.sessions : [];
     
     console.log('All sessions:', DummySession);
 

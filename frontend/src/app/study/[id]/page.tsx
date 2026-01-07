@@ -8,6 +8,7 @@ import { HStack } from '@/components/general/HStack';
 import SessionCard from '@/components/study/Session/SessionCard';
 import UserCard from '@/components/general/UserCard';
 import MainCArchivesCard from '@/components/study/Archives/MainCard';
+import WILCard from '@/components/study/WIL/WILCard';
 
 export default async function StudyDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -20,8 +21,9 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
     const sessions = study.sessions || [];
     const members = study.Members || [];
     const archives = study.Archive || [];
+    const wil = study.WIL || [];
     return (
-        <VStack align='start' justify='start' fullWidth fullHeight gap={16} style={{padding : "48px 128px"}}>
+        <VStack align='start' justify='start' fullWidth fullHeight gap={16} style={{padding : "48px 128px"}} className={s.container}>
             <Title text={study.name} isArchived={study.status as StudyStatus} type={study.type as StudyType} />
             <Section title="Overview" className={s.overviewSection} viewMoreHref={`/study/${id}/overview`}>
                 <p>{study.slug}</p>
@@ -37,6 +39,14 @@ export default async function StudyDetail({ params }: { params: Promise<{ id: st
                         />
                     ))}
                 </HStack>
+            </Section>
+            <Section title="WIL" className={s.wilSection} viewMoreHref={`/study/${id}/wil`} >
+                <VStack fullWidth align='start' justify='start' gap={12} className={s.wilList}>
+                    {wil.slice(0, 3).map((wil: any, id) => (
+                        <WILCard key={id} title={wil.title} user={wil.createUser} />
+                    ))}
+                    {wil.length > 3 && <p className={s.moreCount}>+{wil.length - 3}개</p>}
+                </VStack>
             </Section>
             <Section title='Members' viewMoreHref={`/study/${id}/members`}>
                 <HStack fullWidth align='center' justify='start' gap={12} className={s.membersList}>

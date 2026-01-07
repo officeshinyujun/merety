@@ -1,7 +1,7 @@
 .container{
-    width: 100vw;
-    height: 100vh;
+    overflow-y: scroll;
     background-color: $background-secondary;
+    scrollbar-width: none;
 }
 
 .overviewSection {
@@ -37,4 +37,12 @@
         font-weight: $medium;
         color: $text-primary;
     
+}
+
+.wilSection{
+    width: 100%;
+}
+
+.wilList{
+    padding: $s-12;
 }

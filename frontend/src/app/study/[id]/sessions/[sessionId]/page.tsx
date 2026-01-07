@@ -8,10 +8,11 @@ import MdEditor from '@/components/general/MdEditor';
 import SessionDataCard from '@/components/study/Session/SessionDataCard';
 import SessionUserCard from '@/components/study/Session/SessionUserCard';
 
-export default async function SessionDetailPage({ params }: { params: Promise<{ sessionId: string }> }) {
-    const { sessionId } = await params;
+export default async function SessionDetailPage({ params }: { params: Promise<{ id: string, sessionId: string }> }) {
+    const { id, sessionId } = await params;
     
-    const DummySession = dummyStudyData[0].sessions;
+    const study = dummyStudyData.find(s => s.id === id);
+    const DummySession = study ? study.sessions : [];
     const session = DummySession.find(s => s.id === sessionId);
 
     if (!session) {

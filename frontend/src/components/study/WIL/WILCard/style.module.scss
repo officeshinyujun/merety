@@ -1,0 +1,19 @@
+.container{
+    padding: $s-16;
+    border: 1px solid $border-primary;
+    border-radius: $s-12;
+    background-color: $background-third;
+    h3{
+        font-size: 18px;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+}
+
+.contents{
+    p{
+        font-size: $f-xs;
+        font-weight: $regular;
+        color: $text-secondary;
+    }
+}

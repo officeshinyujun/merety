@@ -1,0 +1,15 @@
+.container{
+    padding: $s-pagePadding;
+}
+
+.contents{
+    padding: $s-16;
+}
+
+.dateSelect{
+    p{
+        font-size: $f-md;
+        color: $text-primary;
+        font-weight: $regular;
+    }
+}

@@ -1,892 +1,1243 @@
 [
   {
-    "id" : "study-1",
-    "name" : "Red Team Study",
-    "type" : "RED",
-    "slug" : "red팀의 스터디입니다.",
-    "status" : "active",
-    "created_by" : "user-1",
-    "created_at" : "2024-01-01T00:00:00Z",
-    "updated_at" : "2024-01-01T00:00:00Z",
-    "overView" : {
-        "description": "# RED 스터디의 개요입니다.",
-        "manager_list" : [
-            {
-                "name" : "user-1",
-                "role" : "manager",
-                "profileImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-            },
-            {
-                "name" : "user-2",
-                "role" : "member",
-                "profileImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-            }
-        ]
+    "id": "study-1",
+    "name": "Red Team Study",
+    "type": "RED",
+    "slug": "red팀의 스터디입니다.",
+    "status": "active",
+    "created_by": "user-1",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z",
+    "overView": {
+      "description": "# RED 스터디의 개요입니다.",
+      "manager_list": [
+        {
+          "name": "user-1",
+          "role": "manager",
+          "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        },
+        {
+          "name": "user-2",
+          "role": "member",
+          "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      ]
     },
-    "sessions" : [{
-        "id" : "session-1",
-        "study_id" : "study-1",
-        "session_no" : 1,
-        "round" : 1,
-        "title" : "1차 세션",
-        "status" : "active",
-        "createUser" : {
-            "name" : "user-1",
-            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+    "sessions": [
+      {
+        "id": "session-1",
+        "study_id": "study-1",
+        "session_no": 1,
+        "round": 1,
+        "title": "1차 세션",
+        "status": "active",
+        "createUser": {
+          "name": "user-1",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
         },
-        "scheduled_at" : "2024-01-15",
-        "content_md" : "# 1차 세션 내용\n\n세션 개요입니다.",
-        "created_at" : "2024-01-01",
-        "updated_at" : "2024-01-01",
-        "data" : {
-            "materials": ["자료1", "자료2"]
+        "scheduled_at": "2024-01-15",
+        "content_md": "# 1차 세션 내용\n\n세션 개요입니다.",
+        "created_at": "2024-01-01",
+        "updated_at": "2024-01-01",
+        "data": {
+          "materials": [
+            "자료1",
+            "자료2"
+          ]
         }
-    },
-    {
-        "id" : "session-2",
-        "study_id" : "study-1",
-        "session_no" : 2,
-        "round" : 2,
-        "title" : "2차 세션",
-        "status" : "archived",
-        "createUser" : {
-            "name" : "user-1",
-            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      {
+        "id": "session-2",
+        "study_id": "study-1",
+        "session_no": 2,
+        "round": 2,
+        "title": "2차 세션",
+        "status": "archived",
+        "createUser": {
+          "name": "user-1",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
         },
-        "scheduled_at" : "2024-01-22",
-        "content_md" : "# 2차 세션 내용\n\n세션 개요입니다.",
-        "created_at" : "2024-01-01",
-        "updated_at" : "2024-01-01",
-        "data" : {
-            "materials": ["자료3", "자료4"]
+        "scheduled_at": "2024-01-22",
+        "content_md": "# 2차 세션 내용\n\n세션 개요입니다.",
+        "created_at": "2024-01-01",
+        "updated_at": "2024-01-01",
+        "data": {
+          "materials": [
+            "자료3",
+            "자료4"
+          ]
         }
-    }],
-    "Members": [
-        {
-                "id": "user-1",
-                "email": "user1@example.com",
-                "password_hash": "$2b$10$examplehash1",
-                "name": "사용자1",
-                "handle": "user1",
-                "role": "MEMBER",
-                "status": "active",
-                "must_change_password": false,
-                "created_at": "2024-01-01T00:00:00Z",
-                "updated_at": "2024-01-01T00:00:00Z",
-                "last_login_at": null,
-                "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        },
-        {
-                "id": "user-2",
-                "email": "user2@example.com",
-                "password_hash": "$2b$10$examplehash2",
-                "name": "사용자2",
-                "handle": "user2",
-                "role": "MEMBER",
-                "status": "active",
-                "must_change_password": false,
-                "created_at": "2024-01-01T00:00:00Z",
-                "updated_at": "2024-01-01T00:00:00Z",
-                "last_login_at": null,
-            "joined_at": "2024-01-01T00:00:00Z",
-            "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        },
-        {
-                "id": "user-3",
-                "email": "user3@example.com",
-                "password_hash": "$2b$10$examplehash2",
-                "name": "사용자3",
-                "handle": "user3",
-                "role": "MEMBER",
-                "status": "active",
-                "must_change_password": false,
-                "created_at": "2024-01-01T00:00:00Z",
-                "updated_at": "2024-01-01T00:00:00Z",
-                "last_login_at": null,
-            "joined_at": "2024-01-01T00:00:00Z",
-            "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        },
-        {
-
-                "id": "user-4",
-                "email": "user4@example.com",
-                "password_hash": "$2b$10$examplehash2",
-                "name": "사용자4",
-                "handle": "user4",
-                "role": "MEMBER",
-                "status": "active",
-                "must_change_password": false,
-                "created_at": "2024-01-01T00:00:00Z",
-                "updated_at": "2024-01-01T00:00:00Z",
-                "last_login_at": null,
-            "joined_at": "2024-01-01T00:00:00Z",
-            "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        }
+      }
     ],
-    "WIL" : [
-        {
-            "id" : "wil-1",
-            "study_id" : "study-1",
-            "author_id" : "user-1",
-            "title" : "WIL 제목",
-            "content_md" : "# WIL 내용\n\n내용입니다.",
-            "tags" : ["태그1", "태그2"],
-            "created_at" : "2024-01-01T00:00:00Z",
-            "updated_at" : "2024-01-01T00:00:00Z",
-            "is_deleted" : false
-        },
-        {
-            "id" : "wil-2",
-            "study_id" : "study-1",
-            "author_id" : "user-2",
-            "title" : "두 번째 WIL",
-            "content_md" : "# 두 번째 WIL\n\n두 번째 내용입니다.",
-            "tags" : ["태그3"],
-            "created_at" : "2024-01-02T00:00:00Z",
-            "updated_at" : "2024-01-02T00:00:00Z",
-            "is_deleted" : false
+    "Members": [
+      {
+        "id": "user-1",
+        "email": "user1@example.com",
+        "password_hash": "$2b$10$examplehash1",
+        "name": "사용자1",
+        "handle": "user1",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "last_login_at": null,
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      {
+        "id": "user-2",
+        "email": "user2@example.com",
+        "password_hash": "$2b$10$examplehash2",
+        "name": "사용자2",
+        "handle": "user2",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "last_login_at": null,
+        "joined_at": "2024-01-01T00:00:00Z",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      {
+        "id": "user-3",
+        "email": "user3@example.com",
+        "password_hash": "$2b$10$examplehash2",
+        "name": "사용자3",
+        "handle": "user3",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "last_login_at": null,
+        "joined_at": "2024-01-01T00:00:00Z",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      {
+        "id": "user-4",
+        "email": "user4@example.com",
+        "password_hash": "$2b$10$examplehash2",
+        "name": "사용자4",
+        "handle": "user4",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "last_login_at": null,
+        "joined_at": "2024-01-01T00:00:00Z",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      }
+    ],
+    "WIL": [
+      {
+        "id": "wil-1",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+        "study_id": "study-1",
+        "author_id": "user-1",
+        "title": "WIL 제목",
+        "content_md": "# WIL 내용\n\n내용입니다.",
+        "tags": [
+          "태그1",
+          "태그2"
+        ],
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:00Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자1",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
         }
+      },
+      {
+        "id": "wil-2",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+        "study_id": "study-1",
+        "author_id": "user-2",
+        "title": "두 번째 WIL",
+        "content_md": "# 두 번째 WIL\n\n두 번째 내용입니다.",
+        "tags": [
+          "태그3"
+        ],
+        "created_at": "2024-01-02T00:00:00Z",
+        "updated_at": "2024-01-02T00:00:00Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자2",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-3",
+        "study_id": "study-1",
+        "author_id": "user-3",
+        "title": "3주차 보안 학습 기록",
+        "content_md": "# 3주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 3\n- 실습 결과",
+        "tags": [
+          "Linux",
+          "WIL"
+        ],
+        "created_at": "2024-01-16T00:00:00.000Z",
+        "updated_at": "2024-01-16T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-4",
+        "study_id": "study-1",
+        "author_id": "user-4",
+        "title": "4주차 보안 학습 기록",
+        "content_md": "# 4주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 4\n- 실습 결과",
+        "tags": [
+          "Forensics",
+          "WIL"
+        ],
+        "created_at": "2024-01-18T00:00:00.000Z",
+        "updated_at": "2024-01-18T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-5",
+        "study_id": "study-1",
+        "author_id": "user-1",
+        "title": "5주차 보안 학습 기록",
+        "content_md": "# 5주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 5\n- 실습 결과",
+        "tags": [
+          "Security",
+          "WIL"
+        ],
+        "created_at": "2024-01-20T00:00:00.000Z",
+        "updated_at": "2024-01-20T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자1",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-6",
+        "study_id": "study-1",
+        "author_id": "user-2",
+        "title": "6주차 보안 학습 기록",
+        "content_md": "# 6주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 6\n- 실습 결과",
+        "tags": [
+          "Network",
+          "WIL"
+        ],
+        "created_at": "2024-01-22T00:00:00.000Z",
+        "updated_at": "2024-01-22T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자2",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-7",
+        "study_id": "study-1",
+        "author_id": "user-3",
+        "title": "7주차 보안 학습 기록",
+        "content_md": "# 7주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 7\n- 실습 결과",
+        "tags": [
+          "Hacking",
+          "WIL"
+        ],
+        "created_at": "2024-01-24T00:00:00.000Z",
+        "updated_at": "2024-01-24T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-8",
+        "study_id": "study-1",
+        "author_id": "user-4",
+        "title": "8주차 보안 학습 기록",
+        "content_md": "# 8주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 8\n- 실습 결과",
+        "tags": [
+          "Linux",
+          "WIL"
+        ],
+        "created_at": "2024-01-26T00:00:00.000Z",
+        "updated_at": "2024-01-26T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-9",
+        "study_id": "study-1",
+        "author_id": "user-1",
+        "title": "9주차 보안 학습 기록",
+        "content_md": "# 9주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 9\n- 실습 결과",
+        "tags": [
+          "Forensics",
+          "WIL"
+        ],
+        "created_at": "2024-01-28T00:00:00.000Z",
+        "updated_at": "2024-01-28T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자1",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-1-10",
+        "study_id": "study-1",
+        "author_id": "user-2",
+        "title": "10주차 보안 학습 기록",
+        "content_md": "# 10주차 WIL\n\n이번 주 학습한 내용입니다.\n\n- 핵심 개념 10\n- 실습 결과",
+        "tags": [
+          "Security",
+          "WIL"
+        ],
+        "created_at": "2024-01-30T00:00:00.000Z",
+        "updated_at": "2024-01-30T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자2",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      }
     ],
     "Archive": [
-        {
-            "id": "archive-1-1",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "네트워크 보안 기초 문서",
-            "storage_key": "uploads/red/doc_01.pdf",
-            "category": "DOC",
-            "created_at": "2024-01-01T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-2",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "포트 스캐닝 기법 슬라이드",
-            "storage_key": "uploads/red/slide_01.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-01-02T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-3",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "SQL 인젝션 예제 코드",
-            "storage_key": "uploads/red/code_01.zip",
-            "category": "CODE",
-            "created_at": "2024-01-03T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-4",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "LINK",
-            "title": "OWASP Top 10 공격 가이드",
-            "url": "https://owasp.org/www-project-top-ten/",
-            "category": "LINK",
-            "created_at": "2024-01-04T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-5",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "보안 도구 설정 메모",
-            "storage_key": "uploads/red/etc_01.txt",
-            "category": "ETC",
-            "created_at": "2024-01-05T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-6",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "침투 테스트 보고서 서식",
-            "storage_key": "uploads/red/doc_02.docx",
-            "category": "DOC",
-            "created_at": "2024-01-06T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-7",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "악성코드 분석 발표 자료",
-            "storage_key": "uploads/red/slide_02.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-01-07T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-8",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "크로스사이트 스크립팅 공격 코드",
-            "storage_key": "uploads/red/code_02.tar.gz",
-            "category": "CODE",
-            "created_at": "2024-01-08T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-9",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "LINK",
-            "title": "해킹 툴 다운로드 사이트",
-            "url": "https://www.kali.org/tools/",
-            "category": "LINK",
-            "created_at": "2024-01-09T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-10",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "네트워크 패킷 캡처 데이터",
-            "storage_key": "uploads/red/etc_02.pcap",
-            "category": "ETC",
-            "created_at": "2024-01-10T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-11",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "시스템 취약점 분석 보고서",
-            "storage_key": "uploads/red/doc_03.pdf",
-            "category": "DOC",
-            "created_at": "2024-01-11T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-12",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "사회공학 공격 기법 설명",
-            "storage_key": "uploads/red/slide_03.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-01-12T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-13",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "DDoS 공격 시뮬레이터",
-            "storage_key": "uploads/red/code_03.py",
-            "category": "CODE",
-            "created_at": "2024-01-13T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-14",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "LINK",
-            "title": "CVE 취약점 데이터베이스",
-            "url": "https://cve.mitre.org/",
-            "category": "LINK",
-            "created_at": "2024-01-14T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-15",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "로그 분석 스크립트",
-            "storage_key": "uploads/red/etc_03.sh",
-            "category": "ETC",
-            "created_at": "2024-01-15T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-16",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "웹 방화벽 설정 가이드",
-            "storage_key": "uploads/red/doc_04.pdf",
-            "category": "DOC",
-            "created_at": "2024-01-16T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-17",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "랜섬웨어 대응 전략 발표",
-            "storage_key": "uploads/red/slide_04.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-01-17T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-18",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "암호화 알고리즘 구현",
-            "storage_key": "uploads/red/code_04.java",
-            "category": "CODE",
-            "created_at": "2024-01-18T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-19",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "LINK",
-            "title": "해커 뉴스 기술 포럼",
-            "url": "https://news.ycombinator.com/",
-            "category": "LINK",
-            "created_at": "2024-01-19T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-20",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "포렌식 도구 설정 파일",
-            "storage_key": "uploads/red/etc_04.conf",
-            "category": "ETC",
-            "created_at": "2024-01-20T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-21",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "보인스팅 공격 분석 문서",
-            "storage_key": "uploads/red/doc_05.docx",
-            "category": "DOC",
-            "created_at": "2024-01-21T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-22",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "클라우드 보안 아키텍처",
-            "storage_key": "uploads/red/slide_05.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-01-22T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-23",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "버퍼 오버플로우 익스플로잇",
-            "storage_key": "uploads/red/code_05.c",
-            "category": "CODE",
-            "created_at": "2024-01-23T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-24",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "LINK",
-            "title": "해킹 학습 온라인 코스",
-            "url": "https://tryhackme.com/",
-            "category": "LINK",
-            "created_at": "2024-01-24T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-25",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "FILE",
-            "title": "보안 정책 템플릿",
-            "storage_key": "uploads/red/etc_05.doc",
-            "category": "ETC",
-            "created_at": "2024-01-25T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-26",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "인증 우회 공격 분석",
-            "storage_key": "uploads/red/doc_06.pdf",
-            "category": "DOC",
-            "created_at": "2024-01-26T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-27",
-            "study_id": "study-1",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "모바일 보안 위협 분석",
-            "storage_key": "uploads/red/slide_06.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-01-27T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-28",
-            "study_id": "study-1",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "네트워크 스캐너 파이썬 코드",
-            "storage_key": "uploads/red/code_06.py",
-            "category": "CODE",
-            "created_at": "2024-01-28T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-29",
-            "study_id": "study-1",
-            "uploader_id": "user-1",
-            "type": "LINK",
-            "title": "보안 블로그 추천",
-            "url": "https://krebsonsecurity.com/",
-            "category": "LINK",
-            "created_at": "2024-01-29T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-1-30",
-            "study_id": "study-1",
-            "uploader_id": "user-2",
-            "type": "FILE",
-            "title": "침해사고 대응 체크리스트",
-            "storage_key": "uploads/red/etc_06.xlsx",
-            "category": "ETC",
-            "created_at": "2024-01-30T00:00:00Z",
-            "is_deleted": false
-        }
+      {
+        "id": "archive-1-1",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "네트워크 보안 기초 문서",
+        "storage_key": "uploads/red/doc_01.pdf",
+        "category": "DOC",
+        "created_at": "2024-01-01T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-2",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "포트 스캐닝 기법 슬라이드",
+        "storage_key": "uploads/red/slide_01.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-01-02T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-3",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "SQL 인젝션 예제 코드",
+        "storage_key": "uploads/red/code_01.zip",
+        "category": "CODE",
+        "created_at": "2024-01-03T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-4",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "LINK",
+        "title": "OWASP Top 10 공격 가이드",
+        "url": "https://owasp.org/www-project-top-ten/",
+        "category": "LINK",
+        "created_at": "2024-01-04T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-5",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "보안 도구 설정 메모",
+        "storage_key": "uploads/red/etc_01.txt",
+        "category": "ETC",
+        "created_at": "2024-01-05T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-6",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "침투 테스트 보고서 서식",
+        "storage_key": "uploads/red/doc_02.docx",
+        "category": "DOC",
+        "created_at": "2024-01-06T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-7",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "악성코드 분석 발표 자료",
+        "storage_key": "uploads/red/slide_02.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-01-07T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-8",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "크로스사이트 스크립팅 공격 코드",
+        "storage_key": "uploads/red/code_02.tar.gz",
+        "category": "CODE",
+        "created_at": "2024-01-08T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-9",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "LINK",
+        "title": "해킹 툴 다운로드 사이트",
+        "url": "https://www.kali.org/tools/",
+        "category": "LINK",
+        "created_at": "2024-01-09T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-10",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "네트워크 패킷 캡처 데이터",
+        "storage_key": "uploads/red/etc_02.pcap",
+        "category": "ETC",
+        "created_at": "2024-01-10T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-11",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "시스템 취약점 분석 보고서",
+        "storage_key": "uploads/red/doc_03.pdf",
+        "category": "DOC",
+        "created_at": "2024-01-11T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-12",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "사회공학 공격 기법 설명",
+        "storage_key": "uploads/red/slide_03.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-01-12T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-13",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "DDoS 공격 시뮬레이터",
+        "storage_key": "uploads/red/code_03.py",
+        "category": "CODE",
+        "created_at": "2024-01-13T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-14",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "LINK",
+        "title": "CVE 취약점 데이터베이스",
+        "url": "https://cve.mitre.org/",
+        "category": "LINK",
+        "created_at": "2024-01-14T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-15",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "로그 분석 스크립트",
+        "storage_key": "uploads/red/etc_03.sh",
+        "category": "ETC",
+        "created_at": "2024-01-15T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-16",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "웹 방화벽 설정 가이드",
+        "storage_key": "uploads/red/doc_04.pdf",
+        "category": "DOC",
+        "created_at": "2024-01-16T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-17",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "랜섬웨어 대응 전략 발표",
+        "storage_key": "uploads/red/slide_04.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-01-17T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-18",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "암호화 알고리즘 구현",
+        "storage_key": "uploads/red/code_04.java",
+        "category": "CODE",
+        "created_at": "2024-01-18T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-19",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "LINK",
+        "title": "해커 뉴스 기술 포럼",
+        "url": "https://news.ycombinator.com/",
+        "category": "LINK",
+        "created_at": "2024-01-19T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-20",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "포렌식 도구 설정 파일",
+        "storage_key": "uploads/red/etc_04.conf",
+        "category": "ETC",
+        "created_at": "2024-01-20T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-21",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "보인스팅 공격 분석 문서",
+        "storage_key": "uploads/red/doc_05.docx",
+        "category": "DOC",
+        "created_at": "2024-01-21T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-22",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "클라우드 보안 아키텍처",
+        "storage_key": "uploads/red/slide_05.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-01-22T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-23",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "버퍼 오버플로우 익스플로잇",
+        "storage_key": "uploads/red/code_05.c",
+        "category": "CODE",
+        "created_at": "2024-01-23T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-24",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "LINK",
+        "title": "해킹 학습 온라인 코스",
+        "url": "https://tryhackme.com/",
+        "category": "LINK",
+        "created_at": "2024-01-24T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-25",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "FILE",
+        "title": "보안 정책 템플릿",
+        "storage_key": "uploads/red/etc_05.doc",
+        "category": "ETC",
+        "created_at": "2024-01-25T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-26",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "인증 우회 공격 분석",
+        "storage_key": "uploads/red/doc_06.pdf",
+        "category": "DOC",
+        "created_at": "2024-01-26T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-27",
+        "study_id": "study-1",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "모바일 보안 위협 분석",
+        "storage_key": "uploads/red/slide_06.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-01-27T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-28",
+        "study_id": "study-1",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "네트워크 스캐너 파이썬 코드",
+        "storage_key": "uploads/red/code_06.py",
+        "category": "CODE",
+        "created_at": "2024-01-28T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-29",
+        "study_id": "study-1",
+        "uploader_id": "user-1",
+        "type": "LINK",
+        "title": "보안 블로그 추천",
+        "url": "https://krebsonsecurity.com/",
+        "category": "LINK",
+        "created_at": "2024-01-29T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-1-30",
+        "study_id": "study-1",
+        "uploader_id": "user-2",
+        "type": "FILE",
+        "title": "침해사고 대응 체크리스트",
+        "storage_key": "uploads/red/etc_06.xlsx",
+        "category": "ETC",
+        "created_at": "2024-01-30T00:00:00Z",
+        "is_deleted": false
+      }
     ]
   },
   {
-    "id" : "study-2",
-    "name" : "Web Team Study",
-    "type" : "WEB",
-    "slug" : "web팀의 스터디입니다.",
-    "status" : "active",
-    "created_by" : "user-3",
-    "created_at" : "2024-02-01T00:00:00Z",
-    "updated_at" : "2024-02-01T00:00:00Z",
-    "overView" : {
-        "description": "# WEB 스터디의 개요입니다.",
-        "manager_list" : [
-            {
-                "name" : "user-3",
-                "role" : "manager",
-                "profileImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-            },
-            {
-                "name" : "user-4",
-                "role" : "member",
-                "profileImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-            }
-        ]
+    "id": "study-2",
+    "name": "Web Team Study",
+    "type": "WEB",
+    "slug": "web팀의 스터디입니다.",
+    "status": "active",
+    "created_by": "user-3",
+    "created_at": "2024-02-01T00:00:00Z",
+    "updated_at": "2024-02-01T00:00:00Z",
+    "overView": {
+      "description": "# WEB 스터디의 개요입니다.",
+      "manager_list": [
+        {
+          "name": "user-3",
+          "role": "manager",
+          "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        },
+        {
+          "name": "user-4",
+          "role": "member",
+          "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      ]
     },
-    "sessions" : [{
-        "id" : "session-3",
-        "study_id" : "study-2",
-        "session_no" : 1,
-        "round" : 1,
-        "title" : "오리엔테이션",
-        "status" : "active",
-        "createUser" : {
-            "name" : "user-3",
-            "userImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+    "sessions": [
+      {
+        "id": "session-3",
+        "study_id": "study-2",
+        "session_no": 1,
+        "round": 1,
+        "title": "오리엔테이션",
+        "status": "active",
+        "createUser": {
+          "name": "user-3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
         },
-        "scheduled_at" : "2024-02-15",
-        "content_md" : "# 오리엔테이션\n\n스터디 진행 방식 소개",
-        "created_at" : "2024-02-01",
-        "updated_at" : "2024-02-01",
-        "data" : {
-            "materials": ["소개자료"]
+        "scheduled_at": "2024-02-15",
+        "content_md": "# 오리엔테이션\n\n스터디 진행 방식 소개",
+        "created_at": "2024-02-01",
+        "updated_at": "2024-02-01",
+        "data": {
+          "materials": [
+            "소개자료"
+          ]
         }
-    }],
-    "Members": [
-        {
-            "id": "user-3",
-            "email": "user3@example.com",
-            "password_hash": "$2b$10$examplehash3",
-            "name": "사용자3",
-            "handle": "user3",
-            "role": "LEADER",
-            "status": "active",
-            "must_change_password": false,
-            "created_at": "2024-02-01T00:00:00Z",
-            "updated_at": "2024-02-01T00:00:00Z",
-            "last_login_at": null,
-            "joined_at": "2024-02-01T00:00:00Z",
-            "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        },
-        {
-            "id": "user-4",
-            "email": "user4@example.com",
-            "password_hash": "$2b$10$examplehash4",
-            "name": "사용자4",
-            "handle": "user4",
-            "role": "MEMBER",
-            "status": "active",
-            "must_change_password": false,
-            "created_at": "2024-02-01T00:00:00Z",
-            "updated_at": "2024-02-01T00:00:00Z",
-            "last_login_at": null,
-            "joined_at": "2024-02-01T00:00:00Z",
-            "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
-        }
+      }
     ],
-    "WIL" : [],
-    "Archive": [
-        {
-            "id": "archive-2-1",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "HTML5 기초 문서",
-            "storage_key": "uploads/web/doc_01.pdf",
-            "category": "DOC",
-            "created_at": "2024-02-01T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-2",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "CSS Grid 레이아웃 슬라이드",
-            "storage_key": "uploads/web/slide_01.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-02-02T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-3",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "React Hooks 예제 코드",
-            "storage_key": "uploads/web/code_01.zip",
-            "category": "CODE",
-            "created_at": "2024-02-03T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-4",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "LINK",
-            "title": "MDN Web Docs 공식 문서",
-            "url": "https://developer.mozilla.org/",
-            "category": "LINK",
-            "created_at": "2024-02-04T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-5",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "웹 개발 참고 메모",
-            "storage_key": "uploads/web/etc_01.txt",
-            "category": "ETC",
-            "created_at": "2024-02-05T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-6",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "JavaScript ES6 가이드",
-            "storage_key": "uploads/web/doc_02.docx",
-            "category": "DOC",
-            "created_at": "2024-02-06T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-7",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "반응형 웹 디자인 발표",
-            "storage_key": "uploads/web/slide_02.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-02-07T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-8",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "Node.js Express 서버 코드",
-            "storage_key": "uploads/web/code_02.tar.gz",
-            "category": "CODE",
-            "created_at": "2024-02-08T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-9",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "LINK",
-            "title": "CSS Tricks 웹사이트",
-            "url": "https://css-tricks.com/",
-            "category": "LINK",
-            "created_at": "2024-02-09T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-10",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "웹 성능 최적화 데이터",
-            "storage_key": "uploads/web/etc_02.json",
-            "category": "ETC",
-            "created_at": "2024-02-10T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-11",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "Type입력 완전 정복 문서",
-            "storage_key": "uploads/web/doc_03.pdf",
-            "category": "DOC",
-            "created_at": "2024-02-11T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-12",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "웹 접근성 가이드라인",
-            "storage_key": "uploads/web/slide_03.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-02-12T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-13",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "Vue.js 컴포넌트 예제",
-            "storage_key": "uploads/web/code_03.js",
-            "category": "CODE",
-            "created_at": "2024-02-13T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-14",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "LINK",
-            "title": "Stack Overflow 개발자 커뮤니티",
-            "url": "https://stackoverflow.com/",
-            "category": "LINK",
-            "created_at": "2024-02-14T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-15",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "Git 명령어 치트시트",
-            "storage_key": "uploads/web/etc_03.md",
-            "category": "ETC",
-            "created_at": "2024-02-15T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-16",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "REST API 설계 원칙",
-            "storage_key": "uploads/web/doc_04.pdf",
-            "category": "DOC",
-            "created_at": "2024-02-16T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-17",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "프론트엔드 빌드 도구 발표",
-            "storage_key": "uploads/web/slide_04.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-02-17T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-18",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "Webpack 설정 파일",
-            "storage_key": "uploads/web/code_04.js",
-            "category": "CODE",
-            "created_at": "2024-02-18T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-19",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "LINK",
-            "title": "W3Schools 웹 튜토리얼",
-            "url": "https://www.w3schools.com/",
-            "category": "LINK",
-            "created_at": "2024-02-19T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-20",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "크롬 개발자 도구 단축키",
-            "storage_key": "uploads/web/etc_04.txt",
-            "category": "ETC",
-            "created_at": "2024-02-20T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-21",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "웹 보안 기초 가이드",
-            "storage_key": "uploads/web/doc_05.docx",
-            "category": "DOC",
-            "created_at": "2024-02-21T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-22",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "CSS 애니메이션 기법",
-            "storage_key": "uploads/web/slide_05.pptx",
-            "category": "SLIDE",
-            "created_at": "2024-02-22T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-23",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "Next.js 프로젝트 코드",
-            "storage_key": "uploads/web/code_05.zip",
-            "category": "CODE",
-            "created_at": "2024-02-23T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-24",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "LINK",
-            "title": "GitHub 저장소 검색",
-            "url": "https://github.com/",
-            "category": "LINK",
-            "created_at": "2024-02-24T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-25",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "프로젝트 관리 템플릿",
-            "storage_key": "uploads/web/etc_05.xlsx",
-            "category": "ETC",
-            "created_at": "2024-02-25T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-26",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "웹 컴포넌트 명세서",
-            "storage_key": "uploads/web/doc_06.pdf",
-            "category": "DOC",
-            "created_at": "2024-02-26T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-27",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "FILE",
-            "title": "모바일 웹 최적화 전략",
-            "storage_key": "uploads/web/slide_06.pdf",
-            "category": "SLIDE",
-            "created_at": "2024-02-27T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-28",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "Tailwind CSS 커스텀 코드",
-            "storage_key": "uploads/web/code_06.css",
-            "category": "CODE",
-            "created_at": "2024-02-28T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-29",
-            "study_id": "study-2",
-            "uploader_id": "user-3",
-            "type": "LINK",
-            "title": "웹 개발 블로그 추천",
-            "url": "https://web.dev/",
-            "category": "LINK",
-            "created_at": "2024-02-29T00:00:00Z",
-            "is_deleted": false
-        },
-        {
-            "id": "archive-2-30",
-            "study_id": "study-2",
-            "uploader_id": "user-4",
-            "type": "FILE",
-            "title": "코드 리뷰 체크리스트",
-            "storage_key": "uploads/web/etc_06.doc",
-            "category": "ETC",
-            "created_at": "2024-03-01T00:00:00Z",
-            "is_deleted": false
+    "Members": [
+      {
+        "id": "user-3",
+        "email": "user3@example.com",
+        "password_hash": "$2b$10$examplehash3",
+        "name": "사용자3",
+        "handle": "user3",
+        "role": "LEADER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-02-01T00:00:00Z",
+        "updated_at": "2024-02-01T00:00:00Z",
+        "last_login_at": null,
+        "joined_at": "2024-02-01T00:00:00Z",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      {
+        "id": "user-4",
+        "email": "user4@example.com",
+        "password_hash": "$2b$10$examplehash4",
+        "name": "사용자4",
+        "handle": "user4",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-02-01T00:00:00Z",
+        "updated_at": "2024-02-01T00:00:00Z",
+        "last_login_at": null,
+        "joined_at": "2024-02-01T00:00:00Z",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      }
+    ],
+    "WIL": [
+      {
+        "id": "wil-2-1",
+        "study_id": "study-2",
+        "author_id": "user-3",
+        "title": "1주차 웹 개발 WIL",
+        "content_md": "# 1주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 1\n- 배운 점",
+        "tags": [
+          "TypeScript",
+          "Dev"
+        ],
+        "created_at": "2024-02-12T00:00:00.000Z",
+        "updated_at": "2024-02-12T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
         }
+      },
+      {
+        "id": "wil-2-2",
+        "study_id": "study-2",
+        "author_id": "user-4",
+        "title": "2주차 웹 개발 WIL",
+        "content_md": "# 2주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 2\n- 배운 점",
+        "tags": [
+          "Next.js",
+          "Dev"
+        ],
+        "created_at": "2024-02-14T00:00:00.000Z",
+        "updated_at": "2024-02-14T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-3",
+        "study_id": "study-2",
+        "author_id": "user-3",
+        "title": "3주차 웹 개발 WIL",
+        "content_md": "# 3주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 3\n- 배운 점",
+        "tags": [
+          "CSS",
+          "Dev"
+        ],
+        "created_at": "2024-02-16T00:00:00.000Z",
+        "updated_at": "2024-02-16T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-4",
+        "study_id": "study-2",
+        "author_id": "user-4",
+        "title": "4주차 웹 개발 WIL",
+        "content_md": "# 4주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 4\n- 배운 점",
+        "tags": [
+          "Frontend",
+          "Dev"
+        ],
+        "created_at": "2024-02-18T00:00:00.000Z",
+        "updated_at": "2024-02-18T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-5",
+        "study_id": "study-2",
+        "author_id": "user-3",
+        "title": "5주차 웹 개발 WIL",
+        "content_md": "# 5주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 5\n- 배운 점",
+        "tags": [
+          "React",
+          "Dev"
+        ],
+        "created_at": "2024-02-20T00:00:00.000Z",
+        "updated_at": "2024-02-20T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-6",
+        "study_id": "study-2",
+        "author_id": "user-4",
+        "title": "6주차 웹 개발 WIL",
+        "content_md": "# 6주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 6\n- 배운 점",
+        "tags": [
+          "TypeScript",
+          "Dev"
+        ],
+        "created_at": "2024-02-22T00:00:00.000Z",
+        "updated_at": "2024-02-22T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-7",
+        "study_id": "study-2",
+        "author_id": "user-3",
+        "title": "7주차 웹 개발 WIL",
+        "content_md": "# 7주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 7\n- 배운 점",
+        "tags": [
+          "Next.js",
+          "Dev"
+        ],
+        "created_at": "2024-02-24T00:00:00.000Z",
+        "updated_at": "2024-02-24T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-8",
+        "study_id": "study-2",
+        "author_id": "user-4",
+        "title": "8주차 웹 개발 WIL",
+        "content_md": "# 8주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 8\n- 배운 점",
+        "tags": [
+          "CSS",
+          "Dev"
+        ],
+        "created_at": "2024-02-26T00:00:00.000Z",
+        "updated_at": "2024-02-26T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-9",
+        "study_id": "study-2",
+        "author_id": "user-3",
+        "title": "9주차 웹 개발 WIL",
+        "content_md": "# 9주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 9\n- 배운 점",
+        "tags": [
+          "Frontend",
+          "Dev"
+        ],
+        "created_at": "2024-02-28T00:00:00.000Z",
+        "updated_at": "2024-02-28T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자3",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      },
+      {
+        "id": "wil-2-10",
+        "study_id": "study-2",
+        "author_id": "user-4",
+        "title": "10주차 웹 개발 WIL",
+        "content_md": "# 10주차 학습 요약\n\n웹 기술 스택을 정리했습니다.\n\n- 기술 10\n- 배운 점",
+        "tags": [
+          "React",
+          "Dev"
+        ],
+        "created_at": "2024-03-01T00:00:00.000Z",
+        "updated_at": "2024-03-01T00:00:00.000Z",
+        "is_deleted": false,
+        "createUser": {
+          "name": "사용자4",
+          "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+        }
+      }
+    ],
+    "Archive": [
+      {
+        "id": "archive-2-1",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "HTML5 기초 문서",
+        "storage_key": "uploads/web/doc_01.pdf",
+        "category": "DOC",
+        "created_at": "2024-02-01T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-2",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "CSS Grid 레이아웃 슬라이드",
+        "storage_key": "uploads/web/slide_01.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-02-02T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-3",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "React Hooks 예제 코드",
+        "storage_key": "uploads/web/code_01.zip",
+        "category": "CODE",
+        "created_at": "2024-02-03T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-4",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "LINK",
+        "title": "MDN Web Docs 공식 문서",
+        "url": "https://developer.mozilla.org/",
+        "category": "LINK",
+        "created_at": "2024-02-04T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-5",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "웹 개발 참고 메모",
+        "storage_key": "uploads/web/etc_01.txt",
+        "category": "ETC",
+        "created_at": "2024-02-05T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-6",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "JavaScript ES6 가이드",
+        "storage_key": "uploads/web/doc_02.docx",
+        "category": "DOC",
+        "created_at": "2024-02-06T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-7",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "반응형 웹 디자인 발표",
+        "storage_key": "uploads/web/slide_02.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-02-07T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-8",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "Node.js Express 서버 코드",
+        "storage_key": "uploads/web/code_02.tar.gz",
+        "category": "CODE",
+        "created_at": "2024-02-08T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-9",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "LINK",
+        "title": "CSS Tricks 웹사이트",
+        "url": "https://css-tricks.com/",
+        "category": "LINK",
+        "created_at": "2024-02-09T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-10",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "웹 성능 최적화 데이터",
+        "storage_key": "uploads/web/etc_02.json",
+        "category": "ETC",
+        "created_at": "2024-02-10T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-11",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "Type입력 완전 정복 문서",
+        "storage_key": "uploads/web/doc_03.pdf",
+        "category": "DOC",
+        "created_at": "2024-02-11T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-12",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "웹 접근성 가이드라인",
+        "storage_key": "uploads/web/slide_03.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-02-12T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-13",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "Vue.js 컴포넌트 예제",
+        "storage_key": "uploads/web/code_03.js",
+        "category": "CODE",
+        "created_at": "2024-02-13T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-14",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "LINK",
+        "title": "Stack Overflow 개발자 커뮤니티",
+        "url": "https://stackoverflow.com/",
+        "category": "LINK",
+        "created_at": "2024-02-14T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-15",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "Git 명령어 치트시트",
+        "storage_key": "uploads/web/etc_03.md",
+        "category": "ETC",
+        "created_at": "2024-02-15T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-16",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "REST API 설계 원칙",
+        "storage_key": "uploads/web/doc_04.pdf",
+        "category": "DOC",
+        "created_at": "2024-02-16T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-17",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "프론트엔드 빌드 도구 발표",
+        "storage_key": "uploads/web/slide_04.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-02-17T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-18",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "Webpack 설정 파일",
+        "storage_key": "uploads/web/code_04.js",
+        "category": "CODE",
+        "created_at": "2024-02-18T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-19",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "LINK",
+        "title": "W3Schools 웹 튜토리얼",
+        "url": "https://www.w3schools.com/",
+        "category": "LINK",
+        "created_at": "2024-02-19T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-20",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "크롬 개발자 도구 단축키",
+        "storage_key": "uploads/web/etc_04.txt",
+        "category": "ETC",
+        "created_at": "2024-02-20T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-21",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "웹 보안 기초 가이드",
+        "storage_key": "uploads/web/doc_05.docx",
+        "category": "DOC",
+        "created_at": "2024-02-21T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-22",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "CSS 애니메이션 기법",
+        "storage_key": "uploads/web/slide_05.pptx",
+        "category": "SLIDE",
+        "created_at": "2024-02-22T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-23",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "Next.js 프로젝트 코드",
+        "storage_key": "uploads/web/code_05.zip",
+        "category": "CODE",
+        "created_at": "2024-02-23T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-24",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "LINK",
+        "title": "GitHub 저장소 검색",
+        "url": "https://github.com/",
+        "category": "LINK",
+        "created_at": "2024-02-24T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-25",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "프로젝트 관리 템플릿",
+        "storage_key": "uploads/web/etc_05.xlsx",
+        "category": "ETC",
+        "created_at": "2024-02-25T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-26",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "웹 컴포넌트 명세서",
+        "storage_key": "uploads/web/doc_06.pdf",
+        "category": "DOC",
+        "created_at": "2024-02-26T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-27",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "FILE",
+        "title": "모바일 웹 최적화 전략",
+        "storage_key": "uploads/web/slide_06.pdf",
+        "category": "SLIDE",
+        "created_at": "2024-02-27T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-28",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "Tailwind CSS 커스텀 코드",
+        "storage_key": "uploads/web/code_06.css",
+        "category": "CODE",
+        "created_at": "2024-02-28T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-29",
+        "study_id": "study-2",
+        "uploader_id": "user-3",
+        "type": "LINK",
+        "title": "웹 개발 블로그 추천",
+        "url": "https://web.dev/",
+        "category": "LINK",
+        "created_at": "2024-02-29T00:00:00Z",
+        "is_deleted": false
+      },
+      {
+        "id": "archive-2-30",
+        "study_id": "study-2",
+        "uploader_id": "user-4",
+        "type": "FILE",
+        "title": "코드 리뷰 체크리스트",
+        "storage_key": "uploads/web/etc_06.doc",
+        "category": "ETC",
+        "created_at": "2024-03-01T00:00:00Z",
+        "is_deleted": false
+      }
     ]
   }
 ]
