@@ -1,0 +1,20 @@
+.container{
+    gap: $s-12;
+    p{
+        font-size: $f-lg;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+    .card{
+        padding: $s-12 $s-16;
+        color: $text-primary;
+        h3{
+            font-size: $f-md;
+            font-weight: $semi-bold;
+        }
+        p{
+            font-size: $f-sm;
+            font-weight: $regular;
+        }
+    }
+}

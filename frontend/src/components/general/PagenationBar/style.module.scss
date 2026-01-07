@@ -1,0 +1,11 @@
+.contents{
+    padding: $s-16;
+    font-size: $f-md;
+    font-weight: $medium;
+    .active{
+        color: $text-primary;
+    }
+    .inactive{
+        color: $text-secondary;
+    }
+}
