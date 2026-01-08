@@ -24,3 +24,37 @@
         color: $text-primary;
     }
 }
+
+.contributionContainer1{
+    padding: $s-12 $s-12 6px $s-12;
+}
+
+.contributionContainer2{
+    padding: 6px $s-12 $s-12 $s-12;
+}
+
+.categoryContainer{
+    padding: $s-16;
+    height: 100%;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    p{
+        font-size: $f-md;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+}
+
+.grassContainer{
+    padding: $s-16;
+    height: 100%;
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    p{
+        font-size: $f-md;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+}
