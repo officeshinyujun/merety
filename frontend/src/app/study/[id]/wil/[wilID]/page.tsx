@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import dummyStudyData from "@/data/dummyStudyData.json";
 import SubTitle from "@/components/study/SubTitle";
 import { HStack } from "@/components/general/HStack";
+import Divider from "@/components/general/Divider";
 
 export default function WILDeatilPage() {
     const params = useParams();
@@ -47,7 +48,8 @@ export default function WILDeatilPage() {
                     userImage: wil.createUser?.userImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
                 }} />
             </HStack>
-            <MdEditor contents={wil.content_md} isEdit={false} />
+            <Divider/>
+            <MdEditor contents={wil.content_md} isEdit={false} className={s.mdSection} />
         </VStack> 
     )
 }

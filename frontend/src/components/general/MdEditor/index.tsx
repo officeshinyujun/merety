@@ -10,6 +10,7 @@ import { VStack } from "../VStack";
 import { HStack } from "../HStack";
 import Button from "../Button";
 import { useEffect } from "react";
+import cn from 'classnames';
 
 interface Props {
   isEdit?: boolean;
@@ -51,7 +52,7 @@ export default function MdEditor ({ isEdit = true, contents, className }: Props)
   }
 
     return (
-        <VStack className={s.container + ' ' + className}>
+        <VStack className={cn(s.container, className)}>
             {isEdit && (
                 <HStack className={s.toolbar}>
                     <Button 
