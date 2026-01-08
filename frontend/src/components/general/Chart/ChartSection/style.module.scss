@@ -16,5 +16,11 @@
             font-size: $f-sm;
             font-weight: $regular;
         }
+        &.clickable {
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05); // Light hover effect
+            }
+        }
     }
 }
