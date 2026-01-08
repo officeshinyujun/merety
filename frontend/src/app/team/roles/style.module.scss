@@ -1,0 +1,21 @@
+.container{
+    padding: $s-pagePadding;
+}
+
+
+.roleItem{
+    padding: $s-12;
+    border: 1px solid $border-primary;
+    border-radius: $s-12;
+    background-color: $background-third;
+    h2{
+        font-size: $f-lg;
+        color: $text-primary;
+        font-weight: $semi-bold;
+    }
+    p{
+        font-size: $f-md;
+        font-size: $f-sm;
+        color: $text-secondary;
+    }
+}
