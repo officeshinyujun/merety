@@ -59,12 +59,6 @@ export default function Sidebar() {
             },
             
             {
-                icon: <Cog size={16} color={pathname === '/team/contribution' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
-                label: 'Contribution',
-                href : '/team/contribution'
-            },
-            
-            {
                 icon: <Pencil size={16} color={pathname === '/team/til' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'TIL',
                 href : '/team/til'
