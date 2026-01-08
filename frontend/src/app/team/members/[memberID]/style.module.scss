@@ -1,0 +1,26 @@
+.container{
+    padding: $s-pagePadding;
+}
+
+.contents{
+    padding: $s-12;
+}
+
+.memberInfo{
+    img{
+        border-radius: 999%;
+    }
+}
+
+.memberDescription{
+    padding: 6px;
+}
+
+.monthSelect{
+    padding: 8px 0px;
+    h2{
+        font-size: $f-lg;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+}

@@ -11,8 +11,10 @@ import ChartSection from "@/components/general/Chart/ChartSection";
 import dummyTeamData from "@/data/dummyTeamData.json";
 import { useState, useMemo } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
+import { useRouter } from "next/navigation";
 
 export default function MembersPage() {
+    const router = useRouter();
     const itemsPerPage = 9;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
@@ -36,17 +38,24 @@ export default function MembersPage() {
         }
     };
 
+    const handleRowClick = (memberId: string) => {
+        router.push(`/team/members/${memberId}`);
+    };
+
     const infoColumnData = currentMembers.map(member => ({
         text: member.user.name,
         image: member.user.userImage,
+        onClick: () => handleRowClick(member.user.id),
     }));
 
     const statusColumnData = currentMembers.map(member => ({
         text: member.user.status,
+        onClick: () => handleRowClick(member.user.id),
     }));
 
     const roleColumnData = currentMembers.map(member => ({
         text: member.role,
+        onClick: () => handleRowClick(member.user.id),
     }));
 
     return (

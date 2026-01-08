@@ -1,0 +1,12 @@
+.container{
+    h2{
+        font-size: $f-lg;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+    p{
+        font-size: $f-md;
+        color: $text-secondary;
+        font-weight: $medium;
+    }
+}
