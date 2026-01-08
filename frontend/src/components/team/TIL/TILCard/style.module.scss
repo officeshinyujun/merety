@@ -1,0 +1,28 @@
+.container{
+    background-color: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-12;
+    padding: $s-16;
+    span{
+        font-size: $f-sm;
+        color: $text-secondary;
+        font-weight: $regular;
+    }
+    .contents{
+        h2{
+            font-size: 18px;
+            font-weight: $semi-bold;
+            color: $text-primary;
+        }
+    }
+    .user{
+        img{
+            border-radius: 999%;
+        }
+        p{
+            font-size: $f-xs;
+            color: $text-secondary;
+            font-weight: $regular;
+        }
+    }
+}
