@@ -4,6 +4,8 @@ export interface TilPost {
   id: UUID;
   study_id: UUID;
   author_id: UUID;
+  author_name: string;
+  author_image: string;
   title: string;
   content_md: string;
   tags: string[];

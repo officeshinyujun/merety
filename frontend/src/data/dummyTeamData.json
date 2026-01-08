@@ -1,0 +1,137 @@
+{
+  "members": [
+    {
+      "user": {
+        "id": "user-1",
+        "email": "manager@example.com",
+        "password_hash": "hashed_pw_1",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+        "name": "Alex Manager",
+        "handle": "alex_m",
+        "role": "STUDY_MANAGER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-01T09:00:00Z",
+        "updated_at": "2024-01-01T09:00:00Z",
+        "last_login_at": "2024-01-08T10:00:00Z"
+      },
+      "joined_at": "2024-01-01T09:00:00Z",
+      "role": "STUDY_MANAGER"
+    },
+    {
+      "user": {
+        "id": "user-2",
+        "email": "sarah@example.com",
+        "password_hash": "hashed_pw_2",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+        "name": "Sarah Member",
+        "handle": "sarah_k",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-02T10:00:00Z",
+        "updated_at": "2024-01-02T10:00:00Z",
+        "last_login_at": "2024-01-07T15:30:00Z"
+      },
+      "joined_at": "2024-01-02T10:00:00Z",
+      "role": "MEMBER"
+    },
+    {
+      "user": {
+        "id": "user-3",
+        "email": "mike@example.com",
+        "password_hash": "hashed_pw_3",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+        "name": "Mike Dev",
+        "handle": "mike_d",
+        "role": "MEMBER",
+        "status": "active",
+        "must_change_password": false,
+        "created_at": "2024-01-03T11:00:00Z",
+        "updated_at": "2024-01-03T11:00:00Z",
+        "last_login_at": "2024-01-08T09:15:00Z"
+      },
+      "joined_at": "2024-01-03T11:00:00Z",
+      "role": "MEMBER"
+    }
+  ],
+  "notices": [
+    {
+      "id": "notice-1",
+      "title": "Welcome to the Study Group!",
+      "content_md": "# Welcome!\n\nWe are excited to start this journey. Please check the schedule.",
+      "created_by": "user-1",
+      "createUser": {
+        "name": "Alex Manager",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-01T10:00:00Z",
+      "is_deleted": false
+    },
+    {
+      "id": "notice-2",
+      "title": "Schedule Change for Session 2",
+      "content_md": "The second session has been moved to **Friday**.",
+      "created_by": "user-1",
+      "createUser":{
+        "name": "Alex Manager",
+        "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"
+      },
+      "created_at": "2024-01-05T14:00:00Z",
+      "updated_at": "2024-01-05T14:00:00Z",
+      "is_deleted": false
+    }
+  ],
+  "tils": [
+    {
+      "id": "til-1",
+      "study_id": "study-1",
+      "author_id": "user-2",
+      "author_name": "Sarah Member",
+      "author_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+      "title": "Learning React Hooks",
+      "content_md": "# React Hooks\n\nToday I learned about `useState` and `useEffect`.",
+      "tags": ["React", "Frontend"],
+      "created_at": "2024-01-04T18:00:00Z",
+      "updated_at": "2024-01-04T18:00:00Z",
+      "is_deleted": false
+    },
+    {
+      "id": "til-2",
+      "study_id": "study-1",
+      "author_id": "user-3",
+      "author_name": "Mike Dev",
+      "author_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+      "title": "Next.js Routing",
+      "content_md": "Next.js 13 App Router is **powerful**.",
+      "tags": ["Next.js", "Routing"],
+      "created_at": "2024-01-06T20:00:00Z",
+      "updated_at": "2024-01-06T20:00:00Z",
+      "is_deleted": false
+    },
+    {
+      "id": "til-3",
+      "study_id": "study-1",
+      "author_id": "user-2",
+      "author_name": "Sarah Member",
+      "author_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s",
+      "title": "TypeScript Generics",
+      "content_md": "Generics allow for reusable code components.",
+      "tags": ["TypeScript"],
+      "created_at": "2024-01-07T19:30:00Z",
+      "updated_at": "2024-01-07T19:30:00Z",
+      "is_deleted": false
+    }
+  ],
+  "roles": [
+    {
+      "role": "STUDY_MANAGER",
+      "description": "Manages the study group, schedules sessions, and posts notices."
+    },
+    {
+      "role": "MEMBER",
+      "description": "Participates in sessions and writes TILs."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+.container{
+    padding: $s-pagePadding;
+    h1{
+        font-size: $f-md;
+    }
+}
+
+.mdSection{
+    div{
+        padding: 0;
+        border: none !important;
+    }
+}

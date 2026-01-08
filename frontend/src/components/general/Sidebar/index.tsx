@@ -42,27 +42,32 @@ export default function Sidebar() {
         title: 'Team',
         contents: [
             {
-                icon: <Bell size={16} color={pathname === '/notice' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
+                icon: <Bell size={16} color={pathname === '/team/notice' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Notice',
+                href : '/team/notice'
             },
             {
-                icon: <User size={16} color={pathname === '/members' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
+                icon: <User size={16} color={pathname === '/team/members' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Members',
+                href : '/team/members'
             },
             
             {
-                icon: <ChartPie size={16} color={pathname === '/roles' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
+                icon: <ChartPie size={16} color={pathname === '/team/roles' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Roles',
+                href : '/team/roles'
             },
             
             {
-                icon: <Cog size={16} color={pathname === '/contribution' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
+                icon: <Cog size={16} color={pathname === '/team/contribution' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Contribution',
+                href : '/team/contribution'
             },
             
             {
-                icon: <Pencil size={16} color={pathname === '/til' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
+                icon: <Pencil size={16} color={pathname === '/team/til' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'TIL',
+                href : '/team/til'
             },
         ]
     },
