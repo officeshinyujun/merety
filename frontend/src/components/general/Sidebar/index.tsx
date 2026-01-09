@@ -71,15 +71,18 @@ export default function Sidebar() {
             {
                 icon: <UserCog size={16} color={pathname === '/user-management' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'User Management',
+                href : '/admin/user'
             },
             
             {
                 icon: <Book size={16} color={pathname === '/study-management' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Study Management',
+                href : '/admin/study'
             },
             {
                 icon: <Cog size={16} color={pathname === '/metrics' ? '#fdfdfe' : iconColor} strokeWidth={2} />,
                 label: 'Metrics',
+                href : '/admin/metrics'
             }
         ]
     }
