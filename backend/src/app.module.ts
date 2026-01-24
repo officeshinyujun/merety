@@ -19,6 +19,10 @@ import {
   ActivityLog,
 } from './entities';
 
+// Modules
+import { AuthModule } from './auth/auth.module';
+import { AdminUsersModule } from './admin/users/admin-users.module';
+
 @Module({
   imports: [
     // 환경 변수 설정
@@ -54,8 +58,13 @@ import {
         logging: configService.get<boolean>('database.logging'),
       }),
     }),
+
+    // Feature Modules
+    AuthModule,
+    AdminUsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
+
