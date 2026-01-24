@@ -4,6 +4,7 @@ import Title from '@/components/study/Title';
 import { HStack } from '@/components/general/HStack';
 import Button from '@/components/general/Button';
 import StudyListCard from '@/components/admin/StudyListCard';
+import dummyStudyData from '@/data/dummyStudyData.json';
 
 export default function Study() {
     return (
@@ -26,11 +27,14 @@ export default function Study() {
                 gap={16}
                 className={s.studyList}
             >
-                <StudyListCard
-                    name='Study 1'
-                    type='Web'
-                    createdAt='2022-01-01'
-                />
+                {dummyStudyData.map((study) => (
+                    <StudyListCard
+                        key={study.id}
+                        name={study.name}
+                        type={study.type === 'RED' ? 'Red' : 'Web'}
+                        createdAt={new Date(study.created_at).toLocaleDateString()}
+                    />
+                ))}
             </VStack>
         </VStack>
     );
