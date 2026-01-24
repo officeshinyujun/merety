@@ -30,6 +30,7 @@ export default function Study() {
                 {dummyStudyData.map((study) => (
                     <StudyListCard
                         key={study.id}
+                        studyId={study.id}
                         name={study.name}
                         type={study.type === 'RED' ? 'Red' : 'Web'}
                         createdAt={new Date(study.created_at).toLocaleDateString()}

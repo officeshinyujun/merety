@@ -1,0 +1,311 @@
+.container {
+    padding: $s-pagePadding;
+    overflow-y: auto;
+}
+
+.section {
+    width: 100%;
+}
+
+// 버튼 스타일
+.editButton {
+    padding: $s-12 $s-16;
+    background: $background-fourth !important;
+    border-radius: $s-8 !important;
+    font-size: $f-sm;
+    color: $text-primary;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        background: $background-third !important;
+    }
+}
+
+.saveButton {
+    padding: $s-12 $s-16;
+    background: $text-correct !important;
+    border-radius: $s-8 !important;
+    font-size: $f-sm;
+    color: $background-primary;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.cancelButton {
+    padding: $s-12 $s-16;
+    background: $background-fourth !important;
+    border-radius: $s-8 !important;
+    font-size: $f-sm;
+    color: $text-secondary;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        background: $background-third !important;
+    }
+}
+
+// 필드 스타일
+.fieldGroup {
+    min-width: 150px;
+}
+
+.label {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-secondary;
+}
+
+.value {
+    font-size: $f-md;
+    font-weight: $regular;
+    color: $text-primary;
+    margin: 0;
+}
+
+// Select 스타일
+.select {
+    padding: $s-8 $s-12;
+    background: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-8;
+    color: $text-primary;
+    font-size: $f-sm;
+    outline: none;
+    cursor: pointer;
+    min-width: 120px;
+
+    &:focus {
+        border-color: $text-secondary;
+    }
+
+    option {
+        background: $background-third;
+        color: $text-primary;
+    }
+}
+
+// Textarea 스타일
+.textarea {
+    width: 100%;
+    padding: $s-12;
+    background: $background-third;
+    border: 1px solid $border-primary;
+    border-radius: $s-16;
+    color: $text-primary;
+    font-size: $f-sm;
+    outline: none;
+    resize: vertical;
+    font-family: inherit;
+    box-sizing: border-box;
+
+    &:focus {
+        border-color: $text-secondary;
+    }
+}
+
+// 배지 스타일
+.typeBadge {
+    padding: $s-4 $s-12;
+    border-radius: $s-8;
+    font-size: $f-xs;
+    font-weight: $semi-bold;
+    text-transform: uppercase;
+
+    &.red {
+        background: rgba(218, 127, 127, 0.2);
+        color: $text-wrong;
+    }
+
+    &.web {
+        background: rgba(137, 218, 127, 0.2);
+        color: $text-correct;
+    }
+}
+
+.statusBadge {
+    padding: $s-4 $s-12;
+    border-radius: $s-8;
+    font-size: $f-xs;
+    font-weight: $medium;
+
+    &.active {
+        background: rgba(137, 218, 127, 0.2);
+        color: $text-correct;
+    }
+
+    &.archived {
+        background: rgba(149, 149, 149, 0.2);
+        color: $text-secondary;
+    }
+
+    &.pending {
+        background: rgba(218, 200, 127, 0.2);
+        color: #dac87f;
+    }
+}
+
+// 매니저 카드
+.managerList {
+    flex-wrap: wrap;
+}
+
+.managerCard {
+    padding: $s-12 $s-16;
+    background: $background-third;
+    border-radius: $s-12;
+    border: 1px solid $border-primary;
+}
+
+.managerImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.managerName {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-primary;
+    margin: 0;
+}
+
+.managerRole {
+    font-size: $f-xs;
+    color: $text-secondary;
+    text-transform: capitalize;
+}
+
+// 멤버 리스트
+.memberList {
+    background: $background-third;
+    border-radius: $s-12;
+    overflow: hidden;
+}
+
+.memberRow {
+    padding: $s-12 $s-16;
+    border-bottom: 1px solid $border-primary;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: $background-fourth;
+    }
+}
+
+.memberImage {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.memberName {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-primary;
+    margin: 0;
+}
+
+.memberEmail {
+    font-size: $f-xs;
+    color: $text-secondary;
+}
+
+.memberRole {
+    padding: $s-4 $s-8;
+    background: $background-fourth;
+    border-radius: $s-4;
+    font-size: $f-xs;
+    color: $text-secondary;
+}
+
+.memberStatus {
+    padding: $s-4 $s-8;
+    border-radius: $s-4;
+    font-size: $f-xs;
+    font-weight: $medium;
+
+    &.active {
+        background: rgba(137, 218, 127, 0.2);
+        color: $text-correct;
+    }
+
+    &.inactive {
+        background: rgba(218, 127, 127, 0.2);
+        color: $text-wrong;
+    }
+}
+
+// 세션 리스트
+.sessionList {
+    background: $background-third;
+    border-radius: $s-12;
+    overflow: hidden;
+}
+
+.sessionRow {
+    padding: $s-12 $s-16;
+    border-bottom: 1px solid $border-primary;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: $background-fourth;
+    }
+}
+
+.sessionRound {
+    padding: $s-4 $s-8;
+    background: $background-fourth;
+    border-radius: $s-4;
+    font-size: $f-xs;
+    font-weight: $semi-bold;
+    color: $text-secondary;
+}
+
+.sessionTitle {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-primary;
+    margin: 0;
+}
+
+.sessionDate {
+    font-size: $f-xs;
+    color: $text-secondary;
+}
+
+.sessionStatus {
+    padding: $s-4 $s-8;
+    border-radius: $s-4;
+    font-size: $f-xs;
+    font-weight: $medium;
+
+    &.active {
+        background: rgba(137, 218, 127, 0.2);
+        color: $text-correct;
+    }
+
+    &.archived {
+        background: rgba(149, 149, 149, 0.2);
+        color: $text-secondary;
+    }
+}
