@@ -14,10 +14,18 @@ import PagenationBar from "@/components/general/PagenationBar";
 import { useRouter } from "next/navigation";
 import UserEditCard from "@/components/admin/UserEditCard";
 import ModalContainer from "@/components/general/ModalContainer";
+import { useItemsPerPage } from "@/hooks/useItemsPerPage";
 
 export default function UserPage() {
     const router = useRouter();
-    const itemsPerPage = 10;
+    // 화면 높이에 따라 동적으로 itemsPerPage 계산
+    const itemsPerPage = useItemsPerPage({
+        itemHeight: 60,      // 각 행의 높이
+        headerOffset: 200,   // 헤더 + 검색창 영역
+        footerOffset: 80,    // 페이지네이션 바 영역
+        minItems: 4,
+        maxItems: 15,
+    }) - 3;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
@@ -66,44 +74,44 @@ export default function UserPage() {
             <VStack fullWidth fullHeight align='start' justify='start' className={s.container} gap={24}>
                 <Title text="User Management" />
                 <HStack fullWidth align="center" justify="center">
-                    <Input 
+                    <Input
                         width="700px"
-                        placeholder="유저를 검색하세요..." 
-                        icon={<Search size={20} color="#959595" strokeWidth={1.5}/>}
+                        placeholder="유저를 검색하세요..."
+                        icon={<Search size={20} color="#959595" strokeWidth={1.5} />}
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                         onKeyDown={handleSearchKeyDown}
                     />
                 </HStack>
-                <VStack fullWidth fullHeight align='start' justify='start' gap={12}>
+                <VStack fullWidth fullHeight align='start' justify='start' gap={12} className="">
                     <ChartBase>
-                        <ChartSection 
-                            title="Info" 
-                            width="60%" 
-                            children={infoColumnData} 
+                        <ChartSection
+                            title="Info"
+                            width="60%"
+                            children={infoColumnData}
                         />
-                        <ChartSection 
-                            title="Status" 
-                            width="20%" 
-                            children={statusColumnData} 
+                        <ChartSection
+                            title="Status"
+                            width="20%"
+                            children={statusColumnData}
                         />
-                        <ChartSection 
-                            title="Role" 
-                            width="20%" 
-                            children={roleColumnData} 
+                        <ChartSection
+                            title="Role"
+                            width="20%"
+                            children={roleColumnData}
                         />
                     </ChartBase>
-                    <PagenationBar 
+                    <PagenationBar
                         totalItems={totalItems}
                         itemsPerPage={itemsPerPage}
                         currentPage={currentPage}
                         onPageChange={setCurrentPage}
                     />
                 </VStack>
-            </VStack>   
+            </VStack>
             {selectedMember && (
                 <ModalContainer>
-                    <UserEditCard 
+                    <UserEditCard
                         password={selectedMember.user.password}
                         userImage={selectedMember.user.userImage}
                         name={selectedMember.user.name || ""}
