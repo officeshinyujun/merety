@@ -7,6 +7,7 @@ import SubTitle from '@/components/study/SubTitle';
 import ChartSection from '@/components/general/Chart/ChartSection';
 import PagenationBar from '@/components/general/PagenationBar';
 import { useState } from "react";
+import { useItemsPerPage } from "@/hooks/useItemsPerPage";
 
 const dummyMemeberData = [
     {
@@ -37,7 +38,7 @@ const dummyMemeberData = [
     {
         width : "100%",
         height : "100%",
-        title : "participate-date",
+        title : "participate",
         children : Array.from({ length: 20 }, (_, i) => ({
             text: `2024-01-${String(i + 1).padStart(2, '0')}`
         }))
@@ -46,7 +47,13 @@ const dummyMemeberData = [
 
 export default function Members() {
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 11;
+    const itemsPerPage = useItemsPerPage({
+        itemHeight: 60,
+        headerOffset: 200,
+        footerOffset: 80,
+        minItems: 5,
+        maxItems: 15,
+    }) - 3;
     const totalItems = dummyMemeberData[0].children.length;
 
     const paginatedData = dummyMemeberData.map(section => ({

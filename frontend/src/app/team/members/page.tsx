@@ -12,10 +12,17 @@ import dummyTeamData from "@/data/dummyTeamData.json";
 import { useState, useMemo } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
 import { useRouter } from "next/navigation";
+import { useItemsPerPage } from "@/hooks/useItemsPerPage";
 
 export default function MembersPage() {
     const router = useRouter();
-    const itemsPerPage = 9;
+    const itemsPerPage = useItemsPerPage({
+        itemHeight: 60,
+        headerOffset: 200,
+        footerOffset: 80,
+        minItems: 5,
+        maxItems: 15,
+    })-3;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");

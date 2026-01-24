@@ -15,6 +15,7 @@ import { Archive as ArchiveType } from "@/types/archive";
 import { useState, useMemo } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
 import { useParams } from "next/navigation";
+import { useItemsPerPage } from "@/hooks/useItemsPerPage";
 
 export default function Archive() {
     const params = useParams();
@@ -24,7 +25,13 @@ export default function Archive() {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
-    const itemsPerPage = 9;
+    const itemsPerPage = useItemsPerPage({
+        itemHeight: 60,
+        headerOffset: 250,
+        footerOffset: 80,
+        minItems: 5,
+        maxItems: 15,
+    }) - 3;
 
     // Find the study and its archives
     const study = dummyStudyData.find(s => s.id === studyId) || dummyStudyData[0];
