@@ -1,3 +1,14 @@
-.container{
+.container {
     padding: $s-pagePadding;
+}
+
+.addButton {
+    padding: $s-12 $s-16;
+    background: $text-primary !important;
+    border-radius: $s-16 !important;
+    font-size: $f-md;
+}
+
+.studyList {
+    padding: $s-16;
 }

@@ -1,0 +1,33 @@
+.container {
+    padding: $s-16;
+    background-color: $background-third;
+    border-radius: $s-12;
+    border: 1px solid $border-primary;
+
+    h6 {
+        font-size: $f-sm;
+        font-weight: $medium;
+        color: $text-secondary;
+    }
+}
+
+.leftContainer {
+    span {
+        font-size: 18px;
+        font-weight: $semi-bold;
+        color: $text-primary;
+    }
+}
+
+.typeCard {
+    background-color: $background-fourth;
+    border: 1px solid $border-primary;
+    padding: $s-8 $s-12;
+    border-radius: $s-16;
+
+    p {
+        font-size: $f-xs;
+        font-weight: $medium;
+        color: $text-primary;
+    }
+}
