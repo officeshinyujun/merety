@@ -1,0 +1,103 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import {
+  Study,
+  StudyMembership,
+  Session,
+  TilPost,
+  ActivityLog,
+  User,
+} from '../entities';
+import { StudyMemberRole } from '../entities/study-membership.entity';
+
+@Injectable()
+export class DashboardService {
+  constructor(
+    @InjectRepository(Study)
+    private studyRepository: Repository<Study>,
+    @InjectRepository(StudyMembership)
+    private membershipRepository: Repository<StudyMembership>,
+    @InjectRepository(Session)
+    private sessionRepository: Repository<Session>,
+    @InjectRepository(TilPost)
+    private tilRepository: Repository<TilPost>,
+    @InjectRepository(ActivityLog)
+    private activityLogRepository: Repository<ActivityLog>,
+  ) {}
+
+  /**
+   * 메인 대시보드 데이터
+   */
+  async getDashboard(user: User) {
+    // 내 스터디 목록
+    const myMemberships = await this.membershipRepository.find({
+      where: { user_id: user.id },
+      relations: ['study', 'study.memberships'],
+    });
+
+    const myStudies = myMemberships.map((m) => ({
+      id: m.study.id,
+      name: m.study.name,
+      type: m.study.type,
+      is_manager: m.member_role === StudyMemberRole.MANAGER,
+      member_count: m.study.memberships?.length || 0,
+    }));
+
+    // TIL 통계
+    const totalTilCount = await this.tilRepository.count({
+      where: { author_id: user.id, is_deleted: false },
+    });
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthlyTilCount = await this.tilRepository
+      .createQueryBuilder('til')
+      .where('til.author_id = :userId', { userId: user.id })
+      .andWhere('til.is_deleted = false')
+      .andWhere('til.created_at >= :startOfMonth', { startOfMonth })
+      .getCount();
+
+    // 최근 활동 로그
+    const recentActivities = await this.activityLogRepository.find({
+      where: { user_id: user.id },
+      order: { created_at: 'DESC' },
+      take: 10,
+    });
+
+    // 캘린더 이벤트 (향후 세션)
+    const upcomingSessions = await this.sessionRepository
+      .createQueryBuilder('session')
+      .innerJoin('session.study', 'study')
+      .innerJoin(
+        StudyMembership,
+        'membership',
+        'membership.study_id = study.id AND membership.user_id = :userId',
+        { userId: user.id },
+      )
+      .where('session.scheduled_at >= :today', {
+        today: new Date().toISOString().split('T')[0],
+      })
+      .andWhere('session.status = :status', { status: 'active' })
+      .orderBy('session.scheduled_at', 'ASC')
+      .take(10)
+      .getMany();
+
+    const calendarEvents = upcomingSessions.map((s) => ({
+      id: s.id,
+      title: s.title,
+      date: s.scheduled_at?.toISOString().split('T')[0] || '',
+      type: 'session' as const,
+    }));
+
+    return {
+      my_studies: myStudies,
+      til_stats: {
+        total_count: totalTilCount,
+        monthly_count: monthlyTilCount,
+      },
+      recent_activities: recentActivities,
+      calendar_events: calendarEvents,
+    };
+  }
+}

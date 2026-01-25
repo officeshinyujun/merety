@@ -23,6 +23,13 @@ import {
 import { AuthModule } from './auth/auth.module';
 import { AdminUsersModule } from './admin/users/admin-users.module';
 import { StudiesModule } from './studies/studies.module';
+import { SessionsModule } from './sessions/sessions.module';
+import { TilModule } from './til/til.module';
+import { ArchiveModule } from './archive/archive.module';
+import { NoticesModule } from './notices/notices.module';
+import { TeamModule } from './team/team.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { MetricsModule } from './admin/metrics/metrics.module';
 
 @Module({
   imports: [
@@ -64,6 +71,13 @@ import { StudiesModule } from './studies/studies.module';
     AuthModule,
     AdminUsersModule,
     StudiesModule,
+    SessionsModule,
+    TilModule,
+    ArchiveModule,
+    NoticesModule,
+    TeamModule,
+    DashboardModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
