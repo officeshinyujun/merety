@@ -22,6 +22,7 @@ import {
 // Modules
 import { AuthModule } from './auth/auth.module';
 import { AdminUsersModule } from './admin/users/admin-users.module';
+import { StudiesModule } from './studies/studies.module';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { AdminUsersModule } from './admin/users/admin-users.module';
     // Feature Modules
     AuthModule,
     AdminUsersModule,
+    StudiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
