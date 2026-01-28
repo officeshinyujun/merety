@@ -5,7 +5,7 @@ import Link from 'next/link';
 interface StudyListCardProps {
     studyId: string;
     name: string;
-    type: 'Web' | 'Red';
+    type: string;
     createdAt: string;
 }
 

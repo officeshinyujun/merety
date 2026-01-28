@@ -235,6 +235,24 @@
     color: $text-secondary;
 }
 
+.removeMemberButton {
+    background: transparent;
+    border: none;
+    padding: $s-4;
+    border-radius: $s-4;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($text-wrong, 0.1);
+        color: $text-wrong;
+    }
+}
+
 .memberStatus {
     padding: $s-4 $s-8;
     border-radius: $s-4;
@@ -307,5 +325,80 @@
     &.archived {
         background: rgba(149, 149, 149, 0.2);
         color: $text-secondary;
+    }
+}
+
+// 멤버 추가 버튼
+.addMemberButton {
+    padding: $s-8 $s-12;
+    background: $background-fourth !important;
+    border-radius: $s-8 !important;
+    font-size: $f-xs;
+    color: $text-primary;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+        background: $background-third !important;
+    }
+}
+
+// 스피너
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// 빈 메시지
+.emptyMessage {
+    text-align: center;
+    color: $text-secondary;
+    padding: $s-24;
+    width: 100%;
+    font-size: $f-sm;
+}
+
+// 세션 추가 버튼
+.addSessionButton {
+    padding: $s-8 $s-12;
+    background: $background-fourth !important;
+    border-radius: $s-8 !important;
+    font-size: $f-xs;
+    color: $text-primary;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+        background: $background-third !important;
+    }
+}
+
+.removeSessionButton {
+    background: transparent;
+    border: none;
+    padding: $s-4;
+    border-radius: $s-4;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($text-wrong, 0.1);
+        color: $text-wrong;
     }
 }

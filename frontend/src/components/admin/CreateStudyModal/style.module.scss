@@ -1,0 +1,129 @@
+.modal {
+    background: $background-primary;
+    border-radius: $s-16;
+    padding: $s-24;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-size: $f-xl;
+    font-weight: $bold;
+    color: $text-primary;
+    margin: 0;
+}
+
+.closeButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: $s-4;
+    color: $text-secondary;
+    border-radius: $s-8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: $background-secondary;
+        color: $text-primary;
+    }
+}
+
+.label {
+    font-size: $f-sm;
+    font-weight: $semi-bold;
+    color: $text-secondary;
+}
+
+.select {
+    width: 100%;
+    padding: $s-12;
+    border: 1px solid $border-primary;
+    border-radius: $s-8;
+    font-size: $f-md;
+    color: $text-primary;
+    background: $background-primary;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $text-primary;
+    }
+}
+
+.textarea {
+    width: 100%;
+    padding: $s-12;
+    border: 1px solid $border-primary;
+    border-radius: $s-8;
+    font-size: $f-md;
+    color: $text-primary;
+    background: $background-primary;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $text-primary;
+    }
+
+    &::placeholder {
+        color: $text-secondary;
+    }
+}
+
+.error {
+    font-size: $f-sm;
+    color: #ef4444;
+    font-weight: $medium;
+    width: 100%;
+}
+
+.cancelButton {
+    padding: $s-12 $s-20;
+    background: transparent !important;
+    border: 1px solid $border-primary !important;
+    color: $text-primary !important;
+    font-size: $f-sm;
+    font-weight: $semi-bold;
+
+    &:hover {
+        background: $background-secondary !important;
+    }
+}
+
+.submitButton {
+    padding: $s-12 $s-20;
+    background: $text-primary !important;
+    color: $background-primary !important;
+    font-size: $f-sm;
+    font-weight: $semi-bold;
+    display: flex;
+    align-items: center;
+    gap: $s-8;
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

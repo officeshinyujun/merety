@@ -7,70 +7,108 @@ import Input from "@/components/general/Input";
 import Section from "@/components/general/Section";
 import Title from "@/components/study/Title";
 import s from './style.module.scss';
-import dummyStudyData from '@/data/dummyStudyData.json';
-import { use, useState, useEffect } from 'react';
-import { Save, X, Edit2 } from 'lucide-react';
+import { use, useState, useEffect, useCallback } from 'react';
+import { Save, X, Edit2, Loader2, UserPlus, Trash2, Calendar } from 'lucide-react';
+import { studiesApi, StudyMember } from '@/api';
+import { Study, StudyType, StudyStatus } from '@/types/study';
+import { Session } from '@/types/session';
+import { sessionsApi } from '@/api';
+import AddMemberModal from '@/components/admin/AddMemberModal';
+import CreateSessionModal from '@/components/admin/CreateSessionModal';
 
-interface StudyData {
+interface StudyDetailData {
     id: string;
     name: string;
     type: string;
-    slug: string;
+    slug?: string;
     status: string;
-    created_by: string;
+    created_by?: string;
     created_at: string;
     updated_at: string;
-    overView: {
+    overview?: {
         description: string;
-        manager_list: Array<{
-            name: string;
-            role: string;
-            profileImage: string;
-        }>;
     };
-    sessions: Array<{
-        id: string;
-        title: string;
-        status: string;
-        scheduled_at: string;
-        round: number;
-    }>;
-    Members: Array<{
-        id: string;
-        name: string;
-        email: string;
-        role: string;
-        status: string;
-        userImage: string;
-    }>;
+    members?: StudyMember[];
+    sessions?: Session[];
 }
 
 export default function StudyDetail({ params }: { params: Promise<{ studyId: string }> }) {
     const { studyId } = use(params);
     const [isEditing, setIsEditing] = useState(false);
-    const [study, setStudy] = useState<StudyData | null>(null);
-    const [editedStudy, setEditedStudy] = useState<StudyData | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    const [error, setError] = useState('');
+    const [study, setStudy] = useState<StudyDetailData | null>(null);
+    const [editedStudy, setEditedStudy] = useState<StudyDetailData | null>(null);
+    const [members, setMembers] = useState<StudyMember[]>([]);
+    const [sessions, setSessions] = useState<Session[]>([]);
+    const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+    const [isCreateSessionModalOpen, setIsCreateSessionModalOpen] = useState(false);
 
-    useEffect(() => {
-        const foundStudy = dummyStudyData.find(s => s.id === studyId) as StudyData | undefined;
-        if (foundStudy) {
-            setStudy(foundStudy);
-            setEditedStudy(foundStudy);
+    const fetchStudyData = useCallback(async () => {
+        try {
+            setIsLoading(true);
+            setError('');
+
+            // 병렬로 데이터 조회
+            const [studyData, overviewData, membersData, sessionsData] = await Promise.all([
+                studiesApi.getStudy(studyId),
+                studiesApi.getOverview(studyId).catch(() => ({ description: '' })),
+                studiesApi.getMembers(studyId).catch(() => ({ data: [] })),
+                sessionsApi.getSessions(studyId).catch(() => ({ data: [] })),
+            ]);
+
+            const fullStudyData: StudyDetailData = {
+                ...studyData,
+                overview: overviewData,
+            };
+
+            setStudy(fullStudyData);
+            setEditedStudy(fullStudyData);
+            setMembers(membersData.data);
+            setSessions(sessionsData.data);
+        } catch (err) {
+            console.error('Failed to fetch study:', err);
+            setError('스터디 정보를 불러오는데 실패했습니다.');
+        } finally {
+            setIsLoading(false);
         }
     }, [studyId]);
 
-    if (!study || !editedStudy) {
-        return (
-            <VStack fullWidth fullHeight align="center" justify="center" className={s.container}>
-                <h2>스터디를 찾을 수 없습니다.</h2>
-            </VStack>
-        );
-    }
+    useEffect(() => {
+        fetchStudyData();
+    }, [fetchStudyData]);
 
-    const handleSave = () => {
-        setStudy(editedStudy);
-        setIsEditing(false);
-        // TODO: API 호출로 실제 저장
+    const handleSave = async () => {
+        if (!editedStudy) return;
+
+        try {
+            setIsSaving(true);
+
+            // 기본 정보 업데이트
+            await studiesApi.updateStudy(studyId, {
+                name: editedStudy.name,
+                type: editedStudy.type as StudyType,
+                slug: editedStudy.slug,
+                status: editedStudy.status as StudyStatus,
+            });
+
+            // Overview 업데이트
+            if (editedStudy.overview?.description) {
+                await studiesApi.updateOverview(studyId, {
+                    description: editedStudy.overview.description,
+                });
+            }
+
+            setStudy(editedStudy);
+            setIsEditing(false);
+            alert('저장되었습니다.');
+        } catch (err) {
+            console.error('Failed to save:', err);
+            alert('저장에 실패했습니다.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const handleCancel = () => {
@@ -78,18 +116,62 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
         setIsEditing(false);
     };
 
-    const handleInputChange = (field: keyof StudyData, value: string) => {
+    const handleInputChange = (field: keyof StudyDetailData, value: string) => {
         setEditedStudy(prev => prev ? { ...prev, [field]: value } : null);
     };
 
     const handleDescriptionChange = (value: string) => {
         setEditedStudy(prev => prev ? {
             ...prev,
-            overView: { ...prev.overView, description: value }
+            overview: { description: value }
         } : null);
     };
 
+    const handleRemoveMember = async (userId: string) => {
+        if (!confirm('정말 이 멤버를 제거하시겠습니까?')) return;
+
+        try {
+            await studiesApi.removeMember(studyId, userId);
+            // 멤버 목록 새로고침
+            fetchStudyData();
+        } catch (err) {
+            console.error('Failed to remove member:', err);
+            alert('멤버 제거에 실패했습니다.');
+        }
+    };
+
+    const handleRemoveSession = async (sessionId: string) => {
+        if (!confirm('정말 이 세션을 제거하시겠습니까?')) return;
+
+        try {
+            await sessionsApi.deleteSession(sessionId);
+            // 목록 새로고침
+            fetchStudyData();
+        } catch (err) {
+            console.error('Failed to delete session:', err);
+            alert('세션 제거에 실패했습니다.');
+        }
+    };
+
+    if (isLoading) {
+        return (
+            <VStack fullWidth fullHeight align="center" justify="center" className={s.container}>
+                <Loader2 className={s.spinner} size={32} />
+                <p>로딩 중...</p>
+            </VStack>
+        );
+    }
+
+    if (error || !study || !editedStudy) {
+        return (
+            <VStack fullWidth fullHeight align="center" justify="center" className={s.container}>
+                <h2>{error || '스터디를 찾을 수 없습니다.'}</h2>
+            </VStack>
+        );
+    }
+
     return (
+        <>
         <VStack
             fullWidth
             fullHeight
@@ -104,13 +186,13 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                 <HStack gap={12} align="center" justify="end">
                     {isEditing ? (
                         <>
-                            <Button className={s.cancelButton} onClick={handleCancel}>
+                            <Button className={s.cancelButton} onClick={handleCancel} disabled={isSaving}>
                                 <X size={18} />
                                 취소
                             </Button>
-                            <Button className={s.saveButton} onClick={handleSave}>
-                                <Save size={18} />
-                                저장
+                            <Button className={s.saveButton} onClick={handleSave} disabled={isSaving}>
+                                {isSaving ? <Loader2 className={s.spinner} size={18} /> : <Save size={18} />}
+                                {isSaving ? '저장 중...' : '저장'}
                             </Button>
                         </>
                     ) : (
@@ -175,28 +257,28 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                         </VStack>
                     </HStack>
                     <VStack gap={8} align="start" justify="start" fullWidth>
-                        <label className={s.label}>설명 (Slug)</label>
+                        <label className={s.label}>Slug</label>
                         {isEditing ? (
                             <Input 
-                                value={editedStudy.slug}
+                                value={editedStudy.slug || ''}
                                 onChange={(e) => handleInputChange('slug', e.target.value)}
                                 width="100%"
                             />
                         ) : (
-                            <p className={s.value}>{study.slug}</p>
+                            <p className={s.value}>{study.slug || '-'}</p>
                         )}
                     </VStack>
                     <VStack gap={8} align="start" justify="start" fullWidth>
                         <label className={s.label}>개요</label>
                         {isEditing ? (
                             <textarea 
-                                value={editedStudy.overView.description}
+                                value={editedStudy.overview?.description || ''}
                                 onChange={(e) => handleDescriptionChange(e.target.value)}
                                 className={s.textarea}
                                 rows={4}
                             />
                         ) : (
-                            <p className={s.value}>{study.overView.description}</p>
+                            <p className={s.value}>{study.overview?.description || '-'}</p>
                         )}
                     </VStack>
                 </VStack>
@@ -216,81 +298,128 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                 </HStack>
             </Section>
 
-            {/* 매니저 정보 */}
-            <Section title="매니저" className={s.section}>
-                <HStack fullWidth gap={16} align="start" justify="start" className={s.managerList}>
-                    {study.overView.manager_list.map((manager, index) => (
-                        <HStack key={index} gap={12} align="center" justify="start" className={s.managerCard}>
-                            <img 
-                                src={manager.profileImage} 
-                                alt={manager.name}
-                                className={s.managerImage}
-                            />
-                            <VStack gap={4} align="start" justify="center">
-                                <p className={s.managerName}>{manager.name}</p>
-                                <span className={s.managerRole}>{manager.role}</span>
-                            </VStack>
-                        </HStack>
-                    ))}
-                </HStack>
-            </Section>
-
             {/* 멤버 목록 */}
-            <Section title={`멤버 (${study.Members.length}명)`} className={s.section}>
+            <Section 
+                title={`멤버 (${members.length}명)`} 
+                className={s.section}
+                action={
+                    <Button className={s.addMemberButton} onClick={() => setIsAddMemberModalOpen(true)}>
+                        <UserPlus size={16} />
+                        멤버 추가
+                    </Button>
+                }
+            >
                 <VStack fullWidth gap={8} align="start" justify="start" className={s.memberList}>
-                    {study.Members.map((member) => (
-                        <HStack 
-                            key={member.id} 
-                            fullWidth 
-                            gap={16} 
-                            align="center" 
-                            justify="between" 
-                            className={s.memberRow}
-                        >
-                            <HStack gap={12} align="center" justify="start">
-                                <img 
-                                    src={member.userImage} 
-                                    alt={member.name}
-                                    className={s.memberImage}
-                                />
-                                <VStack gap={2} align="start" justify="center">
-                                    <p className={s.memberName}>{member.name}</p>
-                                    <span className={s.memberEmail}>{member.email}</span>
-                                </VStack>
+                    {members.length === 0 ? (
+                        <p className={s.emptyMessage}>등록된 멤버가 없습니다.</p>
+                    ) : (
+                        members.map((member) => (
+                            <HStack 
+                                key={member.id} 
+                                fullWidth 
+                                gap={16} 
+                                align="center" 
+                                justify="between" 
+                                className={s.memberRow}
+                            >
+                                <HStack gap={12} align="center" justify="start">
+                                    <img 
+                                        src={member.user.userImage || '/default-avatar.png'} 
+                                        alt={member.user.name || ''}
+                                        className={s.memberImage}
+                                    />
+                                    <VStack gap={2} align="start" justify="center">
+                                        <p className={s.memberName}>{member.user.name || member.user.handle}</p>
+                                        <span className={s.memberEmail}>{member.user.email}</span>
+                                    </VStack>
+                                </HStack>
+                                <HStack gap={12} align="center" justify="end">
+                                    <span className={s.memberRole}>{member.member_role}</span>
+                                    <button 
+                                        className={s.removeMemberButton}
+                                        onClick={() => handleRemoveMember(member.user.id)}
+                                        title="멤버 제거"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </HStack>
                             </HStack>
-                            <HStack gap={12} align="center" justify="end">
-                                <span className={`${s.memberRole}`}>{member.role}</span>
-                                <span className={`${s.memberStatus} ${s[member.status]}`}>{member.status}</span>
-                            </HStack>
-                        </HStack>
-                    ))}
+                        ))
+                    )}
                 </VStack>
             </Section>
 
             {/* 세션 목록 */}
-            <Section title={`세션 (${study.sessions.length}개)`} className={s.section}>
+            <Section 
+                title={`세션 (${sessions.length}개)`} 
+                className={s.section}
+                action={
+                    <Button className={s.addSessionButton} onClick={() => setIsCreateSessionModalOpen(true)}>
+                        <Calendar size={16} />
+                        세션 추가
+                    </Button>
+                }
+            >
                 <VStack fullWidth gap={8} align="start" justify="start" className={s.sessionList}>
-                    {study.sessions.map((session) => (
-                        <HStack 
-                            key={session.id} 
-                            fullWidth 
-                            gap={16} 
-                            align="center" 
-                            justify="between" 
-                            className={s.sessionRow}
-                        >
-                            <HStack gap={12} align="center" justify="start">
-                                <span className={s.sessionRound}>Round {session.round}</span>
-                                <p className={s.sessionTitle}>{session.title}</p>
+                    {sessions.length === 0 ? (
+                        <p className={s.emptyMessage}>등록된 세션이 없습니다.</p>
+                    ) : (
+                        sessions.map((session) => (
+                            <HStack 
+                                key={session.id} 
+                                fullWidth 
+                                gap={16} 
+                                align="center" 
+                                justify="between" 
+                                className={s.sessionRow}
+                            >
+                                <HStack gap={12} align="center" justify="start">
+                                    <span className={s.sessionRound}>Round {session.session_no}</span>
+                                    <p className={s.sessionTitle}>{session.title}</p>
+                                </HStack>
+                                <HStack gap={12} align="center" justify="end">
+                                    <span className={s.sessionDate}>
+                                        {new Date(session.scheduled_at).toLocaleDateString('ko-KR')}
+                                    </span>
+                                    <span className={`${s.sessionStatus} ${s.active}`}>
+                                        active
+                                    </span>
+                                    <button 
+                                        className={s.removeSessionButton}
+                                        onClick={() => handleRemoveSession(session.id)}
+                                        title="세션 제거"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </HStack>
                             </HStack>
-                            <HStack gap={12} align="center" justify="end">
-                                <span className={s.sessionDate}>{session.scheduled_at}</span>
-                                <span className={`${s.sessionStatus} ${s[session.status]}`}>{session.status}</span>
-                            </HStack>
-                        </HStack>
-                    ))}
+                            ))
+                    )}
                 </VStack>
             </Section>
         </VStack>
+
+        {/* 멤버 추가 모달 */}
+        <AddMemberModal
+            isOpen={isAddMemberModalOpen}
+            studyId={studyId}
+            existingMemberIds={members.map(m => m.user.id)}
+            onClose={() => setIsAddMemberModalOpen(false)}
+            onSuccess={() => {
+                // 멤버 목록 새로고침
+                fetchStudyData();
+            }}
+        />
+
+        {/* 세션 생성 모달 */}
+        <CreateSessionModal
+            isOpen={isCreateSessionModalOpen}
+            studyId={studyId}
+            onClose={() => setIsCreateSessionModalOpen(false)}
+            onSuccess={() => {
+                fetchStudyData();
+            }}
+        />
+    </>
     );
 }
