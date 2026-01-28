@@ -16,10 +16,11 @@ interface Props {
   isEdit?: boolean;
   contents?: string;
   className?: string;
+  onChange?: (content: string) => void;
 }
 
-export default function MdEditor ({ isEdit = true, contents, className }: Props) {
-    const [text, setText] = useState("Hello World!");
+export default function MdEditor ({ isEdit = true, contents = '', className, onChange }: Props) {
+  const [text, setText] = useState("");
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -28,7 +29,7 @@ export default function MdEditor ({ isEdit = true, contents, className }: Props)
       }),
       Markdown,
     ],
-    content: contents || text,
+    content: contents,
     immediatelyRender: false,
     editable: isEdit,
     editorProps: {
@@ -37,9 +38,21 @@ export default function MdEditor ({ isEdit = true, contents, className }: Props)
       },
     },
     onUpdate({ editor }) {
-      setText(editor.getHTML());
+      const markdown = editor.storage.markdown.getMarkdown();
+      setText(markdown);
+      onChange?.(markdown);
     }
   });
+
+  useEffect(() => {
+    if (editor && contents !== undefined && editor.getHTML() !== contents) {
+        // Only update if content is significantly different to avoid cursor jumps or infinite loops
+        // For simple view/edit switching, this is fine.
+        if (!editor.isFocused) {
+            editor.commands.setContent(contents);
+        }
+    }
+  }, [contents, editor]);
 
   useEffect(() => {
     if (editor) {

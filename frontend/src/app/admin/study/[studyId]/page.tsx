@@ -15,6 +15,7 @@ import { Session } from '@/types/session';
 import { sessionsApi } from '@/api';
 import AddMemberModal from '@/components/admin/AddMemberModal';
 import CreateSessionModal from '@/components/admin/CreateSessionModal';
+import MdEditor from '@/components/general/MdEditor';
 
 interface StudyDetailData {
     id: string;
@@ -271,14 +272,22 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                     <VStack gap={8} align="start" justify="start" fullWidth>
                         <label className={s.label}>개요</label>
                         {isEditing ? (
-                            <textarea 
-                                value={editedStudy.overview?.description || ''}
-                                onChange={(e) => handleDescriptionChange(e.target.value)}
-                                className={s.textarea}
-                                rows={4}
-                            />
+                            <div className={s.editorWrapper}>
+                                <MdEditor 
+                                    isEdit={true}
+                                    contents={editedStudy.overview?.description || ''}
+                                    onChange={handleDescriptionChange}
+                                    className={s.editor}
+                                />
+                            </div>
                         ) : (
-                            <p className={s.value}>{study.overview?.description || '-'}</p>
+                            <div className={s.descriptionWrapper}>
+                                <MdEditor 
+                                    isEdit={false}
+                                    contents={study.overview?.description || ''}
+                                    className={s.viewer}
+                                />
+                            </div>
                         )}
                     </VStack>
                 </VStack>
@@ -324,7 +333,7 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                             >
                                 <HStack gap={12} align="center" justify="start">
                                     <img 
-                                        src={member.user.userImage || '/default-avatar.png'} 
+                                        src={member.user.user_image || '/default-avatar.png'} 
                                         alt={member.user.name || ''}
                                         className={s.memberImage}
                                     />

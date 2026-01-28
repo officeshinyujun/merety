@@ -8,4 +8,72 @@
     .rulesSection{
         width: 100%;
     }
+
+    .descriptionContent {
+        white-space: pre-wrap;
+        line-height: 1.6;
+        color: $text-secondary;
+        font-size: $f-md;
+    }
+
+    .editButton {
+        padding: $s-4 $s-8;
+        background: transparent !important;
+        border: 1px solid $border-primary !important;
+        font-size: $f-xs;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: $text-secondary;
+        cursor: pointer;
+        border-radius: $s-4 !important;
+
+        &:hover {
+            color: $text-primary;
+            border-color: $text-primary !important;
+            background: $background-secondary !important;
+        }
+    }
+
+    .editorWrapper {
+        width: 100%;
+        border: 1px solid $border-primary;
+        border-radius: $s-8;
+        overflow: hidden;
+    }
+
+    .editor {
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .viewer {
+        width: 100%;
+        // Viewer specific styles if needed
+    }
+
+    .saveButton {
+        padding: $s-8 $s-12;
+        background: $text-correct !important;
+        color: $background-primary !important;
+        font-size: $f-sm;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .cancelButton {
+        padding: $s-8 $s-12;
+        background: transparent !important;
+        border: 1px solid $border-primary !important;
+        color: $text-secondary !important;
+        font-size: $f-sm;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        &:hover {
+            background: $background-secondary !important;
+        }
+    }
 }

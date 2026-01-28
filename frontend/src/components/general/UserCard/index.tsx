@@ -11,7 +11,7 @@ interface UserCardProps {
 export default function UserCard({ user }: UserCardProps) {
     return (
         <HStack align="center" justify="start" gap={12}> 
-            <Image src={user.userImage} alt={user.name} width={40} height={40} className={s.image}/>
+            <Image src={user.user_image || '/default-avatar.png'} alt={user.name} width={40} height={40} className={s.image}/>
             <VStack align="start" justify="start" className={s.contents} gap={4}>
                 <p>{user.name}</p>
                 <span>{user.role}</span>

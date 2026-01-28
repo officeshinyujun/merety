@@ -15,7 +15,7 @@ export interface User {
   id: UUID;
   email: string;
   password_hash: string;
-  userImage: string;
+  user_image: string | null;
   name?: string | null;
   handle: string;
   role: UserRole;

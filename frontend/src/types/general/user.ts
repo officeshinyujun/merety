@@ -1,5 +1,5 @@
 export type User = {
     name : string;
-    userImage : string;
+    user_image : string;
     role ?: string;
 }

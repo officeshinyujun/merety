@@ -8,6 +8,7 @@ import Input from '@/components/general/Input';
 import ModalContainer from '@/components/general/ModalContainer';
 import { X, Loader2, Calendar } from 'lucide-react';
 import { sessionsApi, CreateSessionRequest } from '@/api';
+import MdEditor from '@/components/general/MdEditor';
 import s from './style.module.scss';
 
 interface CreateSessionModalProps {
@@ -116,13 +117,14 @@ export default function CreateSessionModal({ isOpen, studyId, onClose, onSuccess
 
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>내용 (Markdown)</label>
-                        <textarea 
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            placeholder="세션에 대한 내용을 입력하세요 (Markdown 지원)"
-                            className={s.textarea}
-                            rows={6}
-                        />
+                        <div className={s.editorWrapper}>
+                            <MdEditor 
+                                isEdit={true}
+                                contents={content}
+                                onChange={setContent}
+                                className={s.editor}
+                            />
+                        </div>
                     </VStack>
                 </VStack>
 

@@ -97,22 +97,28 @@
 }
 
 // Textarea 스타일
-.textarea {
+// Editor & Viewer 스타일
+.editorWrapper {
+    width: 100%;
+    border: 1px solid $border-primary;
+    border-radius: $s-8;
+    overflow: hidden;
+}
+
+.editor {
+    width: 100%;
+    min-height: 200px;
+}
+
+.descriptionWrapper {
     width: 100%;
     padding: $s-12;
-    background: $background-third;
-    border: 1px solid $border-primary;
-    border-radius: $s-16;
-    color: $text-primary;
-    font-size: $f-sm;
-    outline: none;
-    resize: vertical;
-    font-family: inherit;
-    box-sizing: border-box;
+    border-radius: $s-8;
+    border: 1px solid transparent; // 구조 유지를 위해 투명 테두리
+}
 
-    &:focus {
-        border-color: $text-secondary;
-    }
+.viewer {
+    width: 100%;
 }
 
 // 배지 스타일
