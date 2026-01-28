@@ -9,10 +9,13 @@ import { Search } from "lucide-react";
 import DateCard from "@/components/study/WIL/DateCard";
 import ChartBase from "@/components/general/Chart/ChartBase";
 import ChartSection from "@/components/general/Chart/ChartSection";
-import dummyStudyData from "@/data/dummyStudyData.json";
-import { useState, useMemo } from "react";
+
+import { useState, useMemo, useEffect } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
 import { useParams, useRouter } from "next/navigation";
+import { tilApi } from "@/api";
+import { TilPost } from "@/types/til";
+import { Loader2 } from "lucide-react";
 
 export default function WilPage() {
     const params = useParams();
@@ -26,8 +29,27 @@ export default function WilPage() {
     const [startDate, setStartDate] = useState("2024-01-01");
     const [endDate, setEndDate] = useState("2024-12-31");
 
-    const study = dummyStudyData.find(s => s.id === studyId);
-    const wils = study?.WIL || [];
+
+    
+    const [wils, setWils] = useState<TilPost[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setIsLoading(true);
+                // Fetch up to 1000 posts to apply client-side filtering on specific date ranges
+                // Ideally this should be server-side filtered
+                const response = await tilApi.getTilPosts(studyId, { limit: 1000 });
+                setWils(response.data);
+            } catch (error) {
+                console.error("Failed to fetch WILs:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchData();
+    }, [studyId]);
 
     const filteredWils = useMemo(() => {
         return wils.filter(wil => {
@@ -65,10 +87,8 @@ export default function WilPage() {
     }));
 
     const writerColumnData = currentWils.map(wil => ({
-        // @ts-ignore - createUser exists in our modified data
-        text: wil.createUser?.name || wil.author_id,
-        // @ts-ignore
-        image: wil.createUser?.userImage,
+        text: wil.author_name || 'Unknown',
+        image: wil.author_image,
         onClick: () => handleRowClick(wil.id)
     }));
 
@@ -76,6 +96,14 @@ export default function WilPage() {
         text: new Date(wil.created_at).toLocaleDateString(),
         onClick: () => handleRowClick(wil.id)
     }));
+
+    if (isLoading) {
+        return (
+            <VStack fullWidth fullHeight align="center" justify="center">
+                <Loader2 className={s.spinner} size={32} />
+            </VStack>
+        )
+    }
 
     return (
         <VStack 

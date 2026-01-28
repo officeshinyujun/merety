@@ -36,7 +36,8 @@ const getCategoryIcon = (category: ArchiveCategory) => {
 
 export const convertArchivesToChartData = (
     archives: Archive[],
-    columns: ColumnConfig[]
+    columns: ColumnConfig[],
+    uploaderMap?: Record<string, string>
 ): ChartSectionData[] => {
     return columns.map((col) => ({
         width: col.width,
@@ -84,7 +85,8 @@ export const convertArchivesToChartData = (
             }
             
              if (col.key === 'uploader_id') {
-                 return { text: archive.uploader_id };
+                 const uploaderName = uploaderMap ? uploaderMap[archive.uploader_id] : archive.uploader_id;
+                 return { text: uploaderName || 'Unknown' };
             }
 
             return { text: String(archive[col.key as keyof Archive] || '') };
