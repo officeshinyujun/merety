@@ -1,0 +1,27 @@
+import { VStack } from '@/components/general/VStack';
+import s from './style.module.scss';
+import Hero from '@/components/login-signup/Hero';
+import InputSection from '@/components/login-signup/InputSection';
+import Divider from '@/components/general/Divider';
+import Button from '@/components/general/Button';
+
+export default function SignInPage() {
+    return (
+        <VStack className={s.container} align='center' justify='center' gap={32}>
+            <Hero title='로그인'/>
+            <VStack className={s.contents} align='center' justify='center' gap={20} >
+                <VStack gap={16} align='center' justify='center' style={{width : "100%"}}>
+                    <InputSection text="이메일" placeholder="이메일을 입력하세요" type="email" />
+                    <InputSection text="비밀번호" placeholder="비밀번호를 입력하세요" type="password" />
+                </VStack>
+                <Divider />
+                <VStack className={s.submit} align='center' justify='center' gap={12}>
+                    <Button className={s.signupButton}>
+                        로그인
+                    </Button>
+                    <p>계정이 없으신가요? <a href="/signup">회원가입</a></p>
+                </VStack>
+            </VStack>
+        </VStack>
+    )
+}
