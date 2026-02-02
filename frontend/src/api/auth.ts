@@ -54,6 +54,18 @@ export const authApi = {
     const response = await apiClient.post('/api/auth/change-password', data);
     return response.data;
   },
+
+  // POST /api/upload/profile
+  uploadProfile: async (file: File): Promise<{ url: string }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post('/api/upload/profile', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
 };
 
 export default authApi;

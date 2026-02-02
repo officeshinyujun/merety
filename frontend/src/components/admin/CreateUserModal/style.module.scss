@@ -1,0 +1,78 @@
+
+.container {
+    padding: 24px;
+    background-color: $background-secondary;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid $border-primary;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: $text-primary;
+}
+
+.closeIcon {
+    color: $text-secondary;
+    &:hover {
+        color: $text-primary;
+    }
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0;
+}
+
+.selectInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid $border-primary;
+    outline: none;
+    font-size: 14px;
+    background-color: $background-third;
+    color: $text-primary;
+    cursor: pointer;
+
+    &:focus {
+        border-color: $text-secondary;
+    }
+}
+
+.button {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.tempPasswordBox {
+    background-color: $background-third;
+    color: $text-primary;
+    padding: 12px;
+    border-radius: 8px;
+    width: 100%;
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 16px;
+    text-align: center;
+    border: 1px dashed $border-primary;
+    margin: 8px 0;
+}
+
+.copyButton {
+    background: none;
+    border: none;
+    color: $text-secondary;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    
+    &:hover {
+        color: $text-primary;
+    }
+}

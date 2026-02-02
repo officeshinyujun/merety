@@ -1,3 +1,17 @@
 .container{
     padding: $s-pagePadding;
 }
+
+.createButton {
+    background-color: $background-third;
+    color: $text-primary;
+    padding: $s-12;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid $border-primary !important;
+    border-radius: $s-24 !important;
+    
+    &:hover {
+        background-color: $background-secondary;
+    }
+}

@@ -16,6 +16,8 @@ import { sessionsApi } from '@/api';
 import AddMemberModal from '@/components/admin/AddMemberModal';
 import CreateSessionModal from '@/components/admin/CreateSessionModal';
 import MdEditor from '@/components/general/MdEditor';
+import UserEditCard from "@/components/admin/UserEditCard";
+import ModalContainer from "@/components/general/ModalContainer";
 
 interface StudyDetailData {
     id: string;
@@ -45,6 +47,7 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
     const [sessions, setSessions] = useState<Session[]>([]);
     const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
     const [isCreateSessionModalOpen, setIsCreateSessionModalOpen] = useState(false);
+    const [selectedMember, setSelectedMember] = useState<StudyMember | null>(null);
 
     const fetchStudyData = useCallback(async () => {
         try {
@@ -331,17 +334,17 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                                 justify="between" 
                                 className={s.memberRow}
                             >
-                                <HStack gap={12} align="center" justify="start">
-                                    <img 
-                                        src={member.user.user_image || '/default-avatar.png'} 
-                                        alt={member.user.name || ''}
-                                        className={s.memberImage}
-                                    />
-                                    <VStack gap={2} align="start" justify="center">
-                                        <p className={s.memberName}>{member.user.name || member.user.handle}</p>
-                                        <span className={s.memberEmail}>{member.user.email}</span>
-                                    </VStack>
-                                </HStack>
+                                    <HStack gap={12} align="center" justify="start" onClick={() => setSelectedMember(member)} className={s.memberInfo}>
+                                        <img 
+                                            src={member.user.user_image || '/default-avatar.png'} 
+                                            alt={member.user.name || ''}
+                                            className={s.memberImage}
+                                        />
+                                        <VStack gap={2} align="start" justify="center">
+                                            <p className={s.memberName}>{member.user.name || member.user.handle}</p>
+                                            <span className={s.memberEmail}>{member.user.email}</span>
+                                        </VStack>
+                                    </HStack>
                                 <HStack gap={12} align="center" justify="end">
                                     <span className={s.memberRole}>{member.member_role}</span>
                                     <button 
@@ -429,6 +432,24 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                 fetchStudyData();
             }}
         />
+
+        {selectedMember && (
+            <ModalContainer>
+                <UserEditCard
+                    userId={selectedMember.user.id}
+                    password={""} 
+                    userImage={selectedMember.user.user_image || "/default-profile.png"}
+                    name={selectedMember.user.name || selectedMember.user.handle}
+                    email={selectedMember.user.email}
+                    role={selectedMember.user.role} 
+                    status={selectedMember.user.status}
+                    onClose={() => {
+                        setSelectedMember(null);
+                        fetchStudyData();
+                    }}
+                />
+            </ModalContainer>
+        )}
     </>
     );
 }

@@ -7,9 +7,14 @@ import s from "./style.module.scss"
 import Image from "next/image"
 import Input from "@/components/general/Input"
 import Button from "@/components/general/Button"
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { Camera } from "lucide-react"
+import { authApi } from "@/api"
+import { adminUsersApi } from "@/api"
+import { toast, Toaster } from "react-hot-toast"
 
 interface UserEditCardProps {
+    userId: string;
     userImage: string;
     name: string;
     email : string;
@@ -19,17 +24,53 @@ interface UserEditCardProps {
     onClose: () => void;
 }
 
-export default function UserEditCard({ userImage, name, email, password, role, status, onClose }: UserEditCardProps) {
+export default function UserEditCard({ userId, userImage, name, email, password, role, status, onClose }: UserEditCardProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [editRole, setEditRole] = useState(role);
     const [editStatus, setEditStatus] = useState(status);
     const [tempPassword, setTempPassword] = useState("");
+    const [currentImage, setCurrentImage] = useState(userImage);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleEditClick = () => {
+    const handleImageClick = () => {
+        if (isEditing && fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            const result = await authApi.uploadProfile(file);
+            setCurrentImage(result.url);
+            toast.success("Image uploaded successfully");
+        } catch (error) {
+            console.error("Upload failed", error);
+            toast.error("Failed to upload image");
+        }
+    };
+
+    const handleEditClick = async () => {
         if (isEditing) {
-            // Save logic would go here
-            console.log("Saving:", { editRole, editStatus, tempPassword });
-            setIsEditing(false);
+            try {
+                // 저장 로직
+                await adminUsersApi.updateUser(userId, {
+                    role: editRole as any,
+                    status: editStatus as any,
+                    userImage: currentImage,
+                });
+                
+                toast.success("User updated successfully");
+                setIsEditing(false);
+                // TODO: 리스트 새로고침이 필요할 수 있음 (부모 컴포넌트에서 처리 필요)
+                // 현재는 간단히 닫기만 함 or 부모에게 notify
+                onClose();
+            } catch (error) {
+                console.error("Update failed", error);
+                toast.error("Failed to update user");
+            }
         } else {
             setIsEditing(true);
         }
@@ -42,13 +83,38 @@ export default function UserEditCard({ userImage, name, email, password, role, s
             gap={24}
             className={s.container}
         >
+            <Toaster />
             <HStack fullWidth justify="between" align="center">
                 <h2 className={s.title}>Edit User</h2>
                 <X size={24} onClick={onClose} style={{ cursor: 'pointer' }} className={s.closeIcon} />
             </HStack>
             
             <VStack fullWidth align="center" gap={12}>
-                <Image src={userImage} alt={name} width={80} height={80} style={{ borderRadius: '50%' }} />
+                <div 
+                    className={s.imageContainer} 
+                    onClick={handleImageClick}
+                    style={{ cursor: isEditing ? 'pointer' : 'default', position: 'relative' }}
+                >
+                    <Image 
+                        src={currentImage} 
+                        alt={name} 
+                        width={80} 
+                        height={80} 
+                        style={{ borderRadius: '50%', objectFit: 'cover' }} 
+                    />
+                    {isEditing && (
+                        <div className={s.imageOverlay}>
+                            <Camera size={24} color="white" />
+                        </div>
+                    )}
+                    <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        style={{ display: 'none' }} 
+                        accept="image/*"
+                        onChange={handleFileChange}
+                    />
+                </div>
                 <h3 className={s.name}>{name}</h3>
             </VStack>
 

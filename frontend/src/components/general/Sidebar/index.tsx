@@ -15,7 +15,7 @@ import { Study, StudyType } from '@/types/study';
 
 
 import { authApi } from '@/api/auth';
-import { User } from '@/types/user';
+import { User, UserRole } from '@/types/user';
 
 export default function Sidebar() {
     const router = useRouter();
@@ -106,7 +106,12 @@ export default function Sidebar() {
         <VStack className={s.container} align='start' justify='between'>
             <VStack className={s.contents} gap={14} align='start' justify='start' fullWidth>
                 <Image src={LogoImage} alt="logo" width={71} onClick={() => router.push('/')} />
-                {sidebarSections.map((section, index) => (
+                {sidebarSections.filter(section => {
+                    if (section.title === 'Admin') {
+                        return userInfo?.role === UserRole.SUPER_ADMIN;
+                    }
+                    return true;
+                }).map((section, index) => (
                     //@ts-ignore
                     <SidebarSection key={index} title={section.title} contents={section.contents}/>
                 ))}
@@ -126,7 +131,13 @@ export default function Sidebar() {
                         <span>{userInfo?.role || 'Member'}</span>
                     </VStack>
                 </HStack>
-                <Cog size={24} color="#959595" strokeWidth={1.5} />
+                <Cog 
+                    size={24} 
+                    color="#959595" 
+                    strokeWidth={1.5} 
+                    onClick={() => router.push('/profile')}
+                    style={{ cursor: 'pointer' }}
+                />
             </HStack>
         </VStack>
     )

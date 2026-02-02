@@ -1,0 +1,76 @@
+
+.container {
+    padding: $s-pagePadding;
+    min-height: 100vh;
+    background-color: $background-secondary;
+}
+
+.card {
+    background-color: $background-third;
+    border-radius: 12px;
+    padding: $s-32;
+    border: 1px solid $border-primary;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profileImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid $background-fourth;
+    margin-bottom: $s-16;
+}
+
+.name {
+    font-size: $f-xxl;
+    font-weight: $bold;
+    color: $text-primary;
+    margin-bottom: $s-4;
+}
+
+.handle {
+    font-size: $f-md;
+    color: $text-secondary;
+    margin-bottom: $s-16;
+}
+
+.infoRow {
+    width: 100%;
+    padding: $s-16 0;
+    border-bottom: 1px solid $border-primary;
+    
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.label {
+    font-size: $f-sm;
+    color: $text-secondary;
+    font-weight: $medium;
+}
+
+.value {
+    font-size: $f-md;
+    color: $text-primary;
+}
+
+.logoutButton {
+    background-color: $text-wrong;
+    color: white;
+    width: 100%;
+    padding: $s-12;
+    border-radius: 8px;
+    font-weight: $medium;
+    margin-top: $s-32;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
