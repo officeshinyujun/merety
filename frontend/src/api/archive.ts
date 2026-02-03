@@ -17,6 +17,11 @@ export interface CreateLinkRequest {
   url: string;
 }
 
+export interface UpdateArchiveRequest {
+  title?: string;
+  category?: ArchiveCategory;
+}
+
 export const archiveApi = {
   // GET /api/studies/:studyId/archive
   getArchives: async (studyId: string, params?: ArchiveQueryParams): Promise<{ data: Archive[] }> => {
@@ -42,6 +47,12 @@ export const archiveApi = {
   // POST /api/studies/:studyId/archive/link
   createLink: async (studyId: string, data: CreateLinkRequest): Promise<{ archive: Archive }> => {
     const response = await apiClient.post(`/api/studies/${studyId}/archive/link`, data);
+    return response.data;
+  },
+
+  // PATCH /api/archive/:archiveId
+  updateArchive: async (archiveId: string, data: UpdateArchiveRequest): Promise<Archive> => {
+    const response = await apiClient.patch(`/api/archive/${archiveId}`, data);
     return response.data;
   },
 

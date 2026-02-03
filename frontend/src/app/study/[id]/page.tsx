@@ -90,8 +90,8 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
                                 key={session.id}
                                 title={session.title}
                                 user={{ 
-                                    name: "관리자", // TODO: 실제 생성자 정보 필요하면 API 수정 필요
-                                    profileImage: "/default-avatar.png" 
+                                    name: session.createUser?.name || "관리자",
+                                    profileImage: session.createUser?.userImage || "/default-avatar.png" 
                                 }}
                                 createdAt={session.created_at}
                             />

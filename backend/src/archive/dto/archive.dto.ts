@@ -26,3 +26,13 @@ export class ArchiveQueryDto {
   @IsEnum(ArchiveType)
   type?: ArchiveType;
 }
+
+export class UpdateArchiveDto {
+  @IsOptional()
+  @IsString()
+  title?: string;
+
+  @IsOptional()
+  @IsEnum(ArchiveCategory)
+  category?: ArchiveCategory;
+}

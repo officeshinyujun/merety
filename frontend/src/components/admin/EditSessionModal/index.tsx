@@ -10,6 +10,7 @@ import { X, Loader2, Calendar, Upload, Trash2, FileIcon } from 'lucide-react';
 import { sessionsApi, UpdateSessionRequest, archiveApi } from '@/api';
 import { Session } from '@/types/session';
 import { Archive, ArchiveCategory } from '@/types/archive';
+import CategoryTag from '@/components/study/Archives/CategoryTag';
 import MdEditor from '@/components/general/MdEditor';
 import s from './style.module.scss';
 
@@ -140,6 +141,20 @@ export default function EditSessionModal({ isOpen, session, onClose, onSuccess }
         setArchives(prev => prev.filter(a => a.id !== archiveId));
     };
 
+    const handleToggleCategory = async (archiveId: string, currentCategory: ArchiveCategory) => {
+        const categories = [ArchiveCategory.DOC, ArchiveCategory.SLIDE, ArchiveCategory.CODE, ArchiveCategory.ETC];
+        const currentIndex = categories.indexOf(currentCategory);
+        const nextCategory = categories[(currentIndex + 1) % categories.length];
+
+        try {
+            const updated = await archiveApi.updateArchive(archiveId, { category: nextCategory });
+            setArchives(prev => prev.map(a => a.id === archiveId ? updated : a));
+        } catch (err) {
+            console.error('Failed to update category:', err);
+            setError('파일 타입 변경에 실패했습니다.');
+        }
+    };
+
     const handleRemoveLegacyMaterial = (material: string) => {
         setLegacyMaterials(prev => prev.filter(m => m !== material));
     };
@@ -219,7 +234,11 @@ export default function EditSessionModal({ isOpen, session, onClose, onSuccess }
                                 {archives.map(archive => (
                                     <div key={archive.id} className={s.fileItem}>
                                         <HStack align="center" gap={8} style={{ overflow: 'hidden' }}>
-                                            <FileIcon size={16} className={s.fileIcon} />
+                                            <CategoryTag 
+                                                text={archive.category} 
+                                                isClick={true} 
+                                                onClick={() => handleToggleCategory(archive.id, archive.category)}
+                                            />
                                             <span className={s.fileName}>{archive.title}</span>
                                         </HStack>
                                         <button 

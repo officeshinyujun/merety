@@ -17,6 +17,7 @@ import {
 import { StudyMemberRole } from '../entities/study-membership.entity';
 import {
   UploadArchiveDto,
+  UpdateArchiveDto,
   CreateLinkDto,
   ArchiveQueryDto,
 } from './dto/archive.dto';
@@ -154,6 +155,26 @@ export class ArchiveService {
     const savedArchive = await this.archiveRepository.save(archive);
 
     return { archive: savedArchive };
+  }
+
+  async update(archiveId: string, dto: UpdateArchiveDto, user: User) {
+    const archive = await this.archiveRepository.findOne({
+      where: { id: archiveId, is_deleted: false },
+    });
+
+    if (!archive) {
+      throw new NotFoundException('아카이브를 찾을 수 없습니다.');
+    }
+
+    // 권한 체크: 업로더 본인 또는 스터디 매니저 또는 슈퍼 어드민
+    if (user.role !== UserRole.SUPER_ADMIN && archive.uploader_id !== user.id) {
+      await this.checkStudyManagerPermission(archive.study_id, user);
+    }
+
+    if (dto.title) archive.title = dto.title;
+    if (dto.category) archive.category = dto.category;
+
+    return this.archiveRepository.save(archive);
   }
 
   /**

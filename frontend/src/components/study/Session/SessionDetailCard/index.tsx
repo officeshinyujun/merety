@@ -36,7 +36,7 @@ export default function SessionDetailCard({ id, title, user, round, status, date
                 </div>
             </HStack>
             <HStack className={s.contents} align='center' justify='start' gap={8}>
-                <Image src={user.userImage} alt={user.name} width={24} height={24}/>
+                <Image src={user.userImage || '/default-avatar.png'} alt={user.name} width={24} height={24}/>
                 <p>{user.name}</p>
             </HStack>
             <HStack className={s.contents} align='center' justify='start' gap={8}>

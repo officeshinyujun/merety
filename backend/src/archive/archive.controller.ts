@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Delete,
   Body,
   Param,
@@ -21,6 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ArchiveService } from './archive.service';
 import {
   UploadArchiveDto,
+  UpdateArchiveDto,
   CreateLinkDto,
   ArchiveQueryDto,
 } from './dto/archive.dto';
@@ -107,6 +109,20 @@ export class ArchiveController {
   @HttpCode(HttpStatus.OK)
   async remove(@Param('archiveId') archiveId: string) {
     return this.archiveService.remove(archiveId);
+  }
+
+  /**
+   * PATCH /api/archive/:archiveId
+   * 아카이브 수정 (업로더 또는 매니저)
+   */
+  @Patch('archive/:archiveId')
+  @HttpCode(HttpStatus.OK)
+  async update(
+    @Param('archiveId') archiveId: string,
+    @Body() dto: UpdateArchiveDto,
+    @CurrentUser() user: User,
+  ) {
+    return this.archiveService.update(archiveId, dto, user);
   }
 
   /**

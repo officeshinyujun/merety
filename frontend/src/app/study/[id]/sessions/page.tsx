@@ -68,10 +68,10 @@ export default function StudySessionPage({ params }: { params: Promise<{ id: str
                                     id={session.id}
                                     title={session.title}
                                     user={{
-                                        name: 'Admin', // TODO: user info fetch
-                                        userImage: undefined
+                                        name: session.createUser?.name || 'Admin',
+                                        userImage: session.createUser?.userImage || '/default-avatar.png'
                                     }}
-                                    round={session.session_no}
+                                    round={session.round}
                                     status="active"
                                     date={session.scheduled_at}
                                 />
@@ -86,10 +86,10 @@ export default function StudySessionPage({ params }: { params: Promise<{ id: str
                                     id={session.id}
                                     title={session.title}
                                     user={{
-                                        name: 'Admin', // TODO: user info fetch
-                                        userImage: undefined
+                                        name: session.createUser?.name || 'Admin',
+                                        userImage: session.createUser?.userImage || '/default-avatar.png'
                                     }}
-                                    round={session.session_no}
+                                    round={session.round}
                                     status="archived"
                                     date={session.scheduled_at}
                                 />
