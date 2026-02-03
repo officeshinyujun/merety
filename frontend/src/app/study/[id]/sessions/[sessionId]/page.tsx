@@ -15,6 +15,8 @@ import { Loader2, CheckCircle } from 'lucide-react';
 import { authApi } from '@/api';
 import { User } from '@/types/user';
 import Button from '@/components/general/Button';
+import FilePreviewModal from '@/components/general/FilePreviewModal';
+import { Archive } from '@/types/archive';
 
 export default function SessionDetailPage({ params }: { params: Promise<{ id: string, sessionId: string }> }) {
     const { sessionId } = use(params);
@@ -23,6 +25,8 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     const [isLoading, setIsLoading] = useState(true);
     const [isChecking, setIsChecking] = useState(false);
     const [error, setError] = useState('');
+    const [previewModalOpen, setPreviewModalOpen] = useState(false);
+    const [selectedArchive, setSelectedArchive] = useState<{ url: string; title: string, isLink: boolean } | null>(null);
 
     useEffect(() => {
         const fetchSession = async () => {
@@ -115,8 +119,12 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                             key={archive.id} 
                             name={archive.title} 
                             onClick={() => {
-                                const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-                                window.open(`${baseUrl}${archive.url}`, '_blank');
+                                setSelectedArchive({ 
+                                    url: archive.url as string, 
+                                    title: archive.title,
+                                    isLink: archive.type === 'LINK'
+                                });
+                                setPreviewModalOpen(true);
                             }}
                         />
                     ))}
@@ -154,6 +162,16 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                     })}
                 </VStack>
             </VStack>
+
+            {selectedArchive && (
+                <FilePreviewModal 
+                    isOpen={previewModalOpen}
+                    onClose={() => setPreviewModalOpen(false)}
+                    fileUrl={selectedArchive.url}
+                    fileName={selectedArchive.title}
+                    isLink={selectedArchive.isLink}
+                />
+            )}
         </VStack>
     );
 }
