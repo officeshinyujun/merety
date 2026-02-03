@@ -1,0 +1,53 @@
+@import "@/constants/COLORS.scss";
+@import "@/constants/FONTS.scss";
+@import "@/constants/SPACING.scss";
+
+.container {
+    padding: $s-pagePadding;
+    background-color: $background-secondary;
+    color: $text-primary;
+    overflow-y: scroll;
+}
+
+.backButton {
+    cursor: pointer;
+    transition: opacity 0.2s;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.contentWrapper {
+    width: 100%;
+}
+
+.title {
+    font-size: $f-xxl;
+    font-weight: $bold;
+    color: $text-primary;
+}
+
+.meta {
+    padding: $s-8 0;
+}
+
+.authorName {
+    font-weight: $medium;
+    font-size: $f-md;
+}
+
+.authorImage {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+}
+
+.date {
+    color: $text-secondary;
+    font-size: $f-sm;
+}
+
+.editorContainer {
+    width: 100%;
+}

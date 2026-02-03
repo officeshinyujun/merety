@@ -23,6 +23,24 @@ export class TilController {
   constructor(private readonly tilService: TilService) {}
   
   /**
+   * GET /api/til
+   * 전체 TIL 목록 조회 (글로벌)
+   */
+  @Get('til')
+  async findAll(@Query() query: TilQueryDto) {
+    return this.tilService.findAll(query);
+  }
+
+  /**
+   * GET /api/til/stats
+   * 내 TIL 통계 조회
+   */
+  @Get('til/stats')
+  async getMyStats(@CurrentUser() user: User) {
+    return this.tilService.getMyStats(user);
+  }
+
+  /**
    * GET /api/me/til
    * 내 개인 TIL 목록 조회
    */

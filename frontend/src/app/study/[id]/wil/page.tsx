@@ -44,7 +44,10 @@ export default function WilPage() {
                 setIsLoading(true);
                 // Fetch up to 1000 posts to apply client-side filtering on specific date ranges
                 // Ideally this should be server-side filtered
-                const response = await tilApi.getTilPosts(studyId, { limit: 1000 });
+                const response = await tilApi.getTilPosts(studyId, { 
+                    limit: 1000,
+                    category: 'WIL'
+                });
                 setWils(response.data);
             } catch (error) {
                 console.error("Failed to fetch WILs:", error);

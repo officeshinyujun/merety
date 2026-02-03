@@ -4,7 +4,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between, IsNull } from 'typeorm';
 import { TilPost, Study, User, UserRole, StudyMembership } from '../entities';
 import { StudyMemberRole } from '../entities/study-membership.entity';
 import { CreateTilDto, UpdateTilDto, TilQueryDto } from './dto/til.dto';
@@ -39,7 +39,8 @@ export class TilService {
       .createQueryBuilder('til')
       .leftJoinAndSelect('til.author', 'author')
       .where('til.study_id = :studyId', { studyId })
-      .andWhere('til.is_deleted = false');
+      .andWhere('til.is_deleted = false')
+      .andWhere('til.category = :category', { category: 'WIL' });
 
     if (author_id) {
       queryBuilder.andWhere('til.author_id = :author_id', { author_id });
@@ -159,6 +160,7 @@ export class TilService {
       title: dto.title,
       content_md: dto.content_md,
       tags: dto.tags || [],
+      category: (dto.category as any) || (studyId ? 'WIL' : 'TIL'),
     });
 
     const savedTil = await this.tilRepository.save(til);
@@ -178,7 +180,8 @@ export class TilService {
       .leftJoinAndSelect('til.author', 'author')
       .where('til.author_id = :userId', { userId: user.id })
       .andWhere('til.study_id IS NULL')
-      .andWhere('til.is_deleted = false');
+      .andWhere('til.is_deleted = false')
+      .andWhere('til.category = :category', { category: 'TIL' });
 
     if (tag) {
       queryBuilder.andWhere(':tag = ANY(til.tags)', { tag });
@@ -269,5 +272,101 @@ export class TilService {
     await this.tilRepository.save(til);
 
     return { success: true, message: '게시글이 삭제되었습니다.' };
+  }
+
+  /**
+   * 전체 TIL 목록 조회 (글로벌)
+   */
+  async findAll(query: TilQueryDto) {
+    const { page = 1, limit = 10, search, author_id, tag, category = 'TIL' } = query;
+    const skip = (page - 1) * limit;
+
+    const queryBuilder = this.tilRepository
+      .createQueryBuilder('til')
+      .leftJoinAndSelect('til.author', 'author')
+      .where('til.is_deleted = false')
+      .andWhere('til.category = :category', { category });
+
+    if (category === 'TIL') {
+      queryBuilder.andWhere('til.study_id IS NULL');
+    }
+
+    if (search) {
+      queryBuilder.andWhere(
+        '(til.title LIKE :search OR til.content_md LIKE :search)',
+        { search: `%${search}%` },
+      );
+    }
+
+    if (author_id) {
+      queryBuilder.andWhere('til.author_id = :author_id', { author_id });
+    }
+
+    if (tag) {
+      queryBuilder.andWhere(':tag = ANY(til.tags)', { tag });
+    }
+
+    queryBuilder.orderBy('til.created_at', 'DESC').skip(skip).take(limit);
+
+    const [tils, total] = await queryBuilder.getManyAndCount();
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: tils.map((t) => ({
+        id: t.id,
+        study_id: t.study_id,
+        author_id: t.author_id,
+        author_name: t.author?.name || '',
+        author_image: t.author?.user_image || '',
+        title: t.title,
+        content_md: t.content_md,
+        tags: t.tags,
+        created_at: t.created_at,
+        updated_at: t.updated_at,
+        is_deleted: t.is_deleted,
+      })),
+      pagination: {
+        total,
+        page,
+        limit,
+        total_pages: totalPages,
+        has_next: page < totalPages,
+        has_prev: page > 1,
+      },
+    };
+  }
+
+  /**
+   * 내 TIL 통계 조회 (이번 달, 전체)
+   */
+  async getMyStats(user: User) {
+    const totalCount = await this.tilRepository.count({
+      where: {
+        author_id: user.id,
+        is_deleted: false,
+        category: 'TIL' as any,
+        study_id: IsNull()
+      },
+    });
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+
+    const monthlyCount = await this.tilRepository.count({
+      where: {
+        author_id: user.id,
+        is_deleted: false,
+        category: 'TIL' as any,
+        study_id: IsNull(),
+        created_at: Between(startOfMonth, endOfMonth),
+      },
+    });
+
+    return {
+      total_count: totalCount,
+      monthly_count: monthlyCount,
+    };
   }
 }

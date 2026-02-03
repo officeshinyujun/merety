@@ -1,5 +1,10 @@
+@import "@/constants/COLORS.scss";
+@import "@/constants/FONTS.scss";
+@import "@/constants/SPACING.scss";
+
 .container {
     padding: $s-pagePadding;
+    background-color: $background-secondary;
     overflow-y: scroll;
 }
 
@@ -9,4 +14,9 @@
 
 .tilList{
     padding: $s-16;
+}
+
+.writeButton{
+    background-color: $text-primary !important;
+    padding: $s-12;
 }

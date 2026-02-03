@@ -18,6 +18,10 @@ export class CreateTilDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
+
+  @IsOptional()
+  @IsString()
+  category?: string;
 }
 
 export class UpdateTilDto {
@@ -33,6 +37,10 @@ export class UpdateTilDto {
   @IsArray()
   @IsString({ each: true })
   tags?: string[];
+
+  @IsOptional()
+  @IsString()
+  category?: string;
 }
 
 export class TilQueryDto {
@@ -55,4 +63,12 @@ export class TilQueryDto {
   @IsOptional()
   @IsBoolean()
   mine?: boolean;
+
+  @IsOptional()
+  @IsString()
+  category?: string;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
 }

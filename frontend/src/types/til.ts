@@ -2,6 +2,7 @@ import { UUID, Timestamp } from "./common";
 
 export interface TilPost {
   id: UUID;
+  category: 'TIL' | 'WIL';
   study_id: UUID;
   author_id: UUID;
   author_name: string;

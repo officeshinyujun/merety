@@ -7,11 +7,12 @@ interface Props {
     children?: React.ReactNode;
     leftIcon ?: string;
     rightIcon ?: string;
+    icon ?: React.ReactNode;
     disabled?: boolean;
     style?: React.CSSProperties;
 }
 
-export default function Button({ width, height, onClick, className, children, leftIcon, rightIcon, disabled, style }: Props) {
+export default function Button({ width, height, onClick, className, children, leftIcon, rightIcon, icon, disabled, style }: Props) {
     return (
         <button 
             className={className} 
@@ -33,6 +34,7 @@ export default function Button({ width, height, onClick, className, children, le
                 ...style
             }}
         >
+            {icon}
             {leftIcon && <img width={24} height={24} src={leftIcon} alt="leftIcon" />}
             {children}
             {rightIcon && <img width={24} height={24} src={rightIcon} alt="rightIcon" />}

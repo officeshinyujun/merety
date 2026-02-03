@@ -42,6 +42,7 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
                 title: title.trim(),
                 content_md: content,
                 tags: [], // 추후 태그 기능 추가 가능
+                category: 'WIL',
             });
             
             setTitle('');

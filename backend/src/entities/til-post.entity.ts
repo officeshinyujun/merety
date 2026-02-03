@@ -10,10 +10,22 @@ import {
 import { Study } from './study.entity';
 import { User } from './user.entity';
 
+export enum TilCategory {
+  TIL = 'TIL',
+  WIL = 'WIL',
+}
+
 @Entity('til_posts')
 export class TilPost {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({
+    type: 'enum',
+    enum: TilCategory,
+    default: TilCategory.TIL,
+  })
+  category: TilCategory;
 
   @Column({ name: 'study_id', nullable: true })
   study_id: string | null;
