@@ -1,0 +1,82 @@
+.modal {
+    width: 900px;
+    max-width: 95vw;
+    background: $background-secondary;
+    border-radius: $s-16;
+    padding: $s-32;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.title {
+    font-size: $f-xl;
+    font-weight: $bold;
+    color: $text-primary;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: $text-secondary;
+    cursor: pointer;
+    padding: $s-4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+        color: $text-primary;
+        transform: rotate(90deg);
+    }
+}
+
+.label {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-secondary;
+}
+
+.editorWrapper {
+    width: 100%;
+    min-height: 400px;
+    background: $background-third;
+    border-radius: $s-12;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.error {
+    color: $text-wrong;
+    font-size: $f-sm;
+}
+
+.cancelButton {
+    background: rgba(255, 255, 255, 0.05);
+    color: $text-primary;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.submitButton {
+    background: #4a5ef7; // Primary brand color, keeping for now as there's no brand variable
+    color: $text-primary;
+    font-weight: $semi-bold;
+
+    &:hover {
+        background: #3a4ed7;
+        transform: translateY(-2px);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

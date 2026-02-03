@@ -245,26 +245,23 @@ export class SessionsService {
 
     const savedSession = await this.sessionRepository.save(session);
 
-    if (dto.archiveIds && dto.archiveIds.length > 0) {
-      // 1. Unlink (optional if we just want to replace relations for items in list)
-      // Usually "Edit Materials" means "Here is the new list". 
-      // So we unlink ALL current files for this session, then link the new ones?
-      // Or just append?
-      // Let's assume the user provides the *full* list of current archives.
-      
-      // 1. Unlink all archives for this session
+    // Update archives association
+    if (dto.archiveIds !== undefined) {
+      // 1. Unlink all current archives for this session
       await this.archiveRepository.update(
         { session_id: sessionId },
         { session_id: null as any },
       );
 
-      // 2. Link new list
-      await this.archiveRepository
-        .createQueryBuilder()
-        .update(Archive)
-        .set({ session_id: sessionId })
-        .where('id IN (:...ids)', { ids: dto.archiveIds })
-        .execute();
+      // 2. Link new list if provided
+      if (dto.archiveIds.length > 0) {
+        await this.archiveRepository
+          .createQueryBuilder()
+          .update(Archive)
+          .set({ session_id: sessionId })
+          .where('id IN (:...ids)', { ids: dto.archiveIds })
+          .execute();
+      }
     }
 
     return savedSession;

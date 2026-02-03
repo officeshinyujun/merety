@@ -9,6 +9,9 @@ import { Search } from "lucide-react";
 import DateCard from "@/components/study/WIL/DateCard";
 import ChartBase from "@/components/general/Chart/ChartBase";
 import ChartSection from "@/components/general/Chart/ChartSection";
+import Button from "@/components/general/Button";
+import CreateWilModal from "@/components/study/WIL/CreateWilModal";
+import { Edit3 } from "lucide-react";
 
 import { useState, useMemo, useEffect } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
@@ -27,12 +30,13 @@ export default function WilPage() {
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [startDate, setStartDate] = useState("2024-01-01");
-    const [endDate, setEndDate] = useState("2024-12-31");
+    const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
 
 
     
     const [wils, setWils] = useState<TilPost[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,6 +54,19 @@ export default function WilPage() {
         };
         fetchData();
     }, [studyId]);
+
+    const handleSuccess = () => {
+        // Refresh data
+        const fetchData = async () => {
+            try {
+                const response = await tilApi.getTilPosts(studyId, { limit: 1000 });
+                setWils(response.data);
+            } catch (error) {
+                console.error("Failed to fetch WILs:", error);
+            }
+        };
+        fetchData();
+    };
 
     const filteredWils = useMemo(() => {
         return wils.filter(wil => {
@@ -115,7 +132,16 @@ export default function WilPage() {
             style={{padding : "48px 128px"}} 
             className={s.container}
         >
-            <SubTitle text="WIL" />
+            <HStack fullWidth align="center" justify="between">
+                <SubTitle text="WIL" />
+                <Button 
+                    onClick={() => setIsCreateModalOpen(true)}
+                    style={{ background: '#4a5ef7', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}
+                >
+                    <Edit3 size={18} />
+                    글쓰기
+                </Button>
+            </HStack>
                         <VStack 
                             fullWidth
                             fullHeight
@@ -172,6 +198,13 @@ export default function WilPage() {
                     onPageChange={setCurrentPage}
                 />
             </VStack>
+
+            <CreateWilModal 
+                isOpen={isCreateModalOpen}
+                studyId={studyId}
+                onClose={() => setIsCreateModalOpen(false)}
+                onSuccess={handleSuccess}
+            />
         </VStack>
     )
 }

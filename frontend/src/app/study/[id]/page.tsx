@@ -9,7 +9,7 @@ import SessionCard from '@/components/study/Session/SessionCard';
 import UserCard from '@/components/general/UserCard';
 import MainCArchivesCard from '@/components/study/Archives/MainCard';
 import WILCard from '@/components/study/WIL/WILCard';
-import { studiesApi, StudyMember } from '@/api';
+import { studiesApi, StudyMember, tilApi, archiveApi } from '@/api';
 import { sessionsApi } from '@/api';
 import { Study, StudyType, StudyStatus } from '@/types/study';
 import { Session } from '@/types/session';
@@ -21,6 +21,8 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
     const [study, setStudy] = useState<Study | null>(null);
     const [sessions, setSessions] = useState<Session[]>([]);
     const [members, setMembers] = useState<StudyMember[]>([]);
+    const [archives, setArchives] = useState<any[]>([]);
+    const [wil, setWil] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -28,10 +30,12 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-                const [studyRes, sessionsRes, membersRes] = await Promise.all([
+                const [studyRes, sessionsRes, membersRes, archivesRes, tilRes] = await Promise.all([
                     studiesApi.getStudy(id),
                     sessionsApi.getSessions(id),
-                    studiesApi.getMembers(id)
+                    studiesApi.getMembers(id),
+                    archiveApi.getArchives(id),
+                    tilApi.getTilPosts(id)
                 ]);
 
                 setStudy(studyRes);
@@ -39,6 +43,8 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
                 setSessions(sessionsRes.data || sessionsRes);
                 // @ts-ignore: API response structure might differ
                 setMembers(membersRes.data || membersRes);
+                setArchives(archivesRes.data || []);
+                setWil(tilRes.data || []);
             } catch (err) {
                 console.error('Failed to fetch study detail:', err);
                 setError('스터디 정보를 불러오는데 실패했습니다.');
@@ -66,9 +72,7 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
         );
     }
 
-    // 임시 데이터 (나중에 API 연동 필요)
-    const archives: any[] = [];
-    const wil: any[] = [];
+    // 데이터 렌더링 시작
 
     return (
         <VStack align='start' justify='start' fullWidth fullHeight gap={16} style={{padding : "48px 128px"}} className={s.container}>
@@ -98,14 +102,25 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
                 )}
             </Section>
 
-            {/* <Section title="WIL" className={s.wilSection} viewMoreHref={`/study/${id}/wil`} >
-                <VStack fullWidth align='start' justify='start' gap={12} className={s.wilList}>
-                    {wil.slice(0, 3).map((wil: any, idx) => (
-                        <WILCard key={idx} title={wil.title} user={wil.createUser} />
-                    ))}
-                    {wil.length > 3 && <p className={s.moreCount}>+{wil.length - 3}개</p>}
-                </VStack>
-            </Section> */}
+            <Section title="WIL" className={s.wilSection} viewMoreHref={`/study/${id}/wil`} >
+                {wil.length > 0 ? (
+                    <VStack fullWidth align='start' justify='start' gap={12} className={s.wilList}>
+                        {wil.slice(0, 3).map((item, idx) => (
+                            <WILCard 
+                                key={idx} 
+                                title={item.title} 
+                                user={{
+                                    name: item.author_name || '익명',
+                                    userImage: item.author_image || '/default-avatar.png'
+                                }} 
+                            />
+                        ))}
+                        {wil.length > 3 && <p className={s.moreCount}>+{wil.length - 3}개</p>}
+                    </VStack>
+                ) : (
+                    <p className={s.emptyMessage}>등록된 WIL이 없습니다.</p>
+                )}
+            </Section>
 
             <Section title='Members' viewMoreHref={`/study/${id}/members`}>
                 {members.length > 0 ? (
@@ -130,14 +145,18 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
                 )}
             </Section>
 
-            {/* <Section title='Archives' viewMoreHref={`/study/${id}/archives`}>
-                <HStack align='center' justify='start' gap={12} fullWidth style={{padding:16}} >
-                    {archives.slice(0, 3).map((item, idx) => (
-                        <MainCArchivesCard key={idx} type={item.category as 'DOC' | 'SLIDE' | 'CODE' | 'LINK' | 'ETC'} title={item.title} />
-                    ))}
-                    {archives.length > 3 && <p className={s.moreCount}>+{archives.length - 3}개</p>}
-                </HStack>
-            </Section>   */}
+            <Section title='Archives' viewMoreHref={`/study/${id}/archives`}>
+                {archives.length > 0 ? (
+                    <HStack align='center' justify='start' gap={12} fullWidth style={{padding:16}} >
+                        {archives.slice(0, 3).map((item, idx) => (
+                            <MainCArchivesCard key={idx} type={item.category as 'DOC' | 'SLIDE' | 'CODE' | 'LINK' | 'ETC'} title={item.title} />
+                        ))}
+                        {archives.length > 3 && <p className={s.moreCount}>+{archives.length - 3}개</p>}
+                    </HStack>
+                ) : (
+                    <p className={s.emptyMessage}>등록된 자료가 없습니다.</p>
+                )}
+            </Section>
         </VStack>
     );
 }
