@@ -8,6 +8,7 @@ export interface MyStudy {
   type: StudyType;
   is_manager: boolean;
   member_count: number;
+  member_images: string[];
 }
 
 export interface TilStats {
@@ -35,6 +36,7 @@ export interface ActivityLog {
 export interface DashboardData {
   my_studies: MyStudy[];
   til_stats: TilStats;
+  recent_tils: Array<{ id: UUID; title: string; created_at: string }>;
   recent_activities: ActivityLog[];
   calendar_events: CalendarEvent[];
 }

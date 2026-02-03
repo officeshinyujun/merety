@@ -1,6 +1,7 @@
 .container {
     height: 100vh;
     width: 100vw;
+    color: $text-primary;
 }
 
 .contents{
@@ -60,4 +61,12 @@
 
 .calendar{
     width: 100%;
+}
+
+.link{
+    text-decoration: none;
+    color: $text-primary;
+    &:hover{
+        text-decoration: underline;
+    }
 }

@@ -25,11 +25,13 @@ const nextConfig: NextConfig = {
   `,
 },
 
+  output: 'standalone',
   async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
     return [
       {
         source: '/uploads/:path*',
-        destination: 'http://localhost:3001/uploads/:path*',
+        destination: `${apiUrl}/uploads/:path*`,
       },
     ];
   },

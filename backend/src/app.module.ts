@@ -33,6 +33,7 @@ import { TeamModule } from './team/team.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MetricsModule } from './admin/metrics/metrics.module';
 import { UploadModule } from './upload/upload.module'; // [NEW]
+import { CommonModule } from './common/common.module'; // [NEW]
 
 @Module({
   imports: [
@@ -78,6 +79,7 @@ import { UploadModule } from './upload/upload.module'; // [NEW]
     }),
 
     // Feature Modules
+    CommonModule,
     AuthModule,
     AdminUsersModule,
     StudiesModule,

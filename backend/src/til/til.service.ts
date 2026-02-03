@@ -8,6 +8,8 @@ import { Repository, Between, IsNull } from 'typeorm';
 import { TilPost, Study, User, UserRole, StudyMembership } from '../entities';
 import { StudyMemberRole } from '../entities/study-membership.entity';
 import { CreateTilDto, UpdateTilDto, TilQueryDto } from './dto/til.dto';
+import { ActivityLoggerService } from '../common/services/activity-logger.service';
+import { ActionType, EntityType } from '../entities';
 
 @Injectable()
 export class TilService {
@@ -18,6 +20,7 @@ export class TilService {
     private studyRepository: Repository<Study>,
     @InjectRepository(StudyMembership)
     private membershipRepository: Repository<StudyMembership>,
+    private activityLoggerService: ActivityLoggerService,
   ) {}
 
   /**
@@ -270,6 +273,15 @@ export class TilService {
     // Soft delete
     til.is_deleted = true;
     await this.tilRepository.save(til);
+
+    // Log activity
+    await this.activityLoggerService.logActivity(
+      user.id,
+      ActionType.DELETE,
+      EntityType.TIL_POST,
+      til.id,
+      { title: til.title },
+    );
 
     return { success: true, message: '게시글이 삭제되었습니다.' };
   }

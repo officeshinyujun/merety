@@ -10,6 +10,8 @@ import { Repository } from 'typeorm';
 import { User, UserStatus } from '../entities';
 import { LoginDto, ChangePasswordDto } from './dto/auth.dto';
 import { comparePassword, hashPassword } from '../common/utils/password.util';
+import { ActivityLoggerService } from '../common/services/activity-logger.service';
+import { ActionType, EntityType } from '../entities';
 import { JwtPayload } from './strategies/jwt.strategy';
 
 @Injectable()
@@ -18,6 +20,7 @@ export class AuthService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService,
+    private activityLoggerService: ActivityLoggerService,
   ) {}
 
   /**
@@ -53,6 +56,14 @@ export class AuthService {
 
     // 토큰 생성
     const tokens = await this.generateTokens(user);
+
+    // 로그인 활동 기록
+    await this.activityLoggerService.logActivity(
+      user.id,
+      ActionType.LOGIN,
+      EntityType.USER,
+      user.id,
+    );
 
     // 민감한 정보 제거
     const { password_hash, ...userWithoutPassword } = user;
