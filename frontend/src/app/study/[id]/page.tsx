@@ -79,7 +79,7 @@ export default function StudyDetail({ params }: { params: Promise<{ id: string }
             <Title text={study.name} isArchived={study.status} type={study.type} />
             
             <Section title="Overview" className={s.overviewSection} viewMoreHref={`/study/${id}/overview`}>
-                <p>{study.overview?.description || '스터디 설명이 없습니다.'}</p>
+                <p>{study.slug || '스터디 설명이 없습니다.'}</p>
             </Section>
 
             <Section title="Sessions" className={s.sessionsSection} viewMoreHref={`/study/${id}/sessions`}>

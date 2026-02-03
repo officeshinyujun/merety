@@ -52,6 +52,17 @@ export default function UserEditCard({ userId, userImage, name, email, password,
         }
     };
 
+    const handleIssueTempPassword = async () => {
+        try {
+            const data = await adminUsersApi.resetPassword(userId);
+            setTempPassword(data.temporary_password);
+            toast.success("Temporary password issued");
+        } catch (error) {
+            console.error("Failed to issue temp password", error);
+            toast.error("Failed to issue temporary password");
+        }
+    };
+
     const handleEditClick = async () => {
         if (isEditing) {
             try {
@@ -135,7 +146,7 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                                 onChange={(e) => setTempPassword(e.target.value)} 
                                 placeholder="Enter temporary password" 
                             />
-                            <Button className={s.smallButton} onClick={() => console.log("Issue temp password")}>
+                            <Button className={s.smallButton} onClick={handleIssueTempPassword}>
                                 Issue
                             </Button>
                         </VStack>

@@ -38,6 +38,7 @@ export default function MdEditor ({ isEdit = true, contents = '', className, onC
       },
     },
     onUpdate({ editor }) {
+      //@ts-ignore
       const markdown = editor.storage.markdown.getMarkdown();
       setText(markdown);
       onChange?.(markdown);
