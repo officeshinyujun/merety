@@ -8,34 +8,59 @@ import Input from "@/components/general/Input";
 import { Search } from "lucide-react";
 import ChartBase from "@/components/general/Chart/ChartBase";
 import ChartSection from "@/components/general/Chart/ChartSection";
-import dummyTeamData from "@/data/dummyTeamData.json";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import PagenationBar from "@/components/general/PagenationBar";
 import { useRouter } from "next/navigation";
+import { noticesApi } from "@/api/notices";
+import { authApi } from "@/api/auth";
+import { Notice } from "@/types/notice";
+import { User, UserRole } from "@/types/user";
+import Button from "@/components/general/Button";
+import { Plus } from "lucide-react";
 
 export default function NoticePage() {
     const router = useRouter();
-    const itemsPerPage = 9;
+    const itemsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    
+    const [notices, setNotices] = useState<Notice[]>([]);
+    const [totalItems, setTotalItems] = useState(0);
+    const [userInfo, setUserInfo] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const notices = dummyTeamData.notices || [];
-    const members = dummyTeamData.members || [];
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            try {
+                const { user } = await authApi.getMe();
+                setUserInfo(user);
+            } catch (error) {
+                console.error("Failed to fetch user info:", error);
+            }
+        };
+        fetchInitialData();
+    }, []);
 
-    const getAuthor = (userId: string) => {
-        const member = members.find(m => m.user.id === userId);
-        return member ? member.user : null;
-    };
-
-    const filteredNotices = useMemo(() => {
-        return notices.filter(notice => {
-            return notice.title.toLowerCase().includes(searchQuery.toLowerCase());
-        });
-    }, [notices, searchQuery]);
-
-    const totalItems = filteredNotices.length;
-    const currentNotices = filteredNotices.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    useEffect(() => {
+        const fetchNotices = async () => {
+            setLoading(true);
+            try {
+                const response = await noticesApi.getNotices({
+                    page: currentPage,
+                    limit: itemsPerPage,
+                    search: searchQuery || undefined
+                });
+                setNotices(response.data);
+                setTotalItems(response.pagination.total);
+            } catch (error) {
+                console.error("Failed to fetch notices:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchNotices();
+    }, [currentPage, searchQuery]);
 
     const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -48,28 +73,41 @@ export default function NoticePage() {
         router.push(`/team/notice/${noticeId}`);
     };
 
-    const titleColumnData = currentNotices.map(notice => ({
+    const titleColumnData = notices.map(notice => ({
         text: notice.title,
         onClick: () => handleRowClick(notice.id),
     }));
 
-    const authorColumnData = currentNotices.map(notice => {
-        const author = getAuthor(notice.created_by);
+    const authorColumnData = notices.map(notice => {
+        const author = notice.creator;
         return {
-            text: author ? author.name : "Unknown",
-            image: author ? author.userImage : undefined,
+            text: author ? author.name || author.handle : "Unknown",
+            image: author ? author.user_image || undefined : undefined,
             onClick: () => handleRowClick(notice.id),
         };
     });
 
-    const dateColumnData = currentNotices.map(notice => ({
+    const dateColumnData = notices.map(notice => ({
         text: new Date(notice.created_at).toLocaleDateString(),
         onClick: () => handleRowClick(notice.id),
     }));
 
     return (
         <VStack fullWidth fullHeight align='start' justify='start' className={s.container} gap={24}>
-            <Title text="Notice" />
+            <HStack fullWidth align="center" justify="between">
+                <Title text="Notice" />
+                {userInfo?.role === UserRole.SUPER_ADMIN && (
+                    <Button 
+                        onClick={() => router.push('/team/notice/create')}
+                        className={s.createButton}
+                    >
+                        <HStack gap={8} align="center">
+                            <Plus size={18} />
+                            <span>Create Notice</span>
+                        </HStack>
+                    </Button>
+                )}
+            </HStack>
             <HStack fullWidth align="center" justify="center">
                 <Input 
                     width="700px"

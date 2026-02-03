@@ -1,13 +1,24 @@
-.container{
+.container {
     padding: $s-pagePadding;
-    h1{
-        font-size: $f-md;
+    
+    h1 {
+        font-size: $f-xxl;
+        color: $text-primary;
+    }
+
+    p {
+        color: $text-secondary;
     }
 }
 
-.mdSection{
-    div{
+.authorSection {
+    padding: 0 $s-16;
+}
+
+.mdSection {
+    div {
         padding: 0;
         border: none !important;
+        background-color: transparent !important;
     }
 }
