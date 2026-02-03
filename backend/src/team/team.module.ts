@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TeamController } from './team.controller';
 import { TeamService } from './team.service';
-import { User } from '../entities';
+import { User, TilPost, Archive, Attendance, Session } from '../entities';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, TilPost, Archive, Attendance, Session])],
   controllers: [TeamController],
   providers: [TeamService],
   exports: [TeamService],

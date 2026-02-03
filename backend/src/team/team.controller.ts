@@ -27,6 +27,15 @@ export class TeamController {
   }
 
   /**
+   * GET /api/team/members/:memberId/contributions
+   * 팀 멤버 활동 통계 조회
+   */
+  @Get('members/:memberId/contributions')
+  async getMemberContributions(@Param('memberId') memberId: string) {
+    return this.teamService.getMemberContributions(memberId);
+  }
+
+  /**
    * GET /api/team/roles
    * 역할 정의 조회
    */

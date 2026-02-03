@@ -39,6 +39,12 @@ export const teamApi = {
     const response = await apiClient.get('/api/team/roles');
     return response.data;
   },
+
+  // GET /api/team/members/:memberId/contributions
+  getMemberContributions: async (memberId: string): Promise<any[]> => {
+    const response = await apiClient.get(`/api/team/members/${memberId}/contributions`);
+    return response.data;
+  },
 };
 
 export default teamApi;
