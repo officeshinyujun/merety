@@ -12,6 +12,7 @@ import {
 import { Study } from './study.entity';
 import { User } from './user.entity';
 import { Attendance } from './attendance.entity';
+import { Archive } from './archive.entity';
 
 export enum SessionStatus {
   ACTIVE = 'active',
@@ -72,4 +73,7 @@ export class Session {
   // Relations
   @OneToMany(() => Attendance, (attendance) => attendance.session)
   attendances: Attendance[];
+
+  @OneToMany(() => Archive, (archive) => archive.session)
+  archives: Archive[];
 }

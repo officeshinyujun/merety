@@ -4,17 +4,20 @@ import { File } from 'lucide-react';
 
 interface SessionDataCardProps {
     name : string;
+    onClick?: () => void;
 }
 
-export default function SessionDataCard({ name }: SessionDataCardProps) {
-    return (
-        <HStack 
-        className={s.container} 
-        fullWidth 
-        align='center' 
-        justify='start'
-        gap={12}
-        > 
+    export default function SessionDataCard({ name, onClick }: SessionDataCardProps) {
+        return (
+            <HStack 
+            className={s.container} 
+            fullWidth 
+            align='center' 
+            justify='start'
+            gap={12}
+            onClick={onClick}
+            style={{ cursor: onClick ? 'pointer' : 'default' }}
+            > 
             <File size={24} strokeWidth={2} color='#fdfdfe' />
             <span>{name}</span  >
         </HStack>

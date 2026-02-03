@@ -127,30 +127,34 @@ export class TilService {
   }
 
   /**
-   * TIL/WIL 작성 (스터디 참여자)
+   * TIL (개인) / WIL (스터디) 작성
    */
-  async create(studyId: string, dto: CreateTilDto, user: User) {
-    const study = await this.studyRepository.findOne({
-      where: { id: studyId },
-    });
-
-    if (!study) {
-      throw new NotFoundException('스터디를 찾을 수 없습니다.');
-    }
-
-    // 스터디 멤버인지 확인 (SUPER_ADMIN은 항상 허용)
-    if (user.role !== UserRole.SUPER_ADMIN) {
-      const membership = await this.membershipRepository.findOne({
-        where: { study_id: studyId, user_id: user.id },
+  async create(dto: CreateTilDto, user: User, studyId?: string) {
+    if (studyId) {
+      const study = await this.studyRepository.findOne({
+        where: { id: studyId },
       });
 
-      if (!membership) {
-        throw new ForbiddenException('스터디 멤버만 글을 작성할 수 있습니다.');
+      if (!study) {
+        throw new NotFoundException('스터디를 찾을 수 없습니다.');
+      }
+
+      // 스터디 멤버인지 확인 (SUPER_ADMIN은 항상 허용)
+      if (user.role !== UserRole.SUPER_ADMIN) {
+        const membership = await this.membershipRepository.findOne({
+          where: { study_id: studyId, user_id: user.id },
+        });
+
+        if (!membership) {
+          throw new ForbiddenException(
+            '스터디 멤버만 글을 작성할 수 있습니다.',
+          );
+        }
       }
     }
 
     const til = this.tilRepository.create({
-      study_id: studyId,
+      study_id: studyId || null,
       author_id: user.id,
       title: dto.title,
       content_md: dto.content_md,
@@ -160,6 +164,61 @@ export class TilService {
     const savedTil = await this.tilRepository.save(til);
 
     return savedTil;
+  }
+
+  /**
+   * 개인 TIL 목록 조회 (내 TIL)
+   */
+  async findPersonal(user: User, query: TilQueryDto) {
+    const { page = 1, limit = 10, tag } = query;
+    const skip = (page - 1) * limit;
+
+    const queryBuilder = this.tilRepository
+      .createQueryBuilder('til')
+      .leftJoinAndSelect('til.author', 'author')
+      .where('til.author_id = :userId', { userId: user.id })
+      .andWhere('til.study_id IS NULL')
+      .andWhere('til.is_deleted = false');
+
+    if (tag) {
+      queryBuilder.andWhere(':tag = ANY(til.tags)', { tag });
+    }
+
+    queryBuilder.orderBy('til.created_at', 'DESC').skip(skip).take(limit);
+
+    const [tils, total] = await queryBuilder.getManyAndCount();
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: tils.map((t) => ({
+        id: t.id,
+        study_id: t.study_id,
+        author_id: t.author_id,
+        author_name: t.author?.name || '',
+        author_image: t.author?.user_image || '',
+        title: t.title,
+        content_md: t.content_md,
+        tags: t.tags,
+        created_at: t.created_at,
+        updated_at: t.updated_at,
+        is_deleted: t.is_deleted,
+        createUser: t.author
+          ? {
+              name: t.author.name,
+              userImage: t.author.user_image,
+            }
+          : null,
+      })),
+      pagination: {
+        total,
+        page,
+        limit,
+        total_pages: totalPages,
+        has_next: page < totalPages,
+        has_prev: page > 1,
+      },
+    };
   }
 
   /**

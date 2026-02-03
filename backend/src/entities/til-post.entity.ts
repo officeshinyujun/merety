@@ -15,12 +15,12 @@ export class TilPost {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'study_id' })
-  study_id: string;
+  @Column({ name: 'study_id', nullable: true })
+  study_id: string | null;
 
-  @ManyToOne(() => Study, (study) => study.til_posts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Study, (study) => study.til_posts, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'study_id' })
-  study: Study;
+  study: Study | null;
 
   @Column({ name: 'author_id' })
   author_id: string;

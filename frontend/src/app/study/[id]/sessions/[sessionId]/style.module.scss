@@ -45,3 +45,54 @@
         font-weight: $semi-bold;
     }
 }
+
+.attendanceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.attendanceButton {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    &.checked {
+        background-color: #4CAF50 !important;
+        cursor: default;
+        
+        &:hover {
+            transform: none;
+            opacity: 1;
+        }
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: white;
+}
+
+.emptyMessage {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

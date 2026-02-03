@@ -17,6 +17,7 @@ import AddMemberModal from '@/components/admin/AddMemberModal';
 import CreateSessionModal from '@/components/admin/CreateSessionModal';
 import MdEditor from '@/components/general/MdEditor';
 import UserEditCard from "@/components/admin/UserEditCard";
+import EditSessionModal from '@/components/admin/EditSessionModal';
 import ModalContainer from "@/components/general/ModalContainer";
 
 interface StudyDetailData {
@@ -48,6 +49,7 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
     const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
     const [isCreateSessionModalOpen, setIsCreateSessionModalOpen] = useState(false);
     const [selectedMember, setSelectedMember] = useState<StudyMember | null>(null);
+    const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
     const fetchStudyData = useCallback(async () => {
         try {
@@ -384,6 +386,8 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                                 align="center" 
                                 justify="between" 
                                 className={s.sessionRow}
+                                onClick={() => setSelectedSession(session)}
+                                style={{ cursor: 'pointer' }}
                             >
                                 <HStack gap={12} align="center" justify="start">
                                     <span className={s.sessionRound}>Round {session.session_no}</span>
@@ -398,7 +402,10 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                                     </span>
                                     <button 
                                         className={s.removeSessionButton}
-                                        onClick={() => handleRemoveSession(session.id)}
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleRemoveSession(session.id);
+                                        }}
                                         title="세션 제거"
                                     >
                                         <Trash2 size={16} />
@@ -428,6 +435,16 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
             isOpen={isCreateSessionModalOpen}
             studyId={studyId}
             onClose={() => setIsCreateSessionModalOpen(false)}
+            onSuccess={() => {
+                fetchStudyData();
+            }}
+        />
+
+        {/* 세션 수정/상세 모달 */}
+        <EditSessionModal
+            isOpen={!!selectedSession}
+            session={selectedSession}
+            onClose={() => setSelectedSession(null)}
             onSuccess={() => {
                 fetchStudyData();
             }}

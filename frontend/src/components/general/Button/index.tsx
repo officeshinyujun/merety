@@ -3,14 +3,15 @@ interface Props {
     width?: number;
     height?: number;
     onClick?: () => void;
-    className: string;
-    children?: React.ReactNode;  // Changed from 'child' to 'children'
+    className?: string; // Optional
+    children?: React.ReactNode;
     leftIcon ?: string;
     rightIcon ?: string;
     disabled?: boolean;
+    style?: React.CSSProperties;
 }
 
-export default function Button({ width, height, onClick, className, children, leftIcon, rightIcon, disabled }: Props) {
+export default function Button({ width, height, onClick, className, children, leftIcon, rightIcon, disabled, style }: Props) {
     return (
         <button 
             className={className} 
@@ -29,6 +30,7 @@ export default function Button({ width, height, onClick, className, children, le
                 justifyContent: "center",
                 gap: 12,
                 opacity: disabled ? 0.6 : 1,
+                ...style
             }}
         >
             {leftIcon && <img width={24} height={24} src={leftIcon} alt="leftIcon" />}

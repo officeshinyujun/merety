@@ -11,19 +11,23 @@ export interface CreateSessionRequest {
   title: string;
   scheduled_at: string; // YYYY-MM-DD
   content_md?: string;
+  round?: number;
   data?: {
     materials?: string[];
   };
+  archiveIds?: string[];
 }
 
 export interface UpdateSessionRequest {
   title?: string;
   scheduled_at?: string;
   content_md?: string;
+  round?: number;
   status?: 'active' | 'archived';
   data?: {
     materials?: string[];
   };
+  archiveIds?: string[];
 }
 
 export interface AttendanceItem {
@@ -75,6 +79,11 @@ export const sessionsApi = {
   // PUT /api/sessions/:sessionId/attendance
   updateAttendance: async (sessionId: string, data: BulkUpdateAttendanceRequest): Promise<void> => {
     await apiClient.put(`/api/sessions/${sessionId}/attendance`, data);
+  },
+
+  // POST /api/sessions/:sessionId/attendance/check
+  checkAttendance: async (sessionId: string): Promise<void> => {
+    await apiClient.post(`/api/sessions/${sessionId}/attendance/check`);
   },
 };
 

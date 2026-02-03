@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { Study } from './study.entity';
 import { User } from './user.entity';
+import { Session } from './session.entity';
 
 export enum ArchiveType {
   FILE = 'FILE',
@@ -40,6 +41,13 @@ export class Archive {
   @ManyToOne(() => User, (user) => user.archives)
   @JoinColumn({ name: 'uploader_id' })
   uploader: User;
+
+  @Column({ name: 'session_id', nullable: true })
+  session_id: string;
+
+  @ManyToOne(() => Session, (session) => session.archives, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'session_id' })
+  session: Session;
 
   @Column({
     type: 'enum',

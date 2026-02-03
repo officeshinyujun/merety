@@ -115,4 +115,17 @@ export class SessionsController {
   ) {
     return this.sessionsService.updateAttendance(sessionId, dto, user);
   }
+
+  /**
+   * POST /api/sessions/:sessionId/attendance/check
+   * 본인 출석 체크 (MEMBER)
+   */
+  @Post('sessions/:sessionId/attendance/check')
+  @HttpCode(HttpStatus.OK)
+  async checkAttendance(
+    @Param('sessionId') sessionId: string,
+    @CurrentUser() user: User,
+  ) {
+    return this.sessionsService.checkAttendance(sessionId, user);
+  }
 }

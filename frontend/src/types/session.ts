@@ -1,4 +1,5 @@
 import { UUID, Timestamp } from "./common";
+import { Archive } from "./archive";
 
 export interface Session {
   id: UUID;
@@ -10,6 +11,13 @@ export interface Session {
   created_by: UUID; // user_id
   created_at: Timestamp;
   updated_at: Timestamp;
-  data?: Record<string, unknown>;
-  
+  data?: {
+    materials?: string[];
+  };
+  round: number;
+  createUser?: {
+    name: string;
+    userImage: string;
+  };
+  archives?: Archive[];
 }

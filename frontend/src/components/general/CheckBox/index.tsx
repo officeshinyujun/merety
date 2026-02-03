@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import s from './style.module.scss'
 
 interface CheckBoxProps {
@@ -12,6 +12,10 @@ interface CheckBoxProps {
 
 export default function CheckBox({ checked = false, disabled = false, onChange, className }: CheckBoxProps) {
     const [isChecked, setIsChecked] = useState(checked)
+
+    useEffect(() => {
+        setIsChecked(checked)
+    }, [checked])
 
     const handleChange = () => {
         if (disabled) return

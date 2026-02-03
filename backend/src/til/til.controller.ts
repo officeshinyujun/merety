@@ -21,6 +21,24 @@ import { User } from '../entities';
 @UseGuards(JwtAuthGuard)
 export class TilController {
   constructor(private readonly tilService: TilService) {}
+  
+  /**
+   * GET /api/me/til
+   * 내 개인 TIL 목록 조회
+   */
+  @Get('me/til')
+  async findPersonal(@Query() query: TilQueryDto, @CurrentUser() user: User) {
+    return this.tilService.findPersonal(user, query);
+  }
+
+  /**
+   * POST /api/me/til
+   * 내 개인 TIL 작성
+   */
+  @Post('me/til')
+  async createPersonal(@Body() dto: CreateTilDto, @CurrentUser() user: User) {
+    return this.tilService.create(dto, user);
+  }
 
   /**
    * GET /api/studies/:studyId/til
@@ -55,7 +73,7 @@ export class TilController {
     @Body() dto: CreateTilDto,
     @CurrentUser() user: User,
   ) {
-    return this.tilService.create(studyId, dto, user);
+    return this.tilService.create(dto, user, studyId);
   }
 
   /**

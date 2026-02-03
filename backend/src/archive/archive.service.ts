@@ -108,11 +108,9 @@ export class ArchiveService {
     // 권한 체크
     await this.checkStudyManagerPermission(studyId, user);
 
-    // TODO: 실제 파일 업로드 로직 (S3 등)
-    const storageKey = file
-      ? `archives/${studyId}/${Date.now()}_${file.originalname}`
-      : undefined;
-    const fileUrl = storageKey ? `/uploads/${storageKey}` : undefined;
+    // file.filename contains the saved filename (from diskStorage)
+    const storageKey = `archives/${file.filename}`;
+    const fileUrl = `/uploads/archives/${file.filename}`;
 
     const archive = this.archiveRepository.create({
       study_id: studyId,
@@ -126,7 +124,7 @@ export class ArchiveService {
 
     const savedArchive = await this.archiveRepository.save(archive);
 
-    return savedArchive;
+    return { archive: savedArchive };
   }
 
   /**
@@ -155,7 +153,7 @@ export class ArchiveService {
 
     const savedArchive = await this.archiveRepository.save(archive);
 
-    return savedArchive;
+    return { archive: savedArchive };
   }
 
   /**

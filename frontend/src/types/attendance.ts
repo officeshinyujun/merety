@@ -15,4 +15,10 @@ export interface Attendance {
   memo?: string | null;
   updated_by: UUID; // user_id
   updated_at: Timestamp;
+  user?: {
+    id: UUID;
+    name: string;
+    handle: string;
+    user_image: string;
+  };
 }

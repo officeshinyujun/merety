@@ -11,7 +11,12 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { existsSync, mkdirSync } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ArchiveService } from './archive.service';
 import {
@@ -47,12 +52,32 @@ export class ArchiveController {
    * 파일 업로드 (SUPER_ADMIN 또는 해당 STUDY_MANAGER)
    */
   @Post('studies/:studyId/archive/upload')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: (req, file, cb) => {
+          const uploadPath = './uploads/archives';
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        },
+        filename: (req, file, cb) => {
+          const randomName = uuidv4();
+          const extension = extname(file.originalname);
+          cb(null, `${randomName}${extension}`);
+        },
+      }),
+      limits: {
+        fileSize: 10 * 1024 * 1024, // 10MB
+      },
+    }),
+  )
   @HttpCode(HttpStatus.CREATED)
   async uploadFile(
     @Param('studyId') studyId: string,
     @Body() dto: UploadArchiveDto,
-    @UploadedFile() file: any,
+    @UploadedFile() file: Express.Multer.File,
     @CurrentUser() user: User,
   ) {
     return this.archiveService.uploadFile(studyId, dto, file, user);

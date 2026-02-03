@@ -6,16 +6,19 @@ import CheckBox from "@/components/general/CheckBox";
 interface SessionUserCardProps {
     user : {
         name : string
-        userImage : string;
+        user_image : string;
         role : string;
     }
+    checked?: boolean;
+    onToggle?: () => void;
+    disabled?: boolean;
 }
 
-export default function SessionUserCard({ user }: SessionUserCardProps) {
+export default function SessionUserCard({ user, checked, onToggle, disabled }: SessionUserCardProps) {
     return (
         <HStack fullWidth align="center" justify="between" className={s.container}>
-            <UserCard user={user}/>
-            <CheckBox/>
+            <UserCard user={user as any}/> 
+            <CheckBox checked={checked} disabled={disabled} onChange={onToggle} />
         </HStack>
     )
 }

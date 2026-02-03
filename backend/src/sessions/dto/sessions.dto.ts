@@ -6,6 +6,7 @@ import {
   IsArray,
   ValidateNested,
   IsUUID,
+  IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { SessionStatus } from '../../entities/session.entity';
@@ -25,16 +26,25 @@ export class CreateSessionDto {
   content_md?: string;
 
   @IsOptional()
+  @IsNumber()
+  round?: number;
+
+  @IsOptional()
   data?: {
     materials?: string[];
   };
+
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  archiveIds?: string[];
 }
 
 export class UpdateSessionDto {
   @IsOptional()
   @IsString()
   title?: string;
-
+  
   @IsOptional()
   @IsDateString()
   scheduled_at?: string;
@@ -44,6 +54,10 @@ export class UpdateSessionDto {
   content_md?: string;
 
   @IsOptional()
+  @IsNumber()
+  round?: number;
+
+  @IsOptional()
   @IsEnum(SessionStatus)
   status?: SessionStatus;
 
@@ -51,6 +65,13 @@ export class UpdateSessionDto {
   data?: {
     materials?: string[];
   };
+
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  archiveIds?: string[];
+
+
 }
 
 export class SessionQueryDto {
