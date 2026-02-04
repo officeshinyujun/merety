@@ -1,9 +1,11 @@
+@import '@/constants/COLORS.scss';
+
 .container {
     width: 450px;
     max-height: 90vh;
     padding: 24px;
-    border: 1px solid #474747;
-    background-color: #1e1e20;
+    border: 1px solid $border-primary;
+    background-color: $background-secondary;
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     overflow-y: auto;
@@ -39,25 +41,25 @@
 .title {
     font-size: 20px;
     font-weight: 600;
-    color: #fdfdfe;
+    color: $text-primary;
 }
 
 .closeIcon {
-    color: #959595;
+    color: $text-secondary;
     transition: color 0.2s;
     &:hover {
-        color: #fdfdfe;
+        color: $text-primary;
     }
 }
 
 .label {
     font-size: 14px;
-    color: #959595;
+    color: $text-secondary;
     font-weight: 500;
 }
 
 .name {
-    color: #fdfdfe;
+    color: $text-primary;
     font-size: 18px;
     font-weight: 600;
 }
@@ -98,9 +100,9 @@
     padding: 0 10px;
     box-sizing: border-box;
     border-radius: 16px;
-    color: #fdfdfe;
-    border: 1px solid #474747;
-    background: #26282B;
+    color: $text-primary;
+    border: 1px solid $border-primary;
+    background: $background-third;
     outline: none;
     font-size: 14px;
     appearance: none; 
@@ -121,7 +123,41 @@
         width: 4px;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #474747;
+        background-color: $border-primary;
         border-radius: 4px;
     }
+}
+
+.deleteButton {
+    width: 60%;
+    height: 48px;
+    background-color: $text-wrong !important;
+    color: $background-primary !important;
+    font-weight: 600;
+    border-radius: 16px;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+    
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.cancelDeleteButton {
+    width: 60%;
+    height: 48px;
+    background-color: gray !important;
+    color: $background-primary !important;
+    font-weight: 600;
+    border-radius: 16px;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+    
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.markedForDeletion {
+    border: 2px solid $text-wrong !important;
 }

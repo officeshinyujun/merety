@@ -183,4 +183,22 @@ export class AdminUsersService {
       must_change_password: true,
     };
   }
+
+  /**
+   * 유저 삭제 (Hard Delete - 완전 삭제)
+   */
+  async remove(userId: string) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('사용자를 찾을 수 없습니다.');
+    }
+
+    // Hard delete - DB에서 완전 삭제
+    await this.userRepository.delete(userId);
+
+    return { success: true, message: '유저가 완전히 삭제되었습니다.' };
+  }
 }

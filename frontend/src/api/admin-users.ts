@@ -56,6 +56,12 @@ export const adminUsersApi = {
     const response = await apiClient.post(`/api/admin/users/${userId}/reset-password`);
     return response.data;
   },
+
+  // DELETE /api/admin/users/:userId
+  deleteUser: async (userId: string): Promise<{ success: boolean; message: string }> => {
+    const response = await apiClient.delete(`/api/admin/users/${userId}`);
+    return response.data;
+  },
 };
 
 export default adminUsersApi;

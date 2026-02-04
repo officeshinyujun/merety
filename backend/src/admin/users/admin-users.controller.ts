@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Delete,
   Body,
   Param,
   Query,
@@ -55,9 +56,17 @@ export class AdminUsersController {
    * POST /api/admin/users/:userId/reset-password
    * 비밀번호 초기화
    */
-  @Post(':userId/reset-password')
-  @HttpCode(HttpStatus.OK)
   async resetPassword(@Param('userId') userId: string) {
     return this.adminUsersService.resetPassword(userId);
+  }
+
+  /**
+   * DELETE /api/admin/users/:userId
+   * 유저 삭제
+   */
+  @Delete(':userId')
+  @HttpCode(HttpStatus.OK)
+  async remove(@Param('userId') userId: string) {
+    return this.adminUsersService.remove(userId);
   }
 }

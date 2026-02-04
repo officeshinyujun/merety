@@ -25,6 +25,7 @@ interface UserEditCardProps {
 }
 
 export default function UserEditCard({ userId, userImage, name, email, password, role, status, onClose }: UserEditCardProps) {
+    const [willDelete, setWillDelete] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editRole, setEditRole] = useState(role);
     const [editStatus, setEditStatus] = useState(status);
@@ -66,33 +67,48 @@ export default function UserEditCard({ userId, userImage, name, email, password,
     const handleEditClick = async () => {
         if (isEditing) {
             try {
-                // 저장 로직
-                await adminUsersApi.updateUser(userId, {
-                    role: editRole as any,
-                    status: editStatus as any,
-                    userImage: currentImage,
-                });
+                if (willDelete) {
+                    await adminUsersApi.deleteUser(userId);
+                    toast.success("User deleted successfully");
+                } else {
+                    await adminUsersApi.updateUser(userId, {
+                        role: editRole as any,
+                        status: editStatus as any,
+                        userImage: currentImage,
+                    });
+                    toast.success("User updated successfully");
+                }
                 
-                toast.success("User updated successfully");
                 setIsEditing(false);
-                // TODO: 리스트 새로고침이 필요할 수 있음 (부모 컴포넌트에서 처리 필요)
-                // 현재는 간단히 닫기만 함 or 부모에게 notify
+                window.location.reload(); 
                 onClose();
             } catch (error) {
-                console.error("Update failed", error);
-                toast.error("Failed to update user");
+                console.error("Operation failed", error);
+                toast.error("Failed to update/delete user");
             }
         } else {
             setIsEditing(true);
         }
     };
 
+    const handleDelete = async () => {
+        if (!willDelete) {
+            if (confirm("This will PERMANENTLY delete the user. Are you sure?")) {
+                setWillDelete(true);
+                toast("User marked for deletion. Click Save to confirm.", { icon: "⚠️" });
+            }
+        } else {
+            setWillDelete(false);
+            toast.success("Deletion cancelled.");
+        }
+    }
+
     return (
         <VStack
             align="start"
             justify="start"
             gap={24}
-            className={s.container}
+            className={`${s.container} ${willDelete ? s.markedForDeletion : ''}`}
         >
             <Toaster />
             <HStack fullWidth justify="between" align="center">
@@ -187,9 +203,19 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                 </HStack>
             </VStack>
 
-            <Button className={s.button} onClick={handleEditClick}>
-                {isEditing ? "Save" : "Edit"}
-            </Button>
+            <HStack fullWidth justify="end" gap={12}>
+                <Button className={s.button} onClick={handleEditClick}>
+                    {isEditing ? "Save" : "Edit"}
+                </Button>
+                {isEditing && (
+                    <Button 
+                        className={willDelete ? s.cancelDeleteButton : s.deleteButton} 
+                        onClick={handleDelete}
+                    >
+                        {willDelete ? "Cancel Delete" : "Delete"}
+                    </Button>
+                )}
+            </HStack>
         </VStack>
     )
 }
