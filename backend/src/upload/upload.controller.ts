@@ -27,7 +27,7 @@ if (!existsSync(UPLOAD_DIR)) {
 @Controller('api/upload')
 @UseGuards(JwtAuthGuard)
 export class UploadController {
-  
+
   @Post('profile')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(
@@ -66,6 +66,48 @@ export class UploadController {
     // 클라이언트가 접근할 수 있는 URL 반환 (ServeStaticModule 설정 필요)
     // 예: /uploads/profiles/filename.jpg
     const fileUrl = `/uploads/profiles/${file.filename}`;
+
+    return {
+      url: fileUrl,
+    };
+  }
+
+  @Post('markdown-image')
+  @HttpCode(HttpStatus.CREATED)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: (req, file, cb) => {
+          const uploadPath = './uploads/markdown';
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        },
+        filename: (req, file, cb) => {
+          const randomName = uuidv4();
+          const extension = extname(file.originalname);
+          cb(null, `${randomName}${extension}`);
+        },
+      }),
+      fileFilter: (req, file, cb) => {
+        // 이미지 파일만 허용
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)) {
+          return cb(new BadRequestException('이미지 파일만 업로드 가능합니다.'), false);
+        }
+        cb(null, true);
+      },
+      limits: {
+        fileSize: 10 * 1024 * 1024, // 10MB 제한
+      },
+    }),
+  )
+  uploadMarkdownImage(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('파일이 제공되지 않았습니다.');
+    }
+
+    const fileUrl = `/uploads/markdown/${file.filename}`;
 
     return {
       url: fileUrl,
