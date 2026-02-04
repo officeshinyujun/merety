@@ -7,7 +7,11 @@ async function bootstrap() {
 
   // CORS 설정
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+      process.env.FRONTEND_URL || 'http://localhost:3000',
+      'http://404bnf.cloud',
+      'https://404bnf.cloud',
+    ],
     credentials: true,
   });
 

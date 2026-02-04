@@ -18,16 +18,16 @@ const nextConfig: NextConfig = {
     ],
   },
   sassOptions: {
-  additionalData: `
+    additionalData: `
     @use "@/constants/COLORS.scss" as *;
     @use "@/constants/FONTS.scss" as *;
     @use "@/constants/SPACING.scss" as *;
   `,
-},
+  },
 
   output: 'standalone',
   async rewrites() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     return [
       {
         source: '/uploads/:path*',

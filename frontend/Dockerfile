@@ -10,7 +10,9 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 COPY package*.json ./
 RUN npm install
 
+# Copy all files including .env.production
 COPY . .
+
 RUN npm run build
 
 # Production stage
