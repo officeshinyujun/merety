@@ -51,3 +51,10 @@
 .editorContainer {
     width: 100%;
 }
+
+.editButton {
+    background-color: $text-primary !important;
+    color: $background-primary !important;
+    font-weight: $semi-bold;
+    padding: 16px; 
+}

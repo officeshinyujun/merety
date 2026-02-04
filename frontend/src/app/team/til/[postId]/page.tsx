@@ -7,46 +7,73 @@ import { HStack } from '@/components/general/HStack';
 import Title from '@/components/study/Title';
 import MdEditor from '@/components/general/MdEditor';
 import { tilApi } from '@/api/til';
+import { authApi } from '@/api/auth'; // Import authApi
 import { TilPost } from '@/types/til';
+import { User } from '@/types/user'; // Import User type
 import s from './style.module.scss';
-import { ChevronLeft, Calendar, User } from 'lucide-react';
+import { ChevronLeft, Calendar, Edit2 } from 'lucide-react'; // Import Edit icon
 import Image from 'next/image';
 import Divider from '@/components/general/Divider';
+import Button from '@/components/general/Button'; // Import Button
 
 export default function TilDetailPage() {
     const params = useParams();
     const router = useRouter();
     const postId = params.postId as string;
     const [post, setPost] = useState<TilPost | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null); // State for current user
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchPost = async () => {
+        const fetchData = async () => {
             setLoading(true);
             try {
-                const res = await tilApi.getTilPost(postId);
-                setPost(res);
+                const [postRes, userRes] = await Promise.all([
+                    tilApi.getTilPost(postId),
+                    authApi.getMe().catch(() => ({ user: null })) // Handle potential auth error gracefully
+                ]);
+                setPost(postRes);
+                if (userRes && userRes.user) {
+                    setCurrentUser(userRes.user);
+                }
             } catch (error) {
-                console.error("Failed to fetch TIL post:", error);
+                console.error("Failed to fetch data:", error);
             } finally {
                 setLoading(false);
             }
         };
-        fetchPost();
+        fetchData();
     }, [postId]);
 
     const handleBack = () => {
         router.back();
     };
 
+    const handleEdit = () => {
+        router.push(`/team/til/${postId}/edit`);
+    };
+
     if (loading) return <div className={s.container}>Loading...</div>;
     if (!post) return <div className={s.container}>Post not found.</div>;
 
+    const isAuthor = currentUser && (currentUser.id === post.author_id || currentUser.role === 'SUPER_ADMIN');
+
     return (
         <VStack fullWidth fullHeight align="start" justify="start" className={s.container} gap={24}>
-            <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
-                <ChevronLeft size={24} color="#fdfdfe" />
-                <Title text="TIL Detail" />
+            <HStack fullWidth align="center" justify="between">
+                <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
+                    <ChevronLeft size={24} color="#fdfdfe" />
+                    <Title text="TIL Detail" />
+                </HStack>
+                {isAuthor && (
+                    <Button 
+                        onClick={handleEdit}
+                        className={s.editButton}
+                        icon={<Edit2 size={16} />}
+                    >
+                        Edit
+                    </Button>
+                )}
             </HStack>
 
             <VStack fullWidth gap={16} className={s.contentWrapper}>
