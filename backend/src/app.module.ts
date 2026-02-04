@@ -45,7 +45,7 @@ import { CommonModule } from './common/common.module'; // [NEW]
 
     // 정적 파일 서빙 설정 (uploads 폴더) [NEW]
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
+      rootPath: join(process.cwd(), 'uploads'),
       serveRoot: '/uploads',
       exclude: ['/api/(.*)'],
     }),

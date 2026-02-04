@@ -11,7 +11,7 @@ import { authApi } from '@/api/auth'; // Import authApi
 import { TilPost } from '@/types/til';
 import { User } from '@/types/user'; // Import User type
 import s from './style.module.scss';
-import { ChevronLeft, Calendar, Edit2 } from 'lucide-react'; // Import Edit icon
+import { ChevronLeft, Calendar, Edit2, Trash2 } from 'lucide-react'; // Import Edit icon
 import Image from 'next/image';
 import Divider from '@/components/general/Divider';
 import Button from '@/components/general/Button'; // Import Button
@@ -53,6 +53,20 @@ export default function TilDetailPage() {
         router.push(`/team/til/${postId}/edit`);
     };
 
+    const handleDelete = async () => {
+        if (!confirm('Are you sure you want to delete this post?')) {
+            return;
+        }
+
+        try {
+            await tilApi.deleteTilPost(postId);
+            router.push('/team/til');
+        } catch (error) {
+            console.error("Failed to delete post:", error);
+            alert('Failed to delete post. Please try again.');
+        }
+    };
+
     if (loading) return <div className={s.container}>Loading...</div>;
     if (!post) return <div className={s.container}>Post not found.</div>;
 
@@ -66,13 +80,23 @@ export default function TilDetailPage() {
                     <Title text="TIL Detail" />
                 </HStack>
                 {isAuthor && (
-                    <Button 
-                        onClick={handleEdit}
-                        className={s.editButton}
-                        icon={<Edit2 size={16} />}
-                    >
-                        Edit
-                    </Button>
+                    <HStack gap={8}>
+                        <Button 
+                            onClick={handleDelete}
+                            className={s.deleteButton}
+                            icon={<Trash2 size={16} />}
+                            style={{ backgroundColor: '#ff4d4f', color: '#fff' }} // Simple inline style for delete button
+                        >
+                            Delete
+                        </Button>
+                        <Button 
+                            onClick={handleEdit}
+                            className={s.editButton}
+                            icon={<Edit2 size={16} />}
+                        >
+                            Edit
+                        </Button>
+                    </HStack>
                 )}
             </HStack>
 
