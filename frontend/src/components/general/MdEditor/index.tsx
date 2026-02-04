@@ -80,6 +80,7 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                         if (file) {
                             uploadImage(file).then((url) => {
                                 if (url && editor) {
+                                    // @ts-ignore
                                     editor.chain().focus().setImage({ src: url }).run();
                                 }
                             });
@@ -120,6 +121,7 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
 
     const handleImageResult = (url: string | null) => {
         if (url && editor) {
+            // @ts-ignore
             editor.chain().focus().setImage({ src: url }).run();
         }
     };
@@ -133,10 +135,10 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
-        
+
         const url = await uploadImage(file);
         handleImageResult(url);
-        
+
         // Reset input so same file can be selected again if needed
         e.target.value = '';
     }
@@ -147,12 +149,12 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
 
     return (
         <VStack className={cn(s.container, className)}>
-            <input 
-                type="file" 
+            <input
+                type="file"
                 ref={fileInputRef}
                 style={{ display: 'none' }}
                 accept="image/*"
-                onChange={handleFileChange} 
+                onChange={handleFileChange}
             />
             {isEdit && (
                 <HStack className={s.toolbar}>
