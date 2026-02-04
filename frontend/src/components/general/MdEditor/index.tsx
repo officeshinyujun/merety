@@ -4,13 +4,13 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import Link from "@tiptap/extension-link";
-import Image from "@tiptap/extension-image";
+import ImageResize from "tiptap-extension-resize-image";
 import { Markdown } from "tiptap-markdown";
 import s from './style.module.scss';
 import { VStack } from "../VStack";
 import { HStack } from "../HStack";
 import Button from "../Button";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import cn from 'classnames';
 import apiClient from "@/api/client";
 import toast from "react-hot-toast";
@@ -54,9 +54,8 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
             Link.extend({ inclusive: false }).configure({
                 openOnClick: false,
             }),
-            Image.configure({
-                inline: true,
-                allowBase64: false,
+            ImageResize.configure({
+                inline: false,
             }),
             Markdown,
         ],
@@ -117,12 +116,44 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
         }
     }, [isEdit, editor]);
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleImageResult = (url: string | null) => {
+        if (url && editor) {
+            editor.chain().focus().setImage({ src: url }).run();
+        }
+    };
+
+    const handleImageBtnClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    }
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
+        const url = await uploadImage(file);
+        handleImageResult(url);
+        
+        // Reset input so same file can be selected again if needed
+        e.target.value = '';
+    }
+
     if (!editor) {
         return null;
     }
 
     return (
         <VStack className={cn(s.container, className)}>
+            <input 
+                type="file" 
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                accept="image/*"
+                onChange={handleFileChange} 
+            />
             {isEdit && (
                 <HStack className={s.toolbar}>
                     <Button
@@ -188,6 +219,13 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                         className={`${s.toolbarButton} ${editor.isActive('blockquote') ? s.isActive : ''}`}
                     >
                         Quote
+                    </Button>
+                    <Button
+                        onClick={handleImageBtnClick}
+                        className={s.toolbarButton}
+                        disabled={uploading}
+                    >
+                        {uploading ? '...' : 'Img'}
                     </Button>
                 </HStack>
             )}
