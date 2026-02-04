@@ -1,13 +1,28 @@
-.container{
+.container {
     padding: $s-pagePadding;
-    h1{
+
+    h1 {
         font-size: $f-md;
     }
 }
 
-.mdSection{
-    div{
+.mdSection {
+    div {
         padding: 0;
         border: none !important;
     }
+}
+
+.deleteButton {
+    background-color: $text-wrong;
+    color: $background-primary;
+    padding: $s-12 $s-16;
+    white-space: nowrap;
+}
+
+.editButton {
+    background-color: $text-primary !important;
+    color: $background-primary;
+    padding: $s-12 $s-16;
+    white-space: nowrap;
 }

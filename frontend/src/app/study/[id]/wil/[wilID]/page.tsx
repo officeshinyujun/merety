@@ -4,40 +4,70 @@ import { VStack } from "@/components/general/VStack";
 import s from "./style.module.scss";
 import UserCard from "@/components/general/UserCard";
 import MdEditor from "@/components/general/MdEditor";
-import { useParams } from "next/navigation";
-import dummyStudyData from "@/data/dummyStudyData.json";
+import { useParams, useRouter } from "next/navigation";
 import SubTitle from "@/components/study/SubTitle";
 import { HStack } from "@/components/general/HStack";
 import Divider from "@/components/general/Divider";
 import { useState, useEffect } from "react";
-import { tilApi } from "@/api";
+import { tilApi, authApi } from "@/api";
 import { TilPost } from "@/types/til";
-import { Loader2 } from "lucide-react";
+import { User } from "@/types/user";
+import { Loader2, Edit2, Trash2 } from "lucide-react";
+import Button from "@/components/general/Button";
+import CreateWilModal from "@/components/study/WIL/CreateWilModal";
 
 export default function WILDetailPage() {
     const params = useParams();
+    const router = useRouter();
     const studyId = params.id as string;
     const wilId = params.wilID as string;
 
     const [wil, setWil] = useState<TilPost | null>(null);
+    const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    const fetchData = async () => {
+        try {
+            setIsLoading(true);
+            const [wilRes, userRes] = await Promise.all([
+                tilApi.getTilPost(wilId),
+                authApi.getMe().catch(() => ({ user: null }))
+            ]);
+            setWil(wilRes);
+            if (userRes?.user) {
+                setCurrentUser(userRes.user);
+            }
+        } catch (error) {
+            console.error("Failed to fetch WIL detail:", error);
+            setError("WIL 정보를 불러오는데 실패했습니다.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setIsLoading(true);
-                const response = await tilApi.getTilPost(wilId);
-                setWil(response);
-            } catch (error) {
-                console.error("Failed to fetch WIL detail:", error);
-                setError("WIL 정보를 불러오는데 실패했습니다.");
-            } finally {
-                setIsLoading(false);
-            }
-        };
         fetchData();
     }, [wilId]);
+
+    const handleDelete = async () => {
+        if (!confirm('정말로 이 WIL을 삭제하시겠습니까?')) {
+            return;
+        }
+
+        try {
+            await tilApi.deleteTilPost(wilId);
+            router.push(`/study/${studyId}/wil`);
+        } catch (error) {
+            console.error("Failed to delete WIL:", error);
+            alert('WIL 삭제에 실패했습니다.');
+        }
+    };
+
+    const handleEditSuccess = () => {
+        fetchData();
+    };
 
     if (isLoading) {
         return (
@@ -61,6 +91,8 @@ export default function WILDetailPage() {
         );
     }
 
+    const isAuthor = currentUser && (currentUser.id === wil.author_id || currentUser.role === 'SUPER_ADMIN');
+
     return (
         <VStack
             align="start"
@@ -70,16 +102,49 @@ export default function WILDetailPage() {
             fullHeight
             className={s.container}
         >
-            <SubTitle text={wil.title} />
-            <HStack fullWidth align="start" justify="start" style={{padding:"0px 16px"}}>
+            <HStack fullWidth align="center" justify="between">
+                <SubTitle text={wil.title} />
+                {isAuthor && (
+                    <HStack gap={8}>
+                        <Button
+                            onClick={handleDelete}
+                            className={s.deleteButton}
+                        >
+                            <Trash2 size={16} style={{ marginRight: '8px' }} />
+                            삭제
+                        </Button>
+                        <Button
+                            onClick={() => setIsEditModalOpen(true)}
+                            className={s.editButton}
+                        >
+                            <Edit2 size={16} style={{ marginRight: '8px' }} />
+                            수정
+                        </Button>
+                    </HStack>
+                )}
+            </HStack>
+
+            <HStack fullWidth align="start" justify="start" style={{ padding: "0px 16px" }}>
                 <UserCard user={{
                     name: wil.author_name || "Unknown",
                     user_image: wil.author_image || "/default-avatar.png"
                 }} />
             </HStack>
-            <Divider/>
+            <Divider />
             <MdEditor contents={wil.content_md} isEdit={false} className={s.mdSection} />
-        </VStack> 
+
+            <CreateWilModal
+                isOpen={isEditModalOpen}
+                studyId={studyId}
+                onClose={() => setIsEditModalOpen(false)}
+                onSuccess={handleEditSuccess}
+                initialData={{
+                    id: wil.id,
+                    title: wil.title,
+                    content_md: wil.content_md
+                }}
+            />
+        </VStack>
     )
 }
-            
+

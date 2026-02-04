@@ -8,15 +8,16 @@
     overflow-y: scroll;
 }
 
-.myTILCardContainer{
+.myTILCardContainer {
     padding: $s-12;
 }
 
-.tilList{
+.tilList {
     padding: $s-16;
 }
 
-.writeButton{
+.writeButton {
     background-color: $text-primary !important;
     padding: $s-12;
+    white-space: nowrap;
 }

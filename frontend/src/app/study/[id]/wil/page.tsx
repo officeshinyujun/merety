@@ -139,7 +139,7 @@ export default function WilPage() {
                 <SubTitle text="WIL" />
                 <Button 
                     onClick={() => setIsCreateModalOpen(true)}
-                    style={{ background: '#4a5ef7', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    className={s.createButton}
                 >
                     <Edit3 size={18} />
                     글쓰기

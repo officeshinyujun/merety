@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { VStack } from '@/components/general/VStack';
 import { HStack } from '@/components/general/HStack';
 import Button from '@/components/general/Button';
@@ -16,13 +16,28 @@ interface CreateWilModalProps {
     studyId: string;
     onClose: () => void;
     onSuccess: () => void;
+    initialData?: {
+        id: string;
+        title: string;
+        content_md: string;
+    } | null;
 }
 
-export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: CreateWilModalProps) {
+export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess, initialData }: CreateWilModalProps) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title);
+            setContent(initialData.content_md);
+        } else {
+            setTitle('');
+            setContent('');
+        }
+    }, [initialData, isOpen]);
 
     const handleSubmit = async () => {
         if (!title.trim()) {
@@ -38,20 +53,27 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
         setError('');
 
         try {
-            await tilApi.createTilPost(studyId, {
-                title: title.trim(),
-                content_md: content,
-                tags: [], // 추후 태그 기능 추가 가능
-                category: 'WIL',
-            });
-            
+            if (initialData) {
+                await tilApi.updateTilPost(initialData.id, {
+                    title: title.trim(),
+                    content_md: content,
+                });
+            } else {
+                await tilApi.createTilPost(studyId, {
+                    title: title.trim(),
+                    content_md: content,
+                    tags: [],
+                    category: 'WIL',
+                });
+            }
+
             setTitle('');
             setContent('');
             onSuccess();
             onClose();
         } catch (err: any) {
-            console.error('Failed to create WIL:', err);
-            setError(err.response?.data?.message || 'WIL 작성에 실패했습니다.');
+            console.error('Failed to save WIL:', err);
+            setError(err.response?.data?.message || 'WIL 저장에 실패했습니다.');
         } finally {
             setIsLoading(false);
         }
@@ -64,7 +86,7 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
             <VStack className={s.modal} gap={24} align="start" justify="start">
                 {/* Header */}
                 <HStack fullWidth align="center" justify="between">
-                    <h2 className={s.title}>WIL 작성하기</h2>
+                    <h2 className={s.title}>{initialData ? 'WIL 수정하기' : 'WIL 작성하기'}</h2>
                     <button className={s.closeButton} onClick={onClose}>
                         <X size={24} />
                     </button>
@@ -74,7 +96,7 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
                 <VStack fullWidth gap={16} align="start" justify="start">
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>제목 *</label>
-                        <Input 
+                        <Input
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="제목을 입력하세요"
@@ -85,7 +107,7 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>내용 (Markdown) *</label>
                         <div className={s.editorWrapper}>
-                            <MdEditor 
+                            <MdEditor
                                 isEdit={true}
                                 contents={content}
                                 onChange={setContent}
@@ -107,12 +129,12 @@ export default function CreateWilModal({ isOpen, studyId, onClose, onSuccess }: 
                         {isLoading ? (
                             <>
                                 <Loader2 className={s.spinner} size={18} />
-                                작성 중...
+                                {initialData ? '수정 중...' : '작성 중...'}
                             </>
                         ) : (
                             <>
                                 <Send size={18} style={{ marginRight: '8px' }} />
-                                작성 완료
+                                {initialData ? '수정 완료' : '작성 완료'}
                             </>
                         )}
                     </Button>
