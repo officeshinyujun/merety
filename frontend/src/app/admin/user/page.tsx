@@ -24,12 +24,12 @@ export default function UserPage() {
     const router = useRouter();
     // 화면 높이에 따라 동적으로 itemsPerPage 계산
     const itemsPerPage = useItemsPerPage({
-        itemHeight: 60,      // 각 행의 높이
-        headerOffset: 200,   // 헤더 + 검색창 영역
-        footerOffset: 80,    // 페이지네이션 바 영역
-        minItems: 4,
+        itemHeight: 73,      // 카드(64) + 간격(4) + 구분선(1) + 외부간격(4)
+        headerOffset: 280,   // 여유 공간을 위해 약간 더 크게 잡음
+        footerOffset: 120,
+        minItems: 5,
         maxItems: 15,
-    }) - 3;
+    });
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [users, setUsers] = useState<User[]>([]);
@@ -65,7 +65,7 @@ export default function UserPage() {
     const handleRowClick = (user: User) => {
         // Transform User to the format UserEditCard expects if needed, or pass User directly
         // UserEditCard expects flattened props, so we'll pass the whole object wrapper or individual props
-        setSelectedMember({ user, role: user.role }); 
+        setSelectedMember({ user, role: user.role });
     };
 
     const infoColumnData = users.map(user => ({
@@ -101,7 +101,7 @@ export default function UserPage() {
                         + Create User
                     </Button>
                 </HStack>
-                <VStack fullWidth fullHeight align='start' justify='start' gap={12} className="">
+                <VStack fullWidth align='start' justify='start' gap={12} style={{ flex: 1, minHeight: 0 }}>
                     <ChartBase>
                         <ChartSection
                             title="Info"

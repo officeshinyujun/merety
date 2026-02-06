@@ -17,7 +17,7 @@ interface UserEditCardProps {
     userId: string;
     userImage: string;
     name: string;
-    email : string;
+    email: string;
     role: string;
     status: string;
     password: string;
@@ -78,9 +78,8 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                     });
                     toast.success("User updated successfully");
                 }
-                
+
                 setIsEditing(false);
-                window.location.reload(); 
                 onClose();
             } catch (error) {
                 console.error("Operation failed", error);
@@ -115,29 +114,29 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                 <h2 className={s.title}>Edit User</h2>
                 <X size={24} onClick={onClose} style={{ cursor: 'pointer' }} className={s.closeIcon} />
             </HStack>
-            
+
             <VStack fullWidth align="center" gap={12}>
-                <div 
-                    className={s.imageContainer} 
+                <div
+                    className={s.imageContainer}
                     onClick={handleImageClick}
                     style={{ cursor: isEditing ? 'pointer' : 'default', position: 'relative' }}
                 >
-                    <Image 
-                        src={currentImage} 
-                        alt={name} 
-                        width={80} 
-                        height={80} 
-                        style={{ borderRadius: '50%', objectFit: 'cover' }} 
+                    <Image
+                        src={currentImage}
+                        alt={name}
+                        width={80}
+                        height={80}
+                        style={{ borderRadius: '50%', objectFit: 'cover' }}
                     />
                     {isEditing && (
                         <div className={s.imageOverlay}>
                             <Camera size={24} color="white" />
                         </div>
                     )}
-                    <input 
-                        type="file" 
-                        ref={fileInputRef} 
-                        style={{ display: 'none' }} 
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        style={{ display: 'none' }}
                         accept="image/*"
                         onChange={handleFileChange}
                     />
@@ -150,17 +149,17 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                     <p className={s.label}>Email</p>
                     <Input value={email} readOnly />
                 </VStack>
-                
+
                 <VStack fullWidth align="start" gap={8}>
                     <p className={s.label}>Password</p>
                     <Input value={password} readOnly type="password" />
                     {isEditing && (
                         <VStack fullWidth align="start" gap={8} style={{ marginTop: '8px' }}>
                             <p className={s.label} style={{ fontSize: '12px' }}>Temporary Password</p>
-                            <Input 
-                                value={tempPassword} 
-                                onChange={(e) => setTempPassword(e.target.value)} 
-                                placeholder="Enter temporary password" 
+                            <Input
+                                value={tempPassword}
+                                onChange={(e) => setTempPassword(e.target.value)}
+                                placeholder="Enter temporary password"
                             />
                             <Button className={s.smallButton} onClick={handleIssueTempPassword}>
                                 Issue
@@ -170,11 +169,11 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                 </VStack>
 
                 <HStack fullWidth gap={16}>
-                     <VStack fullWidth align="start" gap={8}>
+                    <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Role</p>
                         {isEditing ? (
-                            <select 
-                                value={editRole} 
+                            <select
+                                value={editRole}
                                 onChange={(e) => setEditRole(e.target.value)}
                                 className={s.selectInput}
                             >
@@ -187,9 +186,9 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                     </VStack>
                     <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Status</p>
-                         {isEditing ? (
-                            <select 
-                                value={editStatus} 
+                        {isEditing ? (
+                            <select
+                                value={editStatus}
                                 onChange={(e) => setEditStatus(e.target.value)}
                                 className={s.selectInput}
                             >
@@ -208,8 +207,8 @@ export default function UserEditCard({ userId, userImage, name, email, password,
                     {isEditing ? "Save" : "Edit"}
                 </Button>
                 {isEditing && (
-                    <Button 
-                        className={willDelete ? s.cancelDeleteButton : s.deleteButton} 
+                    <Button
+                        className={willDelete ? s.cancelDeleteButton : s.deleteButton}
                         onClick={handleDelete}
                     >
                         {willDelete ? "Cancel Delete" : "Delete"}

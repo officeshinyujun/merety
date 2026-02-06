@@ -1,4 +1,3 @@
-
 .container {
     padding: 24px;
     background-color: $background-secondary;
@@ -17,6 +16,7 @@
 
 .closeIcon {
     color: $text-secondary;
+
     &:hover {
         color: $text-primary;
     }
@@ -47,6 +47,8 @@
 
 .button {
     width: 100%;
+    background-color: $text-primary !important;
+    padding: $s-16;
     margin-top: 12px;
 }
 
@@ -71,7 +73,7 @@
     font-size: 12px;
     cursor: pointer;
     text-decoration: underline;
-    
+
     &:hover {
         color: $text-primary;
     }

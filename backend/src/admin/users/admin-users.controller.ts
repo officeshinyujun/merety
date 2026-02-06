@@ -22,7 +22,7 @@ import { UserRole } from '../../entities';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.SUPER_ADMIN)
 export class AdminUsersController {
-  constructor(private readonly adminUsersService: AdminUsersService) {}
+  constructor(private readonly adminUsersService: AdminUsersService) { }
 
   /**
    * GET /api/admin/users
@@ -56,6 +56,7 @@ export class AdminUsersController {
    * POST /api/admin/users/:userId/reset-password
    * 비밀번호 초기화
    */
+  @Post(':userId/reset-password')
   async resetPassword(@Param('userId') userId: string) {
     return this.adminUsersService.resetPassword(userId);
   }
