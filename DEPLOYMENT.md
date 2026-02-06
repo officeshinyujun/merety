@@ -192,10 +192,14 @@ DB_NAME=merety
 JWT_SECRET=your_very_secure_jwt_secret_key_here  # 랜덤한 긴 문자열로 변경!
 
 # Frontend URL (for CORS)
-FRONTEND_URL=https://yourdomain.com  # 실제 도메인으로 변경 (또는 http://VPS_IP:4000)
+FRONTEND_URL=https://yourdomain.com  # 실제 도메인으로 변경 (또는 http://VPS_IP)
 
 # Frontend Environment Variables
-NEXT_PUBLIC_API_URL=https://api.yourdomain.com  # 실제 API URL로 변경 (또는 http://VPS_IP:3000)
+# 경로 분리 방식 (권장)
+NEXT_PUBLIC_API_URL=https://yourdomain.com/api  # 실제 도메인으로 변경 (또는 http://VPS_IP/api)
+
+# 서브도메인 방식을 사용하는 경우
+# NEXT_PUBLIC_API_URL=https://api.yourdomain.com
 ```
 
 > **보안 팁**: JWT_SECRET과 DB_PASSWORD는 반드시 강력한 랜덤 문자열로 변경하세요!
@@ -260,15 +264,31 @@ sudo systemctl enable nginx
 sudo nano /etc/nginx/sites-available/merety
 ```
 
-**Nginx 설정 내용:**
+**Nginx 설정 내용 (권장: 경로 분리 방식):**
 
 ```nginx
 # HTTP 서버 블록 (나중에 HTTPS로 리다이렉트)
 server {
     listen 80;
-    server_name yourdomain.com www.yourdomain.com;  # 실제 도메인으로 변경
+    server_name yourdomain.com www.yourdomain.com;  # 실제 도메인으로 변경 (또는 VPS IP 주소)
 
-    # 프론트엔드 (메인 도메인)
+    # 백엔드 API (먼저 매칭되어야 함)
+    location /api {
+        # /api를 제거하고 백엔드로 전달
+        rewrite ^/api/(.*) /$1 break;
+        
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # 프론트엔드 (모든 나머지 경로)
     location / {
         proxy_pass http://localhost:4000;
         proxy_http_version 1.1;
@@ -279,59 +299,56 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
-    }
-}
-
-# 백엔드 API (서브도메인 사용 시)
-server {
-    listen 80;
-    server_name api.yourdomain.com;  # API 서브도메인
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-        
-        # CORS 헤더 (필요시)
-        add_header 'Access-Control-Allow-Origin' '*' always;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
-        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
     }
 }
 ```
 
-**도메인이 없는 경우 (IP만 사용):**
+**대안: 서브도메인 방식 (api.yourdomain.com 사용):**
+
+<details>
+<summary>클릭하여 서브도메인 설정 보기</summary>
 
 ```nginx
+# 프론트엔드
 server {
     listen 80;
-    server_name [VPS_IP_주소];
+    server_name yourdomain.com www.yourdomain.com;
 
-    # 프론트엔드
     location / {
         proxy_pass http://localhost:4000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
+}
 
-    # 백엔드 API
-    location /api {
+# 백엔드 API (서브도메인)
+server {
+    listen 80;
+    server_name api.yourdomain.com;
+
+    location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
     }
 }
+```
+
+> **참고**: 서브도메인 방식을 사용하려면 DNS에 `api` A 레코드를 추가해야 합니다.
+
+</details>
 ```
 
 ### 4.3 Nginx 설정 활성화
@@ -366,8 +383,11 @@ sudo apt install -y certbot python3-certbot-nginx
 ### 5.2 SSL 인증서 발급
 
 ```bash
-# 인증서 발급 및 Nginx 자동 설정
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -d api.yourdomain.com
+# 경로 분리 방식 (권장)
+sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
+
+# 서브도메인 방식을 사용하는 경우
+# sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com -d api.yourdomain.com
 
 # 이메일 입력 및 약관 동의 후 진행
 ```

@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, FindOptionsWhere } from 'typeorm';
 import { User, UserRole, UserStatus } from '../../entities';
+import { ActivityLog } from '../../entities/activity-log.entity';
 import { CreateUserDto, UpdateUserDto, UserQueryDto } from './dto/admin-users.dto';
 import {
   generateTemporaryPassword,
@@ -17,7 +18,9 @@ export class AdminUsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+    @InjectRepository(ActivityLog)
+    private activityLogRepository: Repository<ActivityLog>,
+  ) { }
 
   /**
    * 유저 목록 조회 (페이지네이션, 검색, 필터링)
@@ -196,7 +199,11 @@ export class AdminUsersService {
       throw new NotFoundException('사용자를 찾을 수 없습니다.');
     }
 
-    // Hard delete - DB에서 완전 삭제
+    // 관련 데이터 삭제 (외래 키 제약 조건 해결)
+    // 1. Activity logs 삭제
+    await this.activityLogRepository.delete({ user_id: userId });
+
+    // 2. 유저 삭제
     await this.userRepository.delete(userId);
 
     return { success: true, message: '유저가 완전히 삭제되었습니다.' };
