@@ -11,7 +11,7 @@ import MdEditor from '@/components/general/MdEditor';
 import { tilApi } from '@/api/til';
 import s from './style.module.scss';
 import { ChevronLeft, Save } from 'lucide-react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 export default function CreateWilPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -50,7 +50,6 @@ export default function CreateWilPage({ params }: { params: Promise<{ id: string
 
     return (
         <VStack fullWidth fullHeight align="start" justify="start" className={s.container} gap={24}>
-            <Toaster />
             <HStack fullWidth align="center" justify="between">
                 <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
                     <ChevronLeft size={24} color="#fdfdfe" />

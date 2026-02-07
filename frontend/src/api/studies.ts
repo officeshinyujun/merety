@@ -1,5 +1,5 @@
 import apiClient from './client';
-import { Study, StudyType, StudyStatus, StudyMemberRole } from '@/types/study';
+import { Study, StudyStatus, StudyMemberRole, StudyType } from '@/types/study';
 import { User } from '@/types/user';
 import { UUID } from '@/types/common';
 
@@ -11,6 +11,7 @@ export interface StudyQueryParams {
 export interface CreateStudyRequest {
   name: string;
   type: StudyType;
+  color?: string;
   slug?: string;
   overview?: {
     description: string;
@@ -21,6 +22,7 @@ export interface CreateStudyRequest {
 export interface UpdateStudyRequest {
   name?: string;
   type?: StudyType;
+  color?: string;
   slug?: string;
   status?: StudyStatus;
 }

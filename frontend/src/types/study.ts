@@ -1,19 +1,19 @@
 import { UUID, Timestamp } from "./common";
 
-export enum StudyType {
-  RED = "RED",
-  WEB = "WEB",
-}
+
 
 export enum StudyStatus {
   ACTIVE = "active",
   ARCHIVED = "archived",
 }
 
+export type StudyType = string;
+
 export interface Study {
   id: UUID;
   name: string;
   type: StudyType;
+  color: string;
   slug: string;
   status: StudyStatus;
   created_by: UUID; // user_id

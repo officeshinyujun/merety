@@ -2,7 +2,7 @@
 export { User, UserRole, UserStatus } from './user.entity';
 
 // Study
-export { Study, StudyType, StudyStatus } from './study.entity';
+export { Study, StudyStatus } from './study.entity';
 export { StudyOverview } from './study-overview.entity';
 export { StudyMembership, StudyMemberRole } from './study-membership.entity';
 

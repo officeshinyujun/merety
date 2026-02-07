@@ -12,7 +12,7 @@ import { noticesApi } from '@/api/notices';
 import { authApi } from '@/api/auth';
 import s from './style.module.scss';
 import { ChevronLeft, Save } from 'lucide-react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 export default function EditNoticePage() {
     const router = useRouter();
@@ -90,7 +90,6 @@ export default function EditNoticePage() {
 
     return (
         <VStack fullWidth fullHeight align="start" justify="start" className={s.container} gap={24}>
-            <Toaster />
             <HStack fullWidth align="center" justify="between">
                 <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
                     <ChevronLeft size={24} color="#fdfdfe" />

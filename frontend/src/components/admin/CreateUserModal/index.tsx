@@ -8,7 +8,7 @@ import Input from "@/components/general/Input"
 import Button from "@/components/general/Button"
 import { useState } from "react"
 import { adminUsersApi } from "@/api"
-import { toast, Toaster } from "react-hot-toast"
+import { toast } from 'react-hot-toast';
 import { UserRole } from "@/types/user"
 
 interface CreateUserModalProps {
@@ -21,7 +21,7 @@ export default function CreateUserModal({ onClose, onSuccess }: CreateUserModalP
     const [handle, setHandle] = useState("");
     const [name, setName] = useState("");
     const [role, setRole] = useState<UserRole>(UserRole.MEMBER);
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [tempPassword, setTempPassword] = useState<string | null>(null);
     const [isCopied, setIsCopied] = useState(false);
@@ -69,46 +69,45 @@ export default function CreateUserModal({ onClose, onSuccess }: CreateUserModalP
             gap={24}
             className={s.container}
         >
-            <Toaster />
             <HStack fullWidth justify="between" align="center">
                 <h2 className={s.title}>Create User</h2>
                 <X size={24} onClick={onClose} style={{ cursor: 'pointer' }} className={s.closeIcon} />
             </HStack>
-            
+
             {!tempPassword ? (
                 // Input Form
                 <VStack fullWidth gap={16}>
                     <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Email *</p>
-                        <Input 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
+                        <Input
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="user@example.com"
                         />
                     </VStack>
-                    
+
                     <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Handle (ID) *</p>
-                        <Input 
-                            value={handle} 
-                            onChange={(e) => setHandle(e.target.value)} 
+                        <Input
+                            value={handle}
+                            onChange={(e) => setHandle(e.target.value)}
                             placeholder="unique_handle"
                         />
                     </VStack>
 
                     <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Name</p>
-                        <Input 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)} 
+                        <Input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder="Display Name"
                         />
                     </VStack>
 
                     <VStack fullWidth align="start" gap={8}>
                         <p className={s.label}>Role</p>
-                        <select 
-                            value={role} 
+                        <select
+                            value={role}
                             onChange={(e) => setRole(e.target.value as UserRole)}
                             className={s.selectInput}
                         >
@@ -133,7 +132,7 @@ export default function CreateUserModal({ onClose, onSuccess }: CreateUserModalP
                     <div className={s.tempPasswordBox}>
                         {tempPassword}
                     </div>
-                    
+
                     <HStack gap={8} align="center" style={{ cursor: 'pointer' }} onClick={handleCopyPassword}>
                         {isCopied ? <Check size={16} color="green" /> : <Copy size={16} color="#666" />}
                         <span className={s.copyButton}>{isCopied ? "Copied!" : "Copy Password"}</span>

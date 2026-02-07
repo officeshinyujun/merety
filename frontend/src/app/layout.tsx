@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthGuard from "@/components/auth/AuthGuard";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,16 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthGuard>
           {children}
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: '#26282B',
+                color: '#fdfdfe',
+                padding: "16px"
+              },
+            }}
+          />
         </AuthGuard>
       </body>
     </html>

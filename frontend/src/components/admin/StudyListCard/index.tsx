@@ -6,6 +6,7 @@ interface StudyListCardProps {
     studyId: string;
     name: string;
     type: string;
+    color: string;
     createdAt: string;
 }
 
@@ -13,6 +14,7 @@ export default function StudyListCard({
     studyId,
     name,
     type,
+    color,
     createdAt
 }: StudyListCardProps) {
     return (
@@ -22,6 +24,7 @@ export default function StudyListCard({
                 justify="between"
                 fullWidth
                 className={s.container}
+                style={{ borderLeft: `4px solid ${color}` }}
             >
                 <HStack
                     align="center"
@@ -35,8 +38,9 @@ export default function StudyListCard({
                         justify="center"
                         gap={4}
                         className={s.typeCard}
+                        style={{ backgroundColor: color, opacity: 0.8 }}
                     >
-                        <p>{type}</p>
+                        <p style={{ color: '#fff' }}>{type}</p>
                     </HStack>
                 </HStack>
                 <h6>{createdAt}</h6>

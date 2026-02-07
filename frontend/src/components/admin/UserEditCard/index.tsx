@@ -11,7 +11,7 @@ import { useRef, useState } from "react"
 import { Camera } from "lucide-react"
 import { authApi } from "@/api"
 import { adminUsersApi } from "@/api"
-import { toast, Toaster } from "react-hot-toast"
+import { toast } from "react-hot-toast";
 
 interface UserEditCardProps {
     userId: string;
@@ -109,7 +109,6 @@ export default function UserEditCard({ userId, userImage, name, email, password,
             gap={24}
             className={`${s.container} ${willDelete ? s.markedForDeletion : ''}`}
         >
-            <Toaster />
             <HStack fullWidth justify="between" align="center">
                 <h2 className={s.title}>Edit User</h2>
                 <X size={24} onClick={onClose} style={{ cursor: 'pointer' }} className={s.closeIcon} />

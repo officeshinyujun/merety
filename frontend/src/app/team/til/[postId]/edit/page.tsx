@@ -12,13 +12,13 @@ import { tilApi } from '@/api/til';
 import { authApi } from '@/api/auth';
 import s from './style.module.scss';
 import { ChevronLeft, Save } from 'lucide-react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 export default function EditTilPage() {
     const router = useRouter();
     const params = useParams();
     const postId = params.postId as string;
-    
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(true);
@@ -90,13 +90,12 @@ export default function EditTilPage() {
 
     return (
         <VStack fullWidth fullHeight align="start" justify="start" className={s.container} gap={24}>
-            <Toaster />
             <HStack fullWidth align="center" justify="between">
                 <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
                     <ChevronLeft size={24} color="#fdfdfe" />
                     <Title text="Edit TIL" />
                 </HStack>
-                <Button 
+                <Button
                     icon={<Save size={18} />}
                     onClick={handleSave}
                     disabled={saving}
@@ -114,10 +113,10 @@ export default function EditTilPage() {
                     className={s.titleInput}
                 />
                 <div className={s.editorContainer}>
-                    <MdEditor 
-                        contents={content} 
-                        onChange={setContent} 
-                        isEdit={true} 
+                    <MdEditor
+                        contents={content}
+                        onChange={setContent}
+                        isEdit={true}
                     />
                 </div>
             </VStack>

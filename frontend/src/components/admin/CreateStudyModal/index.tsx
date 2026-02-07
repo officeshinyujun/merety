@@ -8,7 +8,7 @@ import Input from '@/components/general/Input';
 import ModalContainer from '@/components/general/ModalContainer';
 import { X, Loader2 } from 'lucide-react';
 import { studiesApi, CreateStudyRequest } from '@/api';
-import { StudyType } from '@/types/study';
+
 import s from './style.module.scss';
 
 interface CreateStudyModalProps {
@@ -19,7 +19,8 @@ interface CreateStudyModalProps {
 
 export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateStudyModalProps) {
     const [name, setName] = useState('');
-    const [type, setType] = useState<StudyType>(StudyType.WEB);
+    const [type, setType] = useState('WEB');
+    const [color, setColor] = useState('#ffffff');
     const [slug, setSlug] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -39,12 +40,13 @@ export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateS
             const data: CreateStudyRequest = {
                 name: name.trim(),
                 type,
+                color,
                 slug: slug.trim() || undefined,
                 overview: description ? { description } : undefined,
             };
 
             await studiesApi.createStudy(data);
-            
+
             // 초기화 및 닫기
             resetForm();
             onSuccess();
@@ -64,7 +66,8 @@ export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateS
 
     const resetForm = () => {
         setName('');
-        setType(StudyType.WEB);
+        setType('WEB');
+        setColor('#ffffff');
         setSlug('');
         setDescription('');
         setError('');
@@ -92,7 +95,7 @@ export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateS
                 <VStack fullWidth gap={16} align="start" justify="start">
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>스터디 이름 *</label>
-                        <Input 
+                        <Input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="스터디 이름을 입력하세요"
@@ -102,19 +105,38 @@ export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateS
 
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>타입 *</label>
-                        <select 
+                        <Input
                             value={type}
-                            onChange={(e) => setType(e.target.value as StudyType)}
-                            className={s.select}
-                        >
-                            <option value="WEB">WEB</option>
-                            <option value="RED">RED</option>
-                        </select>
+                            onChange={(e) => setType(e.target.value)}
+                            placeholder="예: WEB, SERVER, AI"
+                            width="100%"
+                        />
+                    </VStack>
+
+                    <VStack fullWidth gap={8} align="start" justify="start">
+                        <label className={s.label}>색상</label>
+                        <HStack align="center" gap={12}>
+                            <input
+                                type="color"
+                                value={color}
+                                onChange={(e) => setColor(e.target.value)}
+                                style={{
+                                    width: '40px',
+                                    height: '40px',
+                                    padding: '0',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    backgroundColor: 'transparent'
+                                }}
+                            />
+                            <span>{color}</span>
+                        </HStack>
                     </VStack>
 
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>Slug (선택)</label>
-                        <Input 
+                        <Input
                             value={slug}
                             onChange={(e) => setSlug(e.target.value)}
                             placeholder="URL에 사용될 고유 식별자"
@@ -124,7 +146,7 @@ export default function CreateStudyModal({ isOpen, onClose, onSuccess }: CreateS
 
                     <VStack fullWidth gap={8} align="start" justify="start">
                         <label className={s.label}>설명 (선택)</label>
-                        <textarea 
+                        <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             placeholder="스터디에 대한 설명을 입력하세요"

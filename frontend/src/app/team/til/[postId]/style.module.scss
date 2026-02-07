@@ -9,13 +9,6 @@
     overflow-y: scroll;
 }
 
-.backButton {
-    cursor: pointer;
-    transition: opacity 0.2s;
-    &:hover {
-        opacity: 0.8;
-    }
-}
 
 .contentWrapper {
     width: 100%;
@@ -56,11 +49,11 @@
     background-color: $text-primary !important;
     color: $background-primary !important;
     font-weight: $semi-bold;
-    padding: 16px; 
+    padding: 16px;
 }
 
-.deleteButton{
+.deleteButton {
     color: $background-primary !important;
     font-weight: $semi-bold;
-    padding: 16px; 
+    padding: 16px;
 }

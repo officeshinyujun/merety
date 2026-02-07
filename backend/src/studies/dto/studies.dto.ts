@@ -5,7 +5,7 @@ import {
   IsArray,
   IsUUID,
 } from 'class-validator';
-import { StudyType, StudyStatus } from '../../entities';
+import { StudyStatus } from '../../entities';
 import { StudyMemberRole } from '../../entities/study-membership.entity';
 
 // ==================== Study DTOs ====================
@@ -14,8 +14,12 @@ export class CreateStudyDto {
   @IsString()
   name: string;
 
-  @IsEnum(StudyType)
-  type: StudyType;
+  @IsString()
+  type: string;
+
+  @IsOptional()
+  @IsString()
+  color?: string;
 
   @IsOptional()
   @IsString()
@@ -38,8 +42,12 @@ export class UpdateStudyDto {
   name?: string;
 
   @IsOptional()
-  @IsEnum(StudyType)
-  type?: StudyType;
+  @IsString()
+  type?: string;
+
+  @IsOptional()
+  @IsString()
+  color?: string;
 
   @IsOptional()
   @IsString()
@@ -56,8 +64,8 @@ export class StudyQueryDto {
   status?: StudyStatus;
 
   @IsOptional()
-  @IsEnum(StudyType)
-  type?: StudyType;
+  @IsString()
+  type?: string;
 }
 
 // ==================== Overview DTOs ====================

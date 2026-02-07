@@ -96,7 +96,8 @@ export default function StudyPage() {
                                 key={study.id}
                                 studyId={study.id}
                                 name={study.name}
-                                type={study.type === 'RED' ? 'Red' : 'Web'}
+                                type={study.type}
+                                color={study.color || '#ffffff'}
                                 createdAt={new Date(study.created_at).toLocaleDateString()}
                             />
                         ))

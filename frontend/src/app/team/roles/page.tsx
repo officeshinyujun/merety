@@ -12,7 +12,7 @@ import { UserRole } from "@/types/user"
 import { Edit2, Save, X, Loader2 } from "lucide-react"
 import Button from "@/components/general/Button"
 import Input from "@/components/general/Input"
-import { toast, Toaster } from "react-hot-toast"
+import { toast } from "react-hot-toast"
 
 interface RoleData {
     role: UserRole;
@@ -117,7 +117,6 @@ export default function RolesPage() {
 
     return (
         <VStack align="start" justify="start" gap={16} fullWidth fullHeight className={s.container}>
-            <Toaster />
             <Title text="Roles" />
             <Divider />
             <VStack fullWidth align="start" justify="start" gap={24} >

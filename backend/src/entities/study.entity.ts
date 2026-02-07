@@ -13,13 +13,10 @@ import { User } from './user.entity';
 import { StudyMembership } from './study-membership.entity';
 import { StudyOverview } from './study-overview.entity';
 import { Session } from './session.entity';
-import { TilPost } from './til-post.entity' ;
+import { TilPost } from './til-post.entity';
 import { Archive } from './archive.entity';
 
-export enum StudyType {
-  RED = 'RED',
-  WEB = 'WEB',
-}
+
 
 export enum StudyStatus {
   ACTIVE = 'active',
@@ -34,11 +31,11 @@ export class Study {
   @Column()
   name: string;
 
-  @Column({
-    type: 'enum',
-    enum: StudyType,
-  })
-  type: StudyType;
+  @Column({ nullable: true, default: 'WEB' })
+  type: string;
+
+  @Column({ default: '#ffffff' })
+  color: string;
 
   @Column({ nullable: true, type: 'text' })
   slug: string;

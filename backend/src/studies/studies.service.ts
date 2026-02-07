@@ -13,7 +13,6 @@ import {
   User,
   UserRole,
   StudyStatus,
-  StudyType,
 } from '../entities';
 import { StudyMemberRole } from '../entities/study-membership.entity';
 import {
@@ -36,7 +35,7 @@ export class StudiesService {
     private membershipRepository: Repository<StudyMembership>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   // ==================== Studies CRUD ====================
 
@@ -109,9 +108,9 @@ export class StudiesService {
     // 응답 구성
     const overview = study.overview
       ? {
-          description: study.overview.description,
-          manager_list: managerList,
-        }
+        description: study.overview.description,
+        manager_list: managerList,
+      }
       : { description: '', manager_list: managerList };
 
     // 멤버 목록 구성
@@ -177,6 +176,7 @@ export class StudiesService {
       members,
       wil,
       archives,
+      color: study.color, // Add color to response
     };
   }
 
@@ -190,6 +190,7 @@ export class StudiesService {
     const study = this.studyRepository.create({
       name,
       type,
+      color: dto.color,
       slug: slug || this.generateSlug(name),
       status: StudyStatus.ACTIVE,
       created_by: userId,
@@ -236,6 +237,7 @@ export class StudiesService {
 
     if (dto.name !== undefined) study.name = dto.name;
     if (dto.type !== undefined) study.type = dto.type;
+    if (dto.color !== undefined) study.color = dto.color;
     if (dto.slug !== undefined) study.slug = dto.slug;
     if (dto.status !== undefined) study.status = dto.status;
 

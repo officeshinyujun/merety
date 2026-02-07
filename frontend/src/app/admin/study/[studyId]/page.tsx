@@ -9,8 +9,9 @@ import Title from "@/components/study/Title";
 import s from './style.module.scss';
 import { use, useState, useEffect, useCallback } from 'react';
 import { Save, X, Edit2, Loader2, UserPlus, Trash2, Calendar } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { studiesApi, StudyMember } from '@/api';
-import { Study, StudyType, StudyStatus } from '@/types/study';
+import { Study, StudyStatus } from '@/types/study';
 import { Session } from '@/types/session';
 import { sessionsApi } from '@/api';
 import AddMemberModal from '@/components/admin/AddMemberModal';
@@ -24,6 +25,7 @@ interface StudyDetailData {
     id: string;
     name: string;
     type: string;
+    color?: string;
     slug?: string;
     status: string;
     created_by?: string;
@@ -94,7 +96,8 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
             // 기본 정보 업데이트
             await studiesApi.updateStudy(studyId, {
                 name: editedStudy.name,
-                type: editedStudy.type as StudyType,
+                type: editedStudy.type,
+                color: editedStudy.color,
                 slug: editedStudy.slug,
                 status: editedStudy.status as StudyStatus,
             });
@@ -108,10 +111,10 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
 
             setStudy(editedStudy);
             setIsEditing(false);
-            alert('저장되었습니다.');
+            toast.success('저장되었습니다.');
         } catch (err) {
             console.error('Failed to save:', err);
-            alert('저장에 실패했습니다.');
+            toast.error('저장에 실패했습니다.');
         } finally {
             setIsSaving(false);
         }
@@ -142,7 +145,7 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
             fetchStudyData();
         } catch (err) {
             console.error('Failed to remove member:', err);
-            alert('멤버 제거에 실패했습니다.');
+            toast.error('멤버 제거에 실패했습니다.');
         }
     };
 
@@ -155,7 +158,7 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
             fetchStudyData();
         } catch (err) {
             console.error('Failed to delete session:', err);
-            alert('세션 제거에 실패했습니다.');
+            toast.error('세션 제거에 실패했습니다.');
         }
     };
 
@@ -178,167 +181,196 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
 
     return (
         <>
-        <VStack
-            fullWidth
-            fullHeight
-            align='start'
-            justify='start'
-            gap={24}
-            className={s.container}
-        >
-            {/* Header */}
-            <HStack fullWidth align="center" justify="between">
-                <Title text={`${study.name} 상세`} />
-                <HStack gap={12} align="center" justify="end">
-                    {isEditing ? (
-                        <>
-                            <Button className={s.cancelButton} onClick={handleCancel} disabled={isSaving}>
-                                <X size={18} />
-                                취소
+            <VStack
+                fullWidth
+                fullHeight
+                align='start'
+                justify='start'
+                gap={24}
+                className={s.container}
+            >
+                {/* Header */}
+                <HStack fullWidth align="center" justify="between">
+                    <Title text={`${study.name} 상세`} />
+                    <HStack gap={12} align="center" justify="end">
+                        {isEditing ? (
+                            <>
+                                <Button className={s.cancelButton} onClick={handleCancel} disabled={isSaving}>
+                                    <X size={18} />
+                                    취소
+                                </Button>
+                                <Button className={s.saveButton} onClick={handleSave} disabled={isSaving}>
+                                    {isSaving ? <Loader2 className={s.spinner} size={18} /> : <Save size={18} />}
+                                    {isSaving ? '저장 중...' : '저장'}
+                                </Button>
+                            </>
+                        ) : (
+                            <Button className={s.editButton} onClick={() => setIsEditing(true)}>
+                                <Edit2 size={18} />
+                                수정
                             </Button>
-                            <Button className={s.saveButton} onClick={handleSave} disabled={isSaving}>
-                                {isSaving ? <Loader2 className={s.spinner} size={18} /> : <Save size={18} />}
-                                {isSaving ? '저장 중...' : '저장'}
-                            </Button>
-                        </>
-                    ) : (
-                        <Button className={s.editButton} onClick={() => setIsEditing(true)}>
-                            <Edit2 size={18} />
-                            수정
-                        </Button>
-                    )}
+                        )}
+                    </HStack>
                 </HStack>
-            </HStack>
 
-            {/* 기본 정보 섹션 */}
-            <Section title="기본 정보" className={s.section}>
-                <VStack fullWidth gap={16} align="start" justify="start">
+                {/* 기본 정보 섹션 */}
+                <Section title="기본 정보" className={s.section}>
+                    <VStack fullWidth gap={16} align="start" justify="start">
+                        <HStack fullWidth gap={24} align="start" justify="start">
+                            <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
+                                <label className={s.label}>스터디 이름</label>
+                                {isEditing ? (
+                                    <Input
+                                        value={editedStudy.name}
+                                        onChange={(e) => handleInputChange('name', e.target.value)}
+                                        width="300px"
+                                    />
+                                ) : (
+                                    <p className={s.value}>{study.name}</p>
+                                )}
+                            </VStack>
+                            <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
+                                <label className={s.label}>타입</label>
+                                {isEditing ? (
+                                    <Input
+                                        value={editedStudy.type}
+                                        onChange={(e) => handleInputChange('type', e.target.value)}
+                                        width="100%"
+                                    />
+                                ) : (
+                                    <span className={s.typeBadge} style={{ backgroundColor: study.color || '#333', color: '#fff' }}>
+                                        {study.type}
+                                    </span>
+                                )}
+                            </VStack>
+                            <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
+                                <label className={s.label}>색상</label>
+                                {isEditing ? (
+                                    <HStack align="center" gap={12}>
+                                        <input
+                                            type="color"
+                                            value={editedStudy.color || '#ffffff'}
+                                            onChange={(e) => handleInputChange('color', e.target.value)}
+                                            style={{
+                                                width: '40px',
+                                                height: '40px',
+                                                padding: '0',
+                                                border: 'none',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                                backgroundColor: 'transparent'
+                                            }}
+                                        />
+                                        <span>{editedStudy.color}</span>
+                                    </HStack>
+                                ) : (
+                                    <div
+                                        style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            borderRadius: '4px',
+                                            backgroundColor: study.color || '#ffffff',
+                                            border: '1px solid #444'
+                                        }}
+                                    />
+                                )}
+                            </VStack>
+                            <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
+                                <label className={s.label}>상태</label>
+                                {isEditing ? (
+                                    <select
+                                        value={editedStudy.status}
+                                        onChange={(e) => handleInputChange('status', e.target.value)}
+                                        className={s.select}
+                                    >
+                                        <option value="active">Active</option>
+                                        <option value="archived">Archived</option>
+                                        <option value="pending">Pending</option>
+                                    </select>
+                                ) : (
+                                    <span className={`${s.statusBadge} ${s[study.status]}`}>
+                                        {study.status}
+                                    </span>
+                                )}
+                            </VStack>
+                        </HStack>
+                        <VStack gap={8} align="start" justify="start" fullWidth>
+                            <label className={s.label}>Slug</label>
+                            {isEditing ? (
+                                <Input
+                                    value={editedStudy.slug || ''}
+                                    onChange={(e) => handleInputChange('slug', e.target.value)}
+                                    width="100%"
+                                />
+                            ) : (
+                                <p className={s.value}>{study.slug || '-'}</p>
+                            )}
+                        </VStack>
+                        <VStack gap={8} align="start" justify="start" fullWidth>
+                            <label className={s.label}>개요</label>
+                            {isEditing ? (
+                                <div className={s.editorWrapper}>
+                                    <MdEditor
+                                        isEdit={true}
+                                        contents={editedStudy.overview?.description || ''}
+                                        onChange={handleDescriptionChange}
+                                        className={s.editor}
+                                    />
+                                </div>
+                            ) : (
+                                <div className={s.descriptionWrapper}>
+                                    <MdEditor
+                                        isEdit={false}
+                                        contents={study.overview?.description || ''}
+                                        className={s.viewer}
+                                    />
+                                </div>
+                            )}
+                        </VStack>
+                    </VStack>
+                </Section>
+
+                {/* 날짜 정보 */}
+                <Section title="날짜 정보" className={s.section}>
                     <HStack fullWidth gap={24} align="start" justify="start">
                         <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
-                            <label className={s.label}>스터디 이름</label>
-                            {isEditing ? (
-                                <Input 
-                                    value={editedStudy.name}
-                                    onChange={(e) => handleInputChange('name', e.target.value)}
-                                    width="300px"
-                                />
-                            ) : (
-                                <p className={s.value}>{study.name}</p>
-                            )}
+                            <label className={s.label}>생성일</label>
+                            <p className={s.value}>{new Date(study.created_at).toLocaleDateString('ko-KR')}</p>
                         </VStack>
                         <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
-                            <label className={s.label}>타입</label>
-                            {isEditing ? (
-                                <select 
-                                    value={editedStudy.type}
-                                    onChange={(e) => handleInputChange('type', e.target.value)}
-                                    className={s.select}
-                                >
-                                    <option value="RED">RED</option>
-                                    <option value="WEB">WEB</option>
-                                </select>
-                            ) : (
-                                <span className={`${s.typeBadge} ${s[study.type.toLowerCase()]}`}>
-                                    {study.type}
-                                </span>
-                            )}
-                        </VStack>
-                        <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
-                            <label className={s.label}>상태</label>
-                            {isEditing ? (
-                                <select 
-                                    value={editedStudy.status}
-                                    onChange={(e) => handleInputChange('status', e.target.value)}
-                                    className={s.select}
-                                >
-                                    <option value="active">Active</option>
-                                    <option value="archived">Archived</option>
-                                    <option value="pending">Pending</option>
-                                </select>
-                            ) : (
-                                <span className={`${s.statusBadge} ${s[study.status]}`}>
-                                    {study.status}
-                                </span>
-                            )}
+                            <label className={s.label}>수정일</label>
+                            <p className={s.value}>{new Date(study.updated_at).toLocaleDateString('ko-KR')}</p>
                         </VStack>
                     </HStack>
-                    <VStack gap={8} align="start" justify="start" fullWidth>
-                        <label className={s.label}>Slug</label>
-                        {isEditing ? (
-                            <Input 
-                                value={editedStudy.slug || ''}
-                                onChange={(e) => handleInputChange('slug', e.target.value)}
-                                width="100%"
-                            />
-                        ) : (
-                            <p className={s.value}>{study.slug || '-'}</p>
-                        )}
-                    </VStack>
-                    <VStack gap={8} align="start" justify="start" fullWidth>
-                        <label className={s.label}>개요</label>
-                        {isEditing ? (
-                            <div className={s.editorWrapper}>
-                                <MdEditor 
-                                    isEdit={true}
-                                    contents={editedStudy.overview?.description || ''}
-                                    onChange={handleDescriptionChange}
-                                    className={s.editor}
-                                />
-                            </div>
-                        ) : (
-                            <div className={s.descriptionWrapper}>
-                                <MdEditor 
-                                    isEdit={false}
-                                    contents={study.overview?.description || ''}
-                                    className={s.viewer}
-                                />
-                            </div>
-                        )}
-                    </VStack>
-                </VStack>
-            </Section>
+                </Section>
 
-            {/* 날짜 정보 */}
-            <Section title="날짜 정보" className={s.section}>
-                <HStack fullWidth gap={24} align="start" justify="start">
-                    <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
-                        <label className={s.label}>생성일</label>
-                        <p className={s.value}>{new Date(study.created_at).toLocaleDateString('ko-KR')}</p>
-                    </VStack>
-                    <VStack gap={8} align="start" justify="start" className={s.fieldGroup}>
-                        <label className={s.label}>수정일</label>
-                        <p className={s.value}>{new Date(study.updated_at).toLocaleDateString('ko-KR')}</p>
-                    </VStack>
-                </HStack>
-            </Section>
-
-            {/* 멤버 목록 */}
-            <Section 
-                title={`멤버 (${members.length}명)`} 
-                className={s.section}
-                action={
-                    <Button className={s.addMemberButton} onClick={() => setIsAddMemberModalOpen(true)}>
-                        <UserPlus size={16} />
-                        멤버 추가
-                    </Button>
-                }
-            >
-                <VStack fullWidth gap={8} align="start" justify="start" className={s.memberList}>
-                    {members.length === 0 ? (
-                        <p className={s.emptyMessage}>등록된 멤버가 없습니다.</p>
-                    ) : (
-                        members.map((member) => (
-                            <HStack 
-                                key={member.id} 
-                                fullWidth 
-                                gap={16} 
-                                align="center" 
-                                justify="between" 
-                                className={s.memberRow}
-                            >
+                {/* 멤버 목록 */}
+                <Section
+                    title={`멤버 (${members.length}명)`}
+                    className={s.section}
+                    action={
+                        <Button className={s.addMemberButton} onClick={() => setIsAddMemberModalOpen(true)}>
+                            <UserPlus size={16} />
+                            멤버 추가
+                        </Button>
+                    }
+                >
+                    <VStack fullWidth gap={8} align="start" justify="start" className={s.memberList}>
+                        {members.length === 0 ? (
+                            <p className={s.emptyMessage}>등록된 멤버가 없습니다.</p>
+                        ) : (
+                            members.map((member) => (
+                                <HStack
+                                    key={member.id}
+                                    fullWidth
+                                    gap={16}
+                                    align="center"
+                                    justify="between"
+                                    className={s.memberRow}
+                                >
                                     <HStack gap={12} align="center" justify="start" onClick={() => setSelectedMember(member)} className={s.memberInfo}>
-                                        <img 
-                                            src={member.user.user_image || '/default-avatar.png'} 
+                                        <img
+                                            src={member.user.user_image || '/default-avatar.png'}
                                             alt={member.user.name || ''}
                                             className={s.memberImage}
                                         />
@@ -347,126 +379,126 @@ export default function StudyDetail({ params }: { params: Promise<{ studyId: str
                                             <span className={s.memberEmail}>{member.user.email}</span>
                                         </VStack>
                                     </HStack>
-                                <HStack gap={12} align="center" justify="end">
-                                    <span className={s.memberRole}>{member.member_role}</span>
-                                    <button 
-                                        className={s.removeMemberButton}
-                                        onClick={() => handleRemoveMember(member.user.id)}
-                                        title="멤버 제거"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
+                                    <HStack gap={12} align="center" justify="end">
+                                        <span className={s.memberRole}>{member.member_role}</span>
+                                        <button
+                                            className={s.removeMemberButton}
+                                            onClick={() => handleRemoveMember(member.user.id)}
+                                            title="멤버 제거"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </HStack>
                                 </HStack>
-                            </HStack>
-                        ))
-                    )}
-                </VStack>
-            </Section>
-
-            {/* 세션 목록 */}
-            <Section 
-                title={`세션 (${sessions.length}개)`} 
-                className={s.section}
-                action={
-                    <Button className={s.addSessionButton} onClick={() => setIsCreateSessionModalOpen(true)}>
-                        <Calendar size={16} />
-                        세션 추가
-                    </Button>
-                }
-            >
-                <VStack fullWidth gap={8} align="start" justify="start" className={s.sessionList}>
-                    {sessions.length === 0 ? (
-                        <p className={s.emptyMessage}>등록된 세션이 없습니다.</p>
-                    ) : (
-                        sessions.map((session) => (
-                            <HStack 
-                                key={session.id} 
-                                fullWidth 
-                                gap={16} 
-                                align="center" 
-                                justify="between" 
-                                className={s.sessionRow}
-                                onClick={() => setSelectedSession(session)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <HStack gap={12} align="center" justify="start">
-                                    <span className={s.sessionRound}>Round {session.session_no}</span>
-                                    <p className={s.sessionTitle}>{session.title}</p>
-                                </HStack>
-                                <HStack gap={12} align="center" justify="end">
-                                    <span className={s.sessionDate}>
-                                        {new Date(session.scheduled_at).toLocaleDateString('ko-KR')}
-                                    </span>
-                                    <span className={`${s.sessionStatus} ${s.active}`}>
-                                        active
-                                    </span>
-                                    <button 
-                                        className={s.removeSessionButton}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleRemoveSession(session.id);
-                                        }}
-                                        title="세션 제거"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
-                                </HStack>
-                            </HStack>
                             ))
-                    )}
-                </VStack>
-            </Section>
-        </VStack>
+                        )}
+                    </VStack>
+                </Section>
 
-        {/* 멤버 추가 모달 */}
-        <AddMemberModal
-            isOpen={isAddMemberModalOpen}
-            studyId={studyId}
-            existingMemberIds={members.map(m => m.user.id)}
-            onClose={() => setIsAddMemberModalOpen(false)}
-            onSuccess={() => {
-                // 멤버 목록 새로고침
-                fetchStudyData();
-            }}
-        />
+                {/* 세션 목록 */}
+                <Section
+                    title={`세션 (${sessions.length}개)`}
+                    className={s.section}
+                    action={
+                        <Button className={s.addSessionButton} onClick={() => setIsCreateSessionModalOpen(true)}>
+                            <Calendar size={16} />
+                            세션 추가
+                        </Button>
+                    }
+                >
+                    <VStack fullWidth gap={8} align="start" justify="start" className={s.sessionList}>
+                        {sessions.length === 0 ? (
+                            <p className={s.emptyMessage}>등록된 세션이 없습니다.</p>
+                        ) : (
+                            sessions.map((session) => (
+                                <HStack
+                                    key={session.id}
+                                    fullWidth
+                                    gap={16}
+                                    align="center"
+                                    justify="between"
+                                    className={s.sessionRow}
+                                    onClick={() => setSelectedSession(session)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <HStack gap={12} align="center" justify="start">
+                                        <span className={s.sessionRound}>Round {session.session_no}</span>
+                                        <p className={s.sessionTitle}>{session.title}</p>
+                                    </HStack>
+                                    <HStack gap={12} align="center" justify="end">
+                                        <span className={s.sessionDate}>
+                                            {new Date(session.scheduled_at).toLocaleDateString('ko-KR')}
+                                        </span>
+                                        <span className={`${s.sessionStatus} ${s.active}`}>
+                                            active
+                                        </span>
+                                        <button
+                                            className={s.removeSessionButton}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleRemoveSession(session.id);
+                                            }}
+                                            title="세션 제거"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </HStack>
+                                </HStack>
+                            ))
+                        )}
+                    </VStack>
+                </Section>
+            </VStack>
 
-        {/* 세션 생성 모달 */}
-        <CreateSessionModal
-            isOpen={isCreateSessionModalOpen}
-            studyId={studyId}
-            onClose={() => setIsCreateSessionModalOpen(false)}
-            onSuccess={() => {
-                fetchStudyData();
-            }}
-        />
+            {/* 멤버 추가 모달 */}
+            <AddMemberModal
+                isOpen={isAddMemberModalOpen}
+                studyId={studyId}
+                existingMemberIds={members.map(m => m.user.id)}
+                onClose={() => setIsAddMemberModalOpen(false)}
+                onSuccess={() => {
+                    // 멤버 목록 새로고침
+                    fetchStudyData();
+                }}
+            />
 
-        {/* 세션 수정/상세 모달 */}
-        <EditSessionModal
-            isOpen={!!selectedSession}
-            session={selectedSession}
-            onClose={() => setSelectedSession(null)}
-            onSuccess={() => {
-                fetchStudyData();
-            }}
-        />
+            {/* 세션 생성 모달 */}
+            <CreateSessionModal
+                isOpen={isCreateSessionModalOpen}
+                studyId={studyId}
+                onClose={() => setIsCreateSessionModalOpen(false)}
+                onSuccess={() => {
+                    fetchStudyData();
+                }}
+            />
 
-        {selectedMember && (
-            <ModalContainer>
-                <UserEditCard
-                    userId={selectedMember.user.id}
-                    password={""} 
-                    userImage={selectedMember.user.user_image || "/default-profile.png"}
-                    name={selectedMember.user.name || selectedMember.user.handle}
-                    email={selectedMember.user.email}
-                    role={selectedMember.user.role} 
-                    status={selectedMember.user.status}
-                    onClose={() => {
-                        setSelectedMember(null);
-                        fetchStudyData();
-                    }}
-                />
-            </ModalContainer>
-        )}
-    </>
+            {/* 세션 수정/상세 모달 */}
+            <EditSessionModal
+                isOpen={!!selectedSession}
+                session={selectedSession}
+                onClose={() => setSelectedSession(null)}
+                onSuccess={() => {
+                    fetchStudyData();
+                }}
+            />
+
+            {selectedMember && (
+                <ModalContainer>
+                    <UserEditCard
+                        userId={selectedMember.user.id}
+                        password={""}
+                        userImage={selectedMember.user.user_image || "/default-profile.png"}
+                        name={selectedMember.user.name || selectedMember.user.handle}
+                        email={selectedMember.user.email}
+                        role={selectedMember.user.role}
+                        status={selectedMember.user.status}
+                        onClose={() => {
+                            setSelectedMember(null);
+                            fetchStudyData();
+                        }}
+                    />
+                </ModalContainer>
+            )}
+        </>
     );
 }

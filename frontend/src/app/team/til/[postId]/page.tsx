@@ -15,6 +15,7 @@ import { ChevronLeft, Calendar, Edit2, Trash2 } from 'lucide-react'; // Import E
 import Image from 'next/image';
 import Divider from '@/components/general/Divider';
 import Button from '@/components/general/Button'; // Import Button
+import SubTitle from '@/components/study/SubTitle';
 
 export default function TilDetailPage() {
     const params = useParams();
@@ -75,13 +76,10 @@ export default function TilDetailPage() {
     return (
         <VStack fullWidth fullHeight align="start" justify="start" className={s.container} gap={24}>
             <HStack fullWidth align="center" justify="between">
-                <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
-                    <ChevronLeft size={24} color="#fdfdfe" />
-                    <Title text="TIL Detail" />
-                </HStack>
+                <SubTitle text={post.title} />
                 {isAuthor && (
                     <HStack gap={8}>
-                        <Button 
+                        <Button
                             onClick={handleDelete}
                             className={s.deleteButton}
                             icon={<Trash2 size={16} />}
@@ -89,7 +87,7 @@ export default function TilDetailPage() {
                         >
                             Delete
                         </Button>
-                        <Button 
+                        <Button
                             onClick={handleEdit}
                             className={s.editButton}
                             icon={<Edit2 size={16} />}
@@ -101,16 +99,15 @@ export default function TilDetailPage() {
             </HStack>
 
             <VStack fullWidth gap={16} className={s.contentWrapper}>
-                <h1 className={s.title}>{post.title}</h1>
-                
+
                 <HStack fullWidth align="center" justify="between" className={s.meta}>
                     <HStack align="center" gap={12}>
                         <div className={s.authorImage}>
-                            <Image 
-                                src={post.author_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"} 
-                                alt={post.author_name} 
-                                width={32} 
-                                height={32} 
+                            <Image
+                                src={post.author_image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhNJEXqIaNHfAlHrN588FXk4quCwsg0mz19g&s"}
+                                alt={post.author_name}
+                                width={32}
+                                height={32}
                             />
                         </div>
                         <p className={s.authorName}>{post.author_name}</p>
@@ -124,10 +121,10 @@ export default function TilDetailPage() {
                 <Divider />
 
                 <div className={s.editorContainer}>
-                    <MdEditor 
-                        contents={post.content_md} 
-                        onChange={() => {}} 
-                        isEdit={false} 
+                    <MdEditor
+                        contents={post.content_md}
+                        onChange={() => { }}
+                        isEdit={false}
                     />
                 </div>
             </VStack>
