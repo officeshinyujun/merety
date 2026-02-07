@@ -40,36 +40,35 @@ export default function NoticeCreatePage() {
 
     return (
         <VStack fullWidth fullHeight align='start' justify='start' className={s.container} gap={32}>
-            <VStack fullWidth gap={12} className={s.header}>
+            <VStack fullWidth gap={8} className={s.header}>
                 <Title text="Create Notice" />
-                <p>Write a new notice for the team.</p>
             </VStack>
 
             <VStack fullWidth gap={24}>
-                <Input 
-                    placeholder="Enter notice title..." 
+                <Input
+                    placeholder="Enter notice title..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className={s.titleInput}
                     width="100%"
                 />
-                
+
                 <VStack fullWidth gap={12} className={s.editorContainer}>
-                    <MdEditor 
+                    <MdEditor
                         contents={content}
                         onChange={setContent}
                     />
                 </VStack>
 
                 <HStack fullWidth justify="end" gap={12} className={s.actions}>
-                    <Button 
+                    <Button
                         onClick={() => router.back()}
                         disabled={loading}
                         className={s.cancelButton}
                     >
                         Cancel
                     </Button>
-                    <Button 
+                    <Button
                         onClick={handleSave}
                         disabled={loading || !title.trim() || !content.trim()}
                         className={s.publishButton}

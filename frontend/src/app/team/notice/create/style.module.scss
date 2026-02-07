@@ -2,6 +2,7 @@
     padding: $s-48;
     background-color: $background-secondary;
     min-height: 100vh;
+    overflow-y: scroll;
 }
 
 .header {
@@ -28,13 +29,12 @@
 .titleInput {
     background-color: transparent !important;
     border: none !important;
-    border-bottom: 2px solid $background-third !important;
     border-radius: 0 !important;
     font-size: $f-xl !important;
     font-weight: $semi-bold !important;
     color: $text-primary !important;
     padding: $s-12 0 !important;
-    
+
     &:focus {
         border-bottom-color: $border-primary !important;
     }

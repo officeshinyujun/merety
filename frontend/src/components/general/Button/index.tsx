@@ -5,24 +5,24 @@ interface Props {
     onClick?: () => void;
     className?: string; // Optional
     children?: React.ReactNode;
-    leftIcon ?: string;
-    rightIcon ?: string;
-    icon ?: React.ReactNode;
+    leftIcon?: string;
+    rightIcon?: string;
+    icon?: React.ReactNode;
     disabled?: boolean;
     style?: React.CSSProperties;
 }
 
 export default function Button({ width, height, onClick, className, children, leftIcon, rightIcon, icon, disabled, style }: Props) {
     return (
-        <button 
-            className={className} 
-            onClick={onClick} 
+        <button
+            className={className}
+            onClick={onClick}
             disabled={disabled}
             style={{
-                width, 
-                height, 
-                outline: 'none', 
-                border: "none", 
+                width,
+                height,
+                outline: 'none',
+                border: "none",
                 background: "none",
                 borderRadius: 8,
                 cursor: disabled ? "not-allowed" : "pointer",
@@ -31,6 +31,7 @@ export default function Button({ width, height, onClick, className, children, le
                 justifyContent: "center",
                 gap: 12,
                 opacity: disabled ? 0.6 : 1,
+                whiteSpace: "nowrap",
                 ...style
             }}
         >
