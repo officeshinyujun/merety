@@ -109,15 +109,15 @@ export default function WILDetailPage() {
                         <Button
                             onClick={handleDelete}
                             className={s.deleteButton}
+                            icon={<Trash2 size={16} />}
                         >
-                            <Trash2 size={16} style={{ marginRight: '8px' }} />
                             삭제
                         </Button>
                         <Button
                             onClick={() => setIsEditModalOpen(true)}
                             className={s.editButton}
+                            icon={<Edit2 size={16} />}
                         >
-                            <Edit2 size={16} style={{ marginRight: '8px' }} />
                             수정
                         </Button>
                     </HStack>

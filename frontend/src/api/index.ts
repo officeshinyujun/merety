@@ -10,6 +10,7 @@ export { default as noticesApi } from './notices';
 export { default as teamApi } from './team';
 export { default as dashboardApi } from './dashboard';
 export { default as metricsApi } from './metrics';
+export { default as roleDescriptionsApi } from './roleDescriptions';
 
 // Re-export types
 export type { LoginRequest, LoginResponse, ChangePasswordRequest } from './auth';

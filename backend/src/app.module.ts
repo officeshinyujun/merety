@@ -19,6 +19,7 @@ import {
   Archive,
   Notice,
   ActivityLog,
+  RoleDescription,
 } from './entities';
 
 // Modules
@@ -34,6 +35,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { MetricsModule } from './admin/metrics/metrics.module';
 import { UploadModule } from './upload/upload.module'; // [NEW]
 import { CommonModule } from './common/common.module'; // [NEW]
+import { RoleDescriptionsModule } from './role-descriptions/role-descriptions.module';
 
 @Module({
   imports: [
@@ -72,6 +74,7 @@ import { CommonModule } from './common/common.module'; // [NEW]
           Archive,
           Notice,
           ActivityLog,
+          RoleDescription,
         ],
         synchronize: configService.get<boolean>('database.synchronize'),
         logging: configService.get<boolean>('database.logging'),
@@ -91,9 +94,10 @@ import { CommonModule } from './common/common.module'; // [NEW]
     DashboardModule,
     MetricsModule,
     UploadModule, // [NEW]
+    RoleDescriptionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
 

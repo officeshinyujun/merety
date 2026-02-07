@@ -17,3 +17,6 @@ export { Notice } from './notice.entity';
 
 // Logging
 export { ActivityLog, ActionType, EntityType } from './activity-log.entity';
+
+// Role Description
+export { RoleDescription } from './role-description.entity';
