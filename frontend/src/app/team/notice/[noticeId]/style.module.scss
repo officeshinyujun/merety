@@ -1,24 +1,74 @@
+@import "@/constants/COLORS.scss";
+@import "@/constants/FONTS.scss";
+@import "@/constants/SPACING.scss";
+
 .container {
     padding: $s-pagePadding;
-    
-    h1 {
-        font-size: $f-xxl;
-        color: $text-primary;
-    }
+    background-color: $background-secondary;
+    overflow-y: scroll;
+}
 
-    p {
-        color: $text-secondary;
+.backButton {
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.8;
     }
 }
 
-.authorSection {
-    padding: 0 $s-16;
+.editButton {
+    background-color: $text-primary !important;
+    color: $background-primary !important;
+    padding: $s-12 $s-16;
 }
 
-.mdSection {
-    div {
-        padding: 0;
-        border: none !important;
-        background-color: transparent !important;
+.deleteButton {
+    padding: $s-12 $s-16;
+}
+
+.contentWrapper {
+    flex: 1;
+}
+
+.title {
+    font-size: $f-xl;
+    font-weight: $semi-bold;
+    color: $text-primary;
+    margin: 0;
+}
+
+.meta {
+    color: $text-secondary;
+    font-size: $f-sm;
+}
+
+.authorImage {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
+}
+
+.authorName {
+    color: $text-primary;
+    font-weight: $semi-bold;
+    margin: 0;
+}
+
+.date {
+    color: $text-secondary;
+}
+
+.editorContainer {
+    flex: 1;
+    background: $background-secondary;
+    border-radius: $s-8;
+    overflow: hidden;
 }
