@@ -1,25 +1,24 @@
 'use client';
 
 import { use, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { VStack } from '@/components/general/VStack';
-import SubTitle from '@/components/study/SubTitle';
+import Title from '@/components/study/Title';
 import Section from '@/components/general/Section';
 import { HStack } from '@/components/general/HStack';
 import UserCard from '@/components/study/Overview/UserCard';
-import MdEditor from '@/components/general/MdEditor'; // TODO: MdViewer로 변경 필요?
+import MdEditor from '@/components/general/MdEditor';
 import { studiesApi, StudyMember, authApi } from '@/api';
 import { Study } from '@/types/study';
 import { UserRole } from '@/types/user';
 import { StudyMemberRole } from '@/types/study';
 import s from './style.module.scss';
-import { Loader2, Edit2, Save, X } from 'lucide-react';
+import { Loader2, Edit2, Save, ChevronLeft, X } from 'lucide-react';
 import Button from '@/components/general/Button';
-
-// MdEditor가 view mode를 지원하는지 확인 필요, 일단 텍스트 표시용으로 사용하거나 별도 뷰어 컴포넌트 필요
-// 임시로 textarea readOnly 또는 div로 대체 가능
 
 export default function StudyOverview({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
+    const router = useRouter();
     const [study, setStudy] = useState<Study | null>(null);
     const [managers, setManagers] = useState<StudyMember[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -41,13 +40,13 @@ export default function StudyOverview({ params }: { params: Promise<{ id: string
 
                 setStudy(studyRes);
                 setDescription(studyRes.overview?.description || '');
-                
+
                 // 매니저 필터링
-                 // @ts-ignore: API response structure check
+                // @ts-ignore: API response structure check
                 const allMembers = (membersRes.data || membersRes) as StudyMember[];
                 const managerMembers = allMembers.filter(m => m.member_role === StudyMemberRole.MANAGER);
                 setManagers(managerMembers);
-                
+
                 await checkPermission(allMembers);
                 setIsLoading(false);
 
@@ -103,6 +102,10 @@ export default function StudyOverview({ params }: { params: Promise<{ id: string
         }
     };
 
+    const handleBack = () => {
+        router.back();
+    };
+
     if (isLoading) {
         return (
             <VStack fullWidth fullHeight align="center" justify="center" style={{ minHeight: '200px' }}>
@@ -112,7 +115,7 @@ export default function StudyOverview({ params }: { params: Promise<{ id: string
     }
 
     if (error || !study) {
-         return (
+        return (
             <VStack fullWidth fullHeight align="center" justify="center" style={{ minHeight: '200px' }}>
                 <p>{error || 'Study not found'}</p>
             </VStack>
@@ -121,16 +124,54 @@ export default function StudyOverview({ params }: { params: Promise<{ id: string
 
     return (
         <VStack className={s.container} gap={12} align='start' justify='start' fullWidth>
-            <SubTitle text="Overview" />
+            <HStack fullWidth align="center" justify="between">
+                <HStack align="center" gap={12} onClick={handleBack} className={s.backButton}>
+                    <ChevronLeft size={24} color="#fdfdfe" />
+                    <Title text="Overview" />
+                </HStack>
+                {isManager && (
+                    <HStack gap={8}>
+                        {isEditing ? (
+                            <>
+                                <Button
+                                    className={s.cancelButton}
+                                    onClick={handleCancel}
+                                    disabled={isSaving}
+                                    icon={<X size={14} />}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    className={s.saveButton}
+                                    onClick={handleSave}
+                                    disabled={isSaving}
+                                    icon={isSaving ? <Loader2 size={14} className={s.spinner} /> : <Save size={14} />}
+                                >
+                                    Save
+                                </Button>
+                            </>
+                        ) : (
+                            <Button
+                                onClick={handleEdit}
+                                className={s.editButton}
+                                icon={<Edit2 size={14} />}
+                            >
+                                Edit
+                            </Button>
+                        )}
+                    </HStack>
+                )}
+            </HStack>
+
             <Section title="manager" className={s.managerSection}>
                 {managers.length > 0 ? (
                     <HStack align='center' justify='start' gap={12} className={s.managerContainer}>
                         {managers.map((manager) => (
-                            <UserCard 
-                                key={manager.id} 
-                                profileImage={manager.user.user_image || '/default-avatar.png'} 
-                                name={manager.user.name || manager.user.handle} 
-                                role={manager.member_role} 
+                            <UserCard
+                                key={manager.id}
+                                profileImage={manager.user.user_image || '/default-avatar.png'}
+                                name={manager.user.name || manager.user.handle}
+                                role={manager.member_role}
                             />
                         ))}
                     </HStack>
@@ -139,40 +180,26 @@ export default function StudyOverview({ params }: { params: Promise<{ id: string
                 )}
             </Section>
             {/* Rules / Description */}
-            <Section 
-                title='Description' 
+            <Section
+                title='Description'
                 className={s.rulesSection}
-                action={isManager && !isEditing ? (
-                    <Button onClick={handleEdit} className={s.editButton}>
-                        <Edit2 size={14} /> Edit
-                    </Button>
-                ) : undefined}
             >
                 {isEditing ? (
                     <VStack fullWidth gap={12} align="end">
-                         <div className={s.editorWrapper}>
-                            <MdEditor 
-                                isEdit={true} 
-                                contents={editDescription} 
+                        <div className={s.editorWrapper}>
+                            <MdEditor
+                                isEdit={true}
+                                contents={editDescription}
                                 onChange={setEditDescription}
                                 className={s.editor}
                             />
                         </div>
-                         <HStack gap={8}>
-                            <Button className={s.cancelButton} onClick={handleCancel} disabled={isSaving}>
-                                <X size={14} /> 취소
-                            </Button>
-                            <Button className={s.saveButton} onClick={handleSave} disabled={isSaving}>
-                                {isSaving ? <Loader2 size={14} className={s.spinner} /> : <Save size={14} />}
-                                저장
-                            </Button>
-                        </HStack>
                     </VStack>
                 ) : (
                     <div className={s.descriptionContent}>
-                        <MdEditor 
-                            isEdit={false} 
-                            contents={description || '설명이 없습니다.'} 
+                        <MdEditor
+                            isEdit={false}
+                            contents={description || '설명이 없습니다.'}
                             className={s.viewer}
                         />
                     </div>

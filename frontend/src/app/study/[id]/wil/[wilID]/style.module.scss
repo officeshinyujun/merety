@@ -14,15 +14,17 @@
 }
 
 .deleteButton {
-    background-color: $text-wrong;
-    color: $background-primary;
-    padding: $s-12 $s-16;
+    background-color: $text-wrong !important;
+    color: $text-primary !important;
+    font-weight: $semi-bold;
+    padding: $s-16;
     white-space: nowrap;
 }
 
 .editButton {
     background-color: $text-primary !important;
-    color: $background-primary;
-    padding: $s-12 $s-16;
+    color: $background-primary !important;
+    font-weight: $semi-bold;
+    padding: $s-16;
     white-space: nowrap;
 }

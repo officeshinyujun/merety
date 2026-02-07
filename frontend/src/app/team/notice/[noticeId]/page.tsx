@@ -86,7 +86,7 @@ export default function NoticeDetailPage() {
                             onClick={handleDelete}
                             className={s.deleteButton}
                             icon={<Trash2 size={16} />}
-                            style={{ backgroundColor: '#ff4d4f', color: '#fff' }}
+                            style={{ backgroundColor: '#ff4d4f', color: '#fdfdfe' }}
                         >
                             Delete
                         </Button>

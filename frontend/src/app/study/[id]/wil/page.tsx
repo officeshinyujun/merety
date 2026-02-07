@@ -10,7 +10,6 @@ import DateCard from "@/components/study/WIL/DateCard";
 import ChartBase from "@/components/general/Chart/ChartBase";
 import ChartSection from "@/components/general/Chart/ChartSection";
 import Button from "@/components/general/Button";
-import CreateWilModal from "@/components/study/WIL/CreateWilModal";
 import { Edit3 } from "lucide-react";
 
 import { useState, useMemo, useEffect } from "react";
@@ -32,11 +31,8 @@ export default function WilPage() {
     const [startDate, setStartDate] = useState("2024-01-01");
     const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0]);
 
-
-    
     const [wils, setWils] = useState<TilPost[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,7 +40,7 @@ export default function WilPage() {
                 setIsLoading(true);
                 // Fetch up to 1000 posts to apply client-side filtering on specific date ranges
                 // Ideally this should be server-side filtered
-                const response = await tilApi.getTilPosts(studyId, { 
+                const response = await tilApi.getTilPosts(studyId, {
                     limit: 1000,
                     category: 'WIL'
                 });
@@ -58,19 +54,6 @@ export default function WilPage() {
         fetchData();
     }, [studyId]);
 
-    const handleSuccess = () => {
-        // Refresh data
-        const fetchData = async () => {
-            try {
-                const response = await tilApi.getTilPosts(studyId, { limit: 1000 });
-                setWils(response.data);
-            } catch (error) {
-                console.error("Failed to fetch WILs:", error);
-            }
-        };
-        fetchData();
-    };
-
     const filteredWils = useMemo(() => {
         return wils.filter(wil => {
             const matchesSearch = wil.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -79,9 +62,9 @@ export default function WilPage() {
             const end = new Date(endDate);
             // Include end date in comparison
             end.setHours(23, 59, 59, 999);
-            
+
             const matchesDate = wilDate >= start && wilDate <= end;
-            
+
             return matchesSearch && matchesDate;
         });
     }, [wils, searchQuery, startDate, endDate]);
@@ -98,6 +81,10 @@ export default function WilPage() {
 
     const handleRowClick = (wilId: string) => {
         router.push(`/study/${studyId}/wil/${wilId}`);
+    };
+
+    const handleCreate = () => {
+        router.push(`/study/${studyId}/wil/create`);
     };
 
     // Transform data for ChartSection
@@ -126,88 +113,81 @@ export default function WilPage() {
     }
 
     return (
-        <VStack 
+        <VStack
             align='start'
-            justify='start' 
+            justify='start'
             fullWidth
-            fullHeight 
-            gap={16} 
-            style={{padding : "48px 128px"}} 
+            fullHeight
+            gap={16}
+            style={{ padding: "48px 128px" }}
             className={s.container}
         >
             <HStack fullWidth align="center" justify="between">
                 <SubTitle text="WIL" />
-                <Button 
-                    onClick={() => setIsCreateModalOpen(true)}
+                <Button
+                    onClick={handleCreate}
                     className={s.createButton}
                 >
                     <Edit3 size={18} />
                     글쓰기
                 </Button>
             </HStack>
-                        <VStack 
-                            fullWidth
-                            fullHeight
-                            align='start' 
-                            justify='start' 
-                            gap={12}
-                            className={s.contents}
-                        >
-                            <HStack fullWidth align="center" justify="center">
-                                <Input 
-                                    width="700px"
-                                    height="40px"
-                                    placeholder="WIL을 검색하세요" 
-                                    icon={<Search size={18} color="#959595" />}
-                                    value={searchText}
-                                    onChange={(e) => setSearchText(e.target.value)}
-                                    onKeyDown={handleSearchKeyDown}
-                                />
-                            </HStack>
-                            <HStack fullWidth align='center' justify='start' gap={12} className={s.dateSelect}>
-                                <DateCard date={startDate} onDateChange={(date) => {
-                                    setStartDate(date);
-                                    setCurrentPage(1);
-                                }}/>
-                                <p>to</p>
-                                <DateCard date={endDate} onDateChange={(date) => {
-                                    setEndDate(date);
-                                    setCurrentPage(1);
-                                }}/>
-                            </HStack>
-                            
-                            <ChartBase>
-                    <ChartSection 
-                        title="Title" 
-                        width="60%" 
-                        children={titleColumnData} 
+            <VStack
+                fullWidth
+                fullHeight
+                align='start'
+                justify='start'
+                gap={12}
+                className={s.contents}
+            >
+                <HStack fullWidth align="center" justify="center">
+                    <Input
+                        width="700px"
+                        height="40px"
+                        placeholder="WIL을 검색하세요"
+                        icon={<Search size={18} color="#959595" />}
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        onKeyDown={handleSearchKeyDown}
                     />
-                    <ChartSection 
-                        title="Writer" 
-                        width="20%" 
-                        children={writerColumnData} 
+                </HStack>
+                <HStack fullWidth align='center' justify='start' gap={12} className={s.dateSelect}>
+                    <DateCard date={startDate} onDateChange={(date) => {
+                        setStartDate(date);
+                        setCurrentPage(1);
+                    }} />
+                    <p>to</p>
+                    <DateCard date={endDate} onDateChange={(date) => {
+                        setEndDate(date);
+                        setCurrentPage(1);
+                    }} />
+                </HStack>
+
+                <ChartBase>
+                    <ChartSection
+                        title="Title"
+                        width="60%"
+                        children={titleColumnData}
                     />
-                    <ChartSection 
-                        title="Date" 
-                        width="20%" 
-                        children={dateColumnData} 
+                    <ChartSection
+                        title="Writer"
+                        width="20%"
+                        children={writerColumnData}
+                    />
+                    <ChartSection
+                        title="Date"
+                        width="20%"
+                        children={dateColumnData}
                     />
                 </ChartBase>
-                
-                <PagenationBar 
+
+                <PagenationBar
                     totalItems={totalItems}
                     itemsPerPage={itemsPerPage}
                     currentPage={currentPage}
                     onPageChange={setCurrentPage}
                 />
             </VStack>
-
-            <CreateWilModal 
-                isOpen={isCreateModalOpen}
-                studyId={studyId}
-                onClose={() => setIsCreateModalOpen(false)}
-                onSuccess={handleSuccess}
-            />
         </VStack>
     )
 }

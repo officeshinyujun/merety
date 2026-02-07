@@ -1,11 +1,24 @@
-.container{
+.container {
     width: 100%;
+    height: 100%;
     padding: 48px 128px;
-    .managerSection{
+    overflow-y: scroll;
+
+    .backButton {
+        cursor: pointer;
+        transition: opacity 0.2s;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .managerSection {
         width: 100%;
         padding: 0px 16px;
     }
-    .rulesSection{
+
+    .rulesSection {
         width: 100%;
     }
 
@@ -17,21 +30,17 @@
     }
 
     .editButton {
-        padding: $s-4 $s-8;
-        background: transparent !important;
-        border: 1px solid $border-primary !important;
-        font-size: $f-xs;
+        background-color: $text-primary !important;
+        color: $background-primary !important;
+        padding: $s-12 $s-16;
         display: flex;
         align-items: center;
-        gap: 4px;
-        color: $text-secondary;
-        cursor: pointer;
-        border-radius: $s-4 !important;
+        gap: 8px;
+        border-radius: $s-8 !important;
+        border: none !important;
 
         &:hover {
-            color: $text-primary;
-            border-color: $text-primary !important;
-            background: $background-secondary !important;
+            opacity: 0.9;
         }
     }
 
@@ -53,27 +62,34 @@
     }
 
     .saveButton {
-        padding: $s-8 $s-12;
-        background: $text-correct !important;
+        background-color: $text-correct !important;
         color: $background-primary !important;
+        padding: $s-12 $s-16;
         font-size: $f-sm;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
+        border-radius: $s-8 !important;
+        border: none !important;
+
+        &:hover {
+            opacity: 0.9;
+        }
     }
 
     .cancelButton {
-        padding: $s-8 $s-12;
-        background: transparent !important;
-        border: 1px solid $border-primary !important;
-        color: $text-secondary !important;
+        background-color: $background-third !important;
+        color: $text-primary !important;
+        padding: $s-12 $s-16;
         font-size: $f-sm;
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 8px;
+        border-radius: $s-8 !important;
+        border: none !important;
 
         &:hover {
-            background: $background-secondary !important;
+            background-color: $background-secondary !important;
         }
     }
 }
