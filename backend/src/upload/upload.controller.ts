@@ -98,7 +98,7 @@ export class UploadController {
         cb(null, true);
       },
       limits: {
-        fileSize: 10 * 1024 * 1024, // 10MB 제한
+        fileSize: 50 * 1024 * 1024, // 50MB 제한
       },
     }),
   )
