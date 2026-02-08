@@ -1,0 +1,58 @@
+@import "@/constants/COLORS.scss";
+@import "@/constants/FONTS.scss";
+@import "@/constants/SPACING.scss";
+
+.container {
+    padding: $s-pagePadding;
+    background-color: $background-secondary;
+    overflow-y: scroll;
+}
+
+.saveButton {
+    background-color: $text-primary !important;
+    color: $background-primary !important;
+    padding: $s-16;
+}
+
+.backButton {
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.editorWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleInput {
+    font-size: $f-lg;
+    font-weight: $semi-bold;
+    color: $text-primary;
+}
+
+.editorContainer {
+    flex: 1;
+    min-height: 500px;
+    background: $background-secondary;
+    border-radius: $s-8;
+    overflow: hidden;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: $text-secondary;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

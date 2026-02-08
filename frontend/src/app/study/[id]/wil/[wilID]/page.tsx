@@ -14,7 +14,6 @@ import { TilPost } from "@/types/til";
 import { User } from "@/types/user";
 import { Loader2, Edit2, Trash2 } from "lucide-react";
 import Button from "@/components/general/Button";
-import CreateWilModal from "@/components/study/WIL/CreateWilModal";
 
 export default function WILDetailPage() {
     const params = useParams();
@@ -26,7 +25,6 @@ export default function WILDetailPage() {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     const fetchData = async () => {
         try {
@@ -63,10 +61,6 @@ export default function WILDetailPage() {
             console.error("Failed to delete WIL:", error);
             alert('WIL 삭제에 실패했습니다.');
         }
-    };
-
-    const handleEditSuccess = () => {
-        fetchData();
     };
 
     if (isLoading) {
@@ -114,7 +108,7 @@ export default function WILDetailPage() {
                             삭제
                         </Button>
                         <Button
-                            onClick={() => setIsEditModalOpen(true)}
+                            onClick={() => router.push(`/study/${studyId}/wil/${wilId}/edit`)}
                             className={s.editButton}
                             icon={<Edit2 size={16} />}
                         >
@@ -132,18 +126,6 @@ export default function WILDetailPage() {
             </HStack>
             <Divider />
             <MdEditor contents={wil.content_md} isEdit={false} className={s.mdSection} />
-
-            <CreateWilModal
-                isOpen={isEditModalOpen}
-                studyId={studyId}
-                onClose={() => setIsEditModalOpen(false)}
-                onSuccess={handleEditSuccess}
-                initialData={{
-                    id: wil.id,
-                    title: wil.title,
-                    content_md: wil.content_md
-                }}
-            />
         </VStack>
     )
 }

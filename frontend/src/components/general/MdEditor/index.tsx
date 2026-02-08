@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
 import { Markdown } from "tiptap-markdown";
+import PdfEmbed from "./PdfEmbed";
 import s from './style.module.scss';
 import { VStack } from "../VStack";
 import { HStack } from "../HStack";
@@ -26,7 +27,7 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
     const [text, setText] = useState("");
     const [uploading, setUploading] = useState(false);
 
-    const uploadImage = async (file: File): Promise<string | null> => {
+    const uploadFile = async (file: File): Promise<string | null> => {
         try {
             setUploading(true);
             const formData = new FormData();
@@ -40,12 +41,16 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
 
             return response.data.url;
         } catch (error) {
-            console.error('Image upload failed:', error);
-            toast.error('이미지 업로드에 실패했습니다.');
+            console.error('File upload failed:', error);
+            toast.error('파일 업로드에 실패했습니다.');
             return null;
         } finally {
             setUploading(false);
         }
+    };
+
+    const isPdfFile = (file: File): boolean => {
+        return file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     };
 
     const editor = useEditor({
@@ -58,6 +63,7 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                 inline: false,
             }),
             Markdown,
+            PdfEmbed,
         ],
         content: contents,
         immediatelyRender: false,
@@ -78,7 +84,7 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                         const file = item.getAsFile();
 
                         if (file) {
-                            uploadImage(file).then((url) => {
+                            uploadFile(file).then((url) => {
                                 if (url && editor) {
                                     // @ts-ignore
                                     editor.chain().focus().setImage({ src: url }).run();
@@ -126,22 +132,53 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
         }
     };
 
+    const handlePdfResult = (url: string | null, fileName: string) => {
+        if (url && editor) {
+            // PDF를 미리보기 가능한 임베드로 삽입
+            editor.chain().focus().setPdfEmbed({ src: url, fileName }).run();
+        }
+    };
+
     const handleImageBtnClick = () => {
         if (fileInputRef.current) {
+            fileInputRef.current.accept = 'image/*';
             fileInputRef.current.click();
         }
-    }
+    };
+
+    const pdfInputRef = useRef<HTMLInputElement>(null);
+
+    const handlePdfBtnClick = () => {
+        if (pdfInputRef.current) {
+            pdfInputRef.current.click();
+        }
+    };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        const url = await uploadImage(file);
-        handleImageResult(url);
+        const url = await uploadFile(file);
+        if (isPdfFile(file)) {
+            handlePdfResult(url, file.name);
+        } else {
+            handleImageResult(url);
+        }
 
         // Reset input so same file can be selected again if needed
         e.target.value = '';
-    }
+    };
+
+    const handlePdfFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const url = await uploadFile(file);
+        handlePdfResult(url, file.name);
+
+        // Reset input so same file can be selected again if needed
+        e.target.value = '';
+    };
 
     if (!editor) {
         return null;
@@ -153,8 +190,15 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                 type="file"
                 ref={fileInputRef}
                 style={{ display: 'none' }}
-                accept="image/*"
+                accept="image/*,.pdf"
                 onChange={handleFileChange}
+            />
+            <input
+                type="file"
+                ref={pdfInputRef}
+                style={{ display: 'none' }}
+                accept=".pdf,application/pdf"
+                onChange={handlePdfFileChange}
             />
             {isEdit && (
                 <HStack className={s.toolbar}>
@@ -228,6 +272,13 @@ export default function MdEditor({ isEdit = true, contents = '', className, onCh
                         disabled={uploading}
                     >
                         {uploading ? '...' : 'Img'}
+                    </Button>
+                    <Button
+                        onClick={handlePdfBtnClick}
+                        className={s.toolbarButton}
+                        disabled={uploading}
+                    >
+                        {uploading ? '...' : 'PDF'}
                     </Button>
                 </HStack>
             )}

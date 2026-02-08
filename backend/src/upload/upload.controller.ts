@@ -91,9 +91,9 @@ export class UploadController {
         },
       }),
       fileFilter: (req, file, cb) => {
-        // 이미지 파일만 허용
-        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)) {
-          return cb(new BadRequestException('이미지 파일만 업로드 가능합니다.'), false);
+        // 이미지 및 PDF 파일 허용
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp|pdf)$/)) {
+          return cb(new BadRequestException('이미지 또는 PDF 파일만 업로드 가능합니다.'), false);
         }
         cb(null, true);
       },
