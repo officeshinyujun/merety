@@ -1,0 +1,88 @@
+@import "@/constants/COLORS.scss";
+@import "@/constants/SPACING.scss";
+@import "@/constants/FONTS.scss";
+
+.modal {
+    width: 800px;
+    max-width: 90vw;
+    max-height: 80vh;
+    padding: $s-24;
+    background: $background-secondary;
+    border-radius: $s-12;
+    border: 1px solid $border-primary;
+}
+
+.title {
+    font-size: $f-xl;
+    font-weight: $semi-bold;
+    color: $text-primary;
+    margin: 0;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: $text-secondary;
+    cursor: pointer;
+    padding: $s-4;
+    border-radius: $s-4;
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: $text-primary;
+        background: $background-third;
+    }
+}
+
+.label {
+    font-size: $f-sm;
+    font-weight: $medium;
+    color: $text-secondary;
+}
+
+.editorWrapper {
+    width: 100%;
+    min-height: 300px;
+    border-radius: $s-8;
+    overflow: hidden;
+}
+
+.editor {
+    min-height: 300px;
+}
+
+.cancelButton {
+    background: $background-third !important;
+    color: $text-secondary !important;
+    padding: $s-12 $s-16;
+
+    &:hover {
+        background: $background-fourth !important;
+    }
+}
+
+.submitButton {
+    background: $text-primary !important;
+    color: $background-primary !important;
+    padding: $s-12 $s-16;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

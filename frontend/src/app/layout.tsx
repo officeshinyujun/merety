@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthGuard from "@/components/auth/AuthGuard";
 import { Toaster } from "react-hot-toast";
+import QuestionButton from "@/components/general/QuestionButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
             }}
           />
         </AuthGuard>
+        <QuestionButton />
       </body>
     </html>
   );

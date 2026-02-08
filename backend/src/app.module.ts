@@ -36,6 +36,7 @@ import { MetricsModule } from './admin/metrics/metrics.module';
 import { UploadModule } from './upload/upload.module'; // [NEW]
 import { CommonModule } from './common/common.module'; // [NEW]
 import { RoleDescriptionsModule } from './role-descriptions/role-descriptions.module';
+import { InquiryModule } from './inquiry/inquiry.module';
 
 @Module({
   imports: [
@@ -95,6 +96,7 @@ import { RoleDescriptionsModule } from './role-descriptions/role-descriptions.mo
     MetricsModule,
     UploadModule, // [NEW]
     RoleDescriptionsModule,
+    InquiryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

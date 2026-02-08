@@ -1,0 +1,18 @@
+
+.questionButton {
+    position: fixed;
+    bottom: $s-16;
+    right: $s-16;
+    padding: $s-12;
+    z-index: 999;
+    background-color: $background-fourth;
+    border-radius: 50%;
+    border: 1px solid $border-primary;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: $background-third;
+        transform: scale(1.05);
+    }
+}
