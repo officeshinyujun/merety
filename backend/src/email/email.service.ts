@@ -19,17 +19,26 @@ export class EmailService {
   // Convert markdown to HTML for email display
   private convertMarkdownToHtml(markdown: string): string {
     let html = markdown;
+    const baseUrl = this.configService.get<string>('FRONTEND_URL') || 'https://404bnf.cloud';
 
     // Convert images: ![alt](url) -> <img src="url" alt="alt" />
+    // Also convert relative URLs to absolute
     html = html.replace(
       /!\[([^\]]*)\]\(([^)]+)\)/g,
-      '<img src="$2" alt="$1" style="max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />'
+      (match, alt, url) => {
+        const absoluteUrl = url.startsWith('/') ? `${baseUrl}${url}` : url;
+        return `<img src="${absoluteUrl}" alt="${alt}" style="max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0;" />`;
+      }
     );
 
     // Convert links: [text](url) -> <a href="url">text</a>
+    // Also convert relative URLs to absolute
     html = html.replace(
       /\[([^\]]+)\]\(([^)]+)\)/g,
-      '<a href="$2" style="color: #3b82f6;">$1</a>'
+      (match, text, url) => {
+        const absoluteUrl = url.startsWith('/') ? `${baseUrl}${url}` : url;
+        return `<a href="${absoluteUrl}" style="color: #3b82f6;">${text}</a>`;
+      }
     );
 
     // Convert bold: **text** or __text__ -> <strong>text</strong>
